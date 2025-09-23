@@ -1,0 +1,35 @@
+{
+  "name": "qrcode-generator-website",
+  "version": "1.0.0",
+  "description": "A simple, free QR code generator website with ad monetization ready",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "qr-code",
+    "generator",
+    "website",
+    "javascript",
+    "frontend",
+    "free",
+    "ads"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/qrcode-generator-website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/qrcode-generator-website/issues"
+  },
+  "homepage": "https://github.com/yourusername/qrcode-generator-website#readme",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

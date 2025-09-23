@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free QR Code Generator - Create QR Codes Instantly</title>
+    <meta name="description" content="Generate QR codes for free! Create QR codes for URLs, text, WiFi, and more. No registration required. Download instantly.">
+    <meta name="keywords" content="QR code generator, free QR code, create QR code, QR code maker">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:title" content="Free QR Code Generator - Create QR Codes Instantly">
+    <meta property="og:description" content="Generate QR codes for free! Create QR codes for URLs, text, WiFi, and more. No registration required.">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/">
+    <meta property="twitter:title" content="Free QR Code Generator - Create QR Codes Instantly">
+    <meta property="twitter:description" content="Generate QR codes for free! Create QR codes for URLs, text, WiFi, and more. No registration required.">
+    <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔲</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="../password-generator/">Password Gen</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free QR Code Generator</h1>
+                <p>Create professional QR codes instantly. No registration required. Generate QR codes for URLs, text, WiFi, and more.</p>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-form">
+                    <h2>Generate Your QR Code</h2>
+                    
+                    <div class="input-group">
+                        <label for="qr-type">QR Code Type:</label>
+                        <select id="qr-type" onchange="updateInputFields()">
+                            <option value="url">Website URL</option>
+                            <option value="text">Plain Text</option>
+                            <option value="wifi">WiFi Network</option>
+                            <option value="email">Email</option>
+                            <option value="phone">Phone Number</option>
+                            <option value="sms">SMS</option>
+                        </select>
+                    </div>
+
+                    <div id="input-fields">
+                        <!-- Dynamic input fields will be inserted here -->
+                    </div>
+
+                    <div class="options-group">
+                        <div class="input-group">
+                            <label for="qr-size">Size:</label>
+                            <select id="qr-size">
+                                <option value="200">200x200</option>
+                                <option value="300" selected>300x300</option>
+                                <option value="400">400x400</option>
+                                <option value="500">500x500</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="qr-color">Color:</label>
+                            <input type="color" id="qr-color" value="#000000">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="qr-bg-color">Background:</label>
+                            <input type="color" id="qr-bg-color" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <button id="generate-btn" class="generate-btn" onclick="generateQRCode()">
+                        <i class="fas fa-magic"></i>
+                        Generate QR Code
+                    </button>
+                    
+                </div>
+
+                <div class="qr-result">
+                    <div id="qr-output" class="qr-output">
+                        <div class="qr-placeholder">
+                            <i class="fas fa-qrcode"></i>
+                            <p>Your QR code will appear here</p>
+                        </div>
+                    </div>
+                    
+                    <div id="download-section" class="download-section" style="display: none;">
+                        <button id="download-btn" class="download-btn" onclick="downloadQRCode()">
+                            <i class="fas fa-download"></i>
+                            Download QR Code
+                        </button>
+                        <div class="format-options">
+                            <label>
+                                <input type="radio" name="format" value="png" checked>
+                                PNG
+                            </label>
+                            <label>
+                                <input type="radio" name="format" value="svg">
+                                SVG
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our QR Generator?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Generation</h3>
+                    <p>Generate QR codes instantly without any delays or waiting times.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-download"></i>
+                    <h3>Multiple Formats</h3>
+                    <p>Download your QR codes in PNG or SVG format for any use case.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Customizable</h3>
+                    <p>Customize colors, size, and style to match your brand or preferences.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All generation happens in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Content</h3>
+                    <p>Type or paste the content you want to encode into a QR code.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Customize Settings</h3>
+                    <p>Choose the size, colors, and format that best fits your needs.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Generate & Download</h3>
+                    <p>Click generate and download your QR code in your preferred format.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is this QR code generator really free?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Our QR code generator is completely free to use. There are no hidden costs, subscriptions, or watermarks on your generated QR codes.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What types of content can I encode?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can encode URLs, plain text, WiFi network credentials, email addresses, phone numbers, SMS messages, and more.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I customize the appearance of my QR code?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! You can customize the size, foreground color, and background color of your QR codes to match your brand or preferences.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is my data secure?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All QR code generation happens locally in your browser. We don't store or transmit any of your data to our servers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-qrcode"></i>
+                        <span>QR Generator</span>
+                    </div>
+                    <p>Generate professional QR codes instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>QR Code Types</h4>
+                    <ul>
+                        <li><a href="#" onclick="setQRType('url')">Website URL</a></li>
+                        <li><a href="#" onclick="setQRType('wifi')">WiFi Network</a></li>
+                        <li><a href="#" onclick="setQRType('email')">Email</a></li>
+                        <li><a href="#" onclick="setQRType('phone')">Phone</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 QR Generator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Load QRCode library with fallback
+        function loadQRCodeLibrary() {
+            const scripts = [
+                'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.min.js',
+                'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js',
+                'https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js'
+            ];
+            
+            let currentScript = 0;
+            
+            function tryLoadScript() {
+                if (currentScript >= scripts.length) {
+                    console.error('Failed to load QRCode library from all CDNs');
+                    document.getElementById('qr-output').innerHTML = `
+                        <div class="qr-placeholder">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Failed to load QR code library. Please check your internet connection and refresh the page.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const script = document.createElement('script');
+                script.src = scripts[currentScript];
+                script.onload = function() {
+                    console.log('QRCode library loaded successfully from:', scripts[currentScript]);
+                };
+                script.onerror = function() {
+                    console.warn('Failed to load QRCode library from:', scripts[currentScript]);
+                    currentScript++;
+                    tryLoadScript();
+                };
+                document.head.appendChild(script);
+            }
+            
+            tryLoadScript();
+        }
+        
+        // Load the library when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadQRCodeLibrary);
+        } else {
+            loadQRCodeLibrary();
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
