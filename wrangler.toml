@@ -1,0 +1,25 @@
+# Cloudflare Pages configuration for FreeThings monorepo
+name = "freethings"
+compatibility_date = "2024-09-23"
+
+[env.production]
+name = "freethings"
+
+# Build configuration
+[build]
+command = "echo 'No build step required for static site'"
+publish = "."
+
+# Pages configuration
+[[pages]]
+name = "freethings"
+source = "."
+destination = "."
+
+# Custom domains (if any)
+# [[pages.custom_domains]]
+# domain = "freethings.win"
+
+# Environment variables (if needed)
+# [env.production.vars]
+# NODE_ENV = "production"

@@ -1,0 +1,35 @@
+# Cloudflare Pages redirects for FreeThings monorepo
+
+# Redirect old tool paths to new monorepo structure
+/frontpage/ /tools/frontpage/ 301
+/unit-converter/ /tools/unit-converter/ 301
+/text-case-converter/ /tools/text-case-converter/ 301
+/password-generator/ /tools/password-generator/ 301
+/uuid-generator/ /tools/uuid-generator/ 301
+/base64-converter/ /tools/base64-converter/ 301
+/word-counter/ /tools/word-counter/ 301
+/image-converter/ /tools/image-converter/ 301
+/image-resizer/ /tools/image-resizer/ 301
+/qrcode-site/ /tools/qrcode-site/ 301
+
+# Common tool aliases
+/qr /tools/qrcode-site/ 301
+/qrcode /tools/qrcode-site/ 301
+/generator /tools/qrcode-site/ 301
+/converter /tools/unit-converter/ 301
+/password /tools/password-generator/ 301
+/uuid /tools/uuid-generator/ 301
+/base64 /tools/base64-converter/ 301
+/counter /tools/word-counter/ 301
+/text /tools/text-case-converter/ 301
+/image /tools/image-converter/ 301
+/resize /tools/image-resizer/ 301
+
+# Handle SPA routing for tools (fallback to index.html)
+/tools/* /tools/:splat/index.html 200
+
+# Handle documentation routing
+/docs/* /docs/:splat 200
+
+# Root redirect to frontpage
+/ /tools/frontpage/ 301

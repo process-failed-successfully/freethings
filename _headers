@@ -1,0 +1,62 @@
+# Cloudflare Pages headers for FreeThings monorepo
+
+# Security headers for all pages
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://kit.fontawesome.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self';
+
+# Cache control for HTML files
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Cache control for CSS files
+/*.css
+  Cache-Control: public, max-age=31536000
+
+# Cache control for JavaScript files
+/*.js
+  Cache-Control: public, max-age=31536000
+
+# Cache control for images
+/*.png
+  Cache-Control: public, max-age=31536000
+
+/*.jpg
+  Cache-Control: public, max-age=31536000
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000
+
+/*.gif
+  Cache-Control: public, max-age=31536000
+
+/*.svg
+  Cache-Control: public, max-age=31536000
+
+/*.webp
+  Cache-Control: public, max-age=31536000
+
+# Cache control for fonts
+/*.woff
+  Cache-Control: public, max-age=31536000
+
+/*.woff2
+  Cache-Control: public, max-age=31536000
+
+/*.ttf
+  Cache-Control: public, max-age=31536000
+
+/*.eot
+  Cache-Control: public, max-age=31536000
+
+# Cache control for XML files (sitemaps)
+/*.xml
+  Cache-Control: public, max-age=86400
+
+# Cache control for robots.txt
+/robots.txt
+  Cache-Control: public, max-age=86400

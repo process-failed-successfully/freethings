@@ -40,17 +40,17 @@ This document explains the sitemap setup and SEO best practices implemented for 
 
 ### High Priority (0.9-1.0)
 - Homepage (`/`) - Priority 1.0
-- Frontpage (`/frontpage/`) - Priority 0.9
-- Unit Converter (`/unit-converter/`) - Priority 0.9
+- Frontpage (`/tools/frontpage/`) - Priority 0.9
+- Unit Converter (`/tools/unit-converter/`) - Priority 0.9
 
 ### Medium Priority (0.7-0.8)
-- Image tools (converter, resizer) - Priority 0.8
-- Text tools (word counter, case converter) - Priority 0.8
+- Image tools (`/tools/image-converter/`, `/tools/image-resizer/`) - Priority 0.8
+- Text tools (`/tools/word-counter/`, `/tools/text-case-converter/`) - Priority 0.8
 - Documentation (`/docs/`) - Priority 0.8
 
 ### Lower Priority (0.6-0.7)
-- Developer tools (password generator, UUID, Base64) - Priority 0.7
-- QR Code generator - Priority 0.7
+- Developer tools (`/tools/password-generator/`, `/tools/uuid-generator/`, `/tools/base64-converter/`) - Priority 0.7
+- QR Code generator (`/tools/qrcode-site/`) - Priority 0.7
 - Individual documentation pages - Priority 0.6
 
 ## Change Frequencies
