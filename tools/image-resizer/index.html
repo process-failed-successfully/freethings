@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image Resizer & Compressor - Resize Images Instantly</title>
+    <meta name="description" content="Resize and compress images instantly. Reduce file size, change dimensions, and optimize images for web. Support for JPG, PNG, WebP, and more.">
+    <meta name="keywords" content="image resizer, image compressor, resize images, compress images, image optimizer, photo resizer">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/image-resizer/">
+    <meta property="og:title" content="Free Image Resizer & Compressor - Resize Images Instantly">
+    <meta property="og:description" content="Resize and compress images instantly. Reduce file size, change dimensions, and optimize images for web.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/image-resizer/">
+    <meta property="twitter:title" content="Free Image Resizer & Compressor - Resize Images Instantly">
+    <meta property="twitter:description" content="Resize and compress images instantly. Reduce file size, change dimensions, and optimize images for web.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖼️</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Image Resizer & Compressor</h1>
+                <p>Resize and compress images instantly. Reduce file size, change dimensions, and optimize images for web. Support for JPG, PNG, WebP, and more.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Resizer Section -->
+    <section class="resizer-section">
+        <div class="container">
+            <div class="resizer-container">
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <h2>Upload Image</h2>
+                        <div class="upload-actions">
+                            <button id="clear-btn" class="clear-btn" onclick="clearAll()">
+                                <i class="fas fa-trash"></i>
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="file-upload-area" id="file-upload-area">
+                        <div class="file-upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drop images here or click to upload</h3>
+                            <p>Supports JPG, PNG, WebP, GIF, and more</p>
+                            <input type="file" id="file-input" multiple accept="image/*" style="display: none;" onchange="handleFileUpload()">
+                        </div>
+                    </div>
+                    
+                    <div id="file-list" class="file-list">
+                        <!-- Uploaded files will be listed here -->
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-header">
+                        <h2>Resize Settings</h2>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <label for="resize-mode">Resize Mode:</label>
+                            <select id="resize-mode" onchange="updateResizeMode()">
+                                <option value="percentage">Percentage</option>
+                                <option value="dimensions">Custom Dimensions</option>
+                                <option value="preset">Preset Sizes</option>
+                            </select>
+                        </div>
+
+                        <div id="percentage-group" class="setting-group">
+                            <label for="resize-percentage">Resize Percentage:</label>
+                            <div class="range-container">
+                                <input type="range" id="resize-percentage" min="10" max="200" value="100" oninput="updatePercentageDisplay()">
+                                <span id="percentage-display">100%</span>
+                            </div>
+                        </div>
+
+                        <div id="dimensions-group" class="setting-group" style="display: none;">
+                            <label for="custom-width">Custom Dimensions:</label>
+                            <div class="dimensions-container">
+                                <input type="number" id="custom-width" placeholder="Width" min="1" max="10000">
+                                <span>×</span>
+                                <input type="number" id="custom-height" placeholder="Height" min="1" max="10000">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="maintain-aspect" checked>
+                                    <span class="checkmark"></span>
+                                    Maintain Aspect Ratio
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="preset-group" class="setting-group" style="display: none;">
+                            <label for="preset-size">Preset Size:</label>
+                            <select id="preset-size" onchange="applyPreset()">
+                                <option value="">Select preset...</option>
+                                <option value="thumbnail">Thumbnail (150×150)</option>
+                                <option value="small">Small (300×300)</option>
+                                <option value="medium">Medium (600×600)</option>
+                                <option value="large">Large (1200×1200)</option>
+                                <option value="facebook">Facebook Post (1200×630)</option>
+                                <option value="instagram">Instagram Square (1080×1080)</option>
+                                <option value="instagram-story">Instagram Story (1080×1920)</option>
+                                <option value="twitter">Twitter Header (1500×500)</option>
+                                <option value="youtube">YouTube Thumbnail (1280×720)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-group">
+                            <label for="output-format">Output Format:</label>
+                            <select id="output-format">
+                                <option value="original">Keep Original</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-group">
+                            <label for="quality">Quality (JPEG/WebP):</label>
+                            <div class="range-container">
+                                <input type="range" id="quality" min="10" max="100" value="85" oninput="updateQualityDisplay()">
+                                <span id="quality-display">85%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="resize-btn" class="resize-btn" onclick="resizeImages()">
+                            <i class="fas fa-compress-alt"></i>
+                            Resize Images
+                        </button>
+                        <button id="download-all-btn" class="download-all-btn" onclick="downloadAll()" style="display: none;">
+                            <i class="fas fa-download"></i>
+                            Download All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section" style="display: none;">
+                <h3>Resized Images</h3>
+                <div id="results-grid" class="results-grid">
+                    <!-- Resized images will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Presets Section -->
+    <section class="presets-section">
+        <div class="container">
+            <h2>Quick Presets</h2>
+            <div class="presets-grid">
+                <div class="preset-item" onclick="applyQuickPreset('thumbnail')">
+                    <h4>Thumbnail</h4>
+                    <p>150×150px</p>
+                    <span class="preset-desc">Perfect for thumbnails</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('social')">
+                    <h4>Social Media</h4>
+                    <p>1200×630px</p>
+                    <span class="preset-desc">Facebook, LinkedIn posts</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('instagram')">
+                    <h4>Instagram</h4>
+                    <p>1080×1080px</p>
+                    <span class="preset-desc">Square posts</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('web')">
+                    <h4>Web Optimized</h4>
+                    <p>800×600px</p>
+                    <span class="preset-desc">Fast loading</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('email')">
+                    <h4>Email</h4>
+                    <p>600×400px</p>
+                    <span class="preset-desc">Email attachments</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('compress')">
+                    <h4>Compress Only</h4>
+                    <p>Same size</p>
+                    <span class="preset-desc">Reduce file size</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Image Resizer?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Processing</h3>
+                    <p>Resize and compress images instantly in your browser. No uploads, no waiting.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-images"></i>
+                    <h3>Multiple Formats</h3>
+                    <p>Support for JPG, PNG, WebP, GIF, and more. Convert between formats.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Advanced Options</h3>
+                    <p>Custom dimensions, aspect ratio control, quality settings, and presets.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens in your browser. Images never leave your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Upload Images</h3>
+                    <p>Drag and drop or click to upload your images. Support for multiple files at once.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Configure Settings</h3>
+                    <p>Choose resize mode, dimensions, output format, and quality settings.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Download Results</h3>
+                    <p>Download individual images or all at once. See file size savings instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What image formats are supported?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We support all common image formats including JPG, PNG, WebP, GIF, BMP, and TIFF. You can also convert between different formats.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is there a file size limit?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>File size is limited by your browser's memory. Very large images (over 50MB) may cause performance issues, but most common images work perfectly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are my images secure?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All image processing happens locally in your browser. Images are never uploaded to our servers or stored anywhere.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I resize multiple images at once?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! You can upload multiple images and resize them all with the same settings. Download them individually or all at once.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-compress-alt"></i>
+                        <span>Image Resizer</span>
+                    </div>
+                    <p>Resize and compress images instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Presets</h4>
+                    <ul>
+                        <li><a href="#" onclick="applyQuickPreset('thumbnail')">Thumbnail</a></li>
+                        <li><a href="#" onclick="applyQuickPreset('social')">Social Media</a></li>
+                        <li><a href="#" onclick="applyQuickPreset('instagram')">Instagram</a></li>
+                        <li><a href="#" onclick="applyQuickPreset('web')">Web Optimized</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Image Resizer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

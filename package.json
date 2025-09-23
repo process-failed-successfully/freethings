@@ -1,0 +1,47 @@
+{
+  "name": "freethings",
+  "version": "1.0.0",
+  "description": "A monorepo of free online tools and utilities - QR code generator, unit converter, text tools, and more",
+  "main": "index.html",
+  "private": true,
+  "workspaces": [
+    "tools/*"
+  ],
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "serve": "npx http-server -p 8000 -o",
+    "dev": "npx http-server -p 8000 -o -c-1",
+    "test": "echo 'Visit http://localhost:8000 to test the site'",
+    "check": "node -e \"console.log('Checking project structure...'); const fs = require('fs'); const tools = ['frontpage', 'qrcode-site', 'unit-converter', 'text-case-converter', 'password-generator', 'uuid-generator', 'base64-converter', 'word-counter', 'image-converter', 'image-resizer']; let missing = 0; tools.forEach(tool => { if (!fs.existsSync(tool + '/index.html')) { console.log('✗ ' + tool + '/index.html missing'); missing++; } else { console.log('✓ ' + tool + '/index.html'); } }); if (missing === 0) { console.log('All files present!'); } else { console.log(missing + ' files missing'); }\"",
+    "build": "echo 'No build step required for static site'",
+    "lint": "echo 'No linting configured yet'",
+    "format": "echo 'No formatting configured yet'"
+  },
+  "keywords": [
+    "monorepo",
+    "free-tools",
+    "online-utilities",
+    "qr-code-generator",
+    "unit-converter",
+    "text-tools",
+    "password-generator",
+    "uuid-generator",
+    "base64-converter",
+    "word-counter",
+    "image-converter",
+    "image-resizer"
+  ],
+  "author": "FreeThings.win",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luke/freethings.git"
+  },
+  "homepage": "https://freethings.win",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

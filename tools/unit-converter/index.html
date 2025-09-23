@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Unit Converter - Convert Length, Weight, Temperature & More</title>
+    <meta name="description" content="Convert between metric and imperial units instantly. Length, weight, temperature, area, volume, and more. 100% free online unit converter.">
+    <meta name="keywords" content="unit converter, metric converter, imperial converter, temperature converter, length converter, weight converter">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/unit-converter/">
+    <meta property="og:title" content="Free Unit Converter - Convert Length, Weight, Temperature & More">
+    <meta property="og:description" content="Convert between metric and imperial units instantly. Length, weight, temperature, area, volume, and more.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/unit-converter/">
+    <meta property="twitter:title" content="Free Unit Converter - Convert Length, Weight, Temperature & More">
+    <meta property="twitter:description" content="Convert between metric and imperial units instantly. Length, weight, temperature, area, volume, and more.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="../password-generator/">Password Gen</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Unit Converter</h1>
+                <p>Convert between metric and imperial units instantly. Length, weight, temperature, area, volume, and more. No registration required.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Converter Section -->
+    <section class="converter-section">
+        <div class="container">
+            <div class="converter-container">
+                <div class="converter-form">
+                    <h2>Convert Units</h2>
+                    
+                    <div class="input-group">
+                        <label for="category-select">Conversion Category:</label>
+                        <select id="category-select" onchange="updateUnits()">
+                            <option value="length">Length</option>
+                            <option value="weight">Weight</option>
+                            <option value="temperature">Temperature</option>
+                            <option value="area">Area</option>
+                            <option value="volume">Volume</option>
+                            <option value="time">Time</option>
+                            <option value="speed">Speed</option>
+                            <option value="pressure">Pressure</option>
+                            <option value="energy">Energy</option>
+                            <option value="data">Data Storage</option>
+                        </select>
+                    </div>
+
+                    <div class="conversion-inputs">
+                        <div class="input-group">
+                            <label for="from-unit">From:</label>
+                            <select id="from-unit"></select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="value-input">Value:</label>
+                            <input type="number" id="value-input" placeholder="Enter value" step="any">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="to-unit">To:</label>
+                            <select id="to-unit"></select>
+                        </div>
+                    </div>
+
+                    <button id="convert-btn" class="convert-btn" onclick="convertUnits()">
+                        <i class="fas fa-calculator"></i>
+                        Convert
+                    </button>
+                </div>
+
+                <div class="result-section">
+                    <div id="result-output" class="result-output">
+                        <div class="result-placeholder">
+                            <i class="fas fa-exchange-alt"></i>
+                            <p>Your conversion result will appear here</p>
+                        </div>
+                    </div>
+                    
+                    <div id="copy-section" class="copy-section" style="display: none;">
+                        <button id="copy-btn" class="copy-btn" onclick="copyResult()">
+                            <i class="fas fa-copy"></i>
+                            Copy Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Conversions Section -->
+    <section class="quick-conversions">
+        <div class="container">
+            <h2>Quick Conversions</h2>
+            <div class="quick-grid">
+                <div class="quick-item" onclick="quickConvert('length', 'meter', 'feet', 1)">
+                    <h3>1 Meter</h3>
+                    <p>= 3.281 Feet</p>
+                </div>
+                <div class="quick-item" onclick="quickConvert('weight', 'kilogram', 'pound', 1)">
+                    <h3>1 Kilogram</h3>
+                    <p>= 2.205 Pounds</p>
+                </div>
+                <div class="quick-item" onclick="quickConvert('temperature', 'celsius', 'fahrenheit', 0)">
+                    <h3>0°C</h3>
+                    <p>= 32°F</p>
+                </div>
+                <div class="quick-item" onclick="quickConvert('area', 'square_meter', 'square_feet', 1)">
+                    <h3>1 m²</h3>
+                    <p>= 10.764 ft²</p>
+                </div>
+                <div class="quick-item" onclick="quickConvert('volume', 'liter', 'gallon', 1)">
+                    <h3>1 Liter</h3>
+                    <p>= 0.264 Gallons</p>
+                </div>
+                <div class="quick-item" onclick="quickConvert('data', 'megabyte', 'kilobyte', 1)">
+                    <h3>1 MB</h3>
+                    <p>= 1024 KB</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Unit Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Conversion</h3>
+                    <p>Get accurate conversions instantly without any delays or waiting times.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Comprehensive Units</h3>
+                    <p>Convert between metric, imperial, and other unit systems worldwide.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>High Precision</h3>
+                    <p>Accurate calculations with proper rounding and significant figures.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All calculations happen in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Select Category</h3>
+                    <p>Choose the type of units you want to convert (length, weight, temperature, etc.).</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Enter Values</h3>
+                    <p>Select your source and target units, then enter the value you want to convert.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Results</h3>
+                    <p>Click convert to see the result instantly with high precision.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is this unit converter really free?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Our unit converter is completely free to use. There are no hidden costs, subscriptions, or limitations.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What unit systems are supported?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We support metric (SI), imperial, US customary, and other international unit systems for comprehensive conversion options.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How accurate are the conversions?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our conversions are highly accurate, using standard conversion factors and proper rounding for practical use.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I convert between any units?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can convert between any units within the same category. For example, you can convert between any length units, weight units, etc.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Unit Converter</span>
+                    </div>
+                    <p>Convert between units instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Conversions</h4>
+                    <ul>
+                        <li><a href="#" onclick="setCategory('length')">Length</a></li>
+                        <li><a href="#" onclick="setCategory('weight')">Weight</a></li>
+                        <li><a href="#" onclick="setCategory('temperature')">Temperature</a></li>
+                        <li><a href="#" onclick="setCategory('area')">Area</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Unit Converter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

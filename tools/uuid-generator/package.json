@@ -1,0 +1,36 @@
+{
+  "name": "uuid-generator-website",
+  "version": "1.0.0",
+  "description": "Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "uuid-generator",
+    "unique-identifier",
+    "guid-generator",
+    "uuid-v4",
+    "uuid-v1",
+    "developer-tools",
+    "nanoid"
+  ],
+  "author": "FreeThings",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freethings/uuid-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freethings/uuid-generator/issues"
+  },
+  "homepage": "https://freethings.win/uuid-generator/",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+

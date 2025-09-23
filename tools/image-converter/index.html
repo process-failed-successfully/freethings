@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image Converter - Convert SVG, JPG, PNG, WebP Instantly</title>
+    <meta name="description" content="Convert images between SVG, JPG, PNG, WebP formats instantly. Special support for SVG to JPG with transparency handling. Perfect for web developers and designers.">
+    <meta name="keywords" content="image converter, svg converter, jpg converter, png converter, webp converter, svg to jpg, image format converter">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/image-converter/">
+    <meta property="og:title" content="Free Image Converter - Convert SVG, JPG, PNG, WebP Instantly">
+    <meta property="og:description" content="Convert images between SVG, JPG, PNG, WebP formats instantly. Special support for SVG to JPG with transparency handling.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/image-converter/">
+    <meta property="twitter:title" content="Free Image Converter - Convert SVG, JPG, PNG, WebP Instantly">
+    <meta property="twitter:description" content="Convert images between SVG, JPG, PNG, WebP formats instantly. Special support for SVG to JPG with transparency handling.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Image Converter</h1>
+                <p>Convert images between SVG, JPG, PNG, WebP formats instantly. Special support for SVG to JPG with transparency handling. Perfect for web developers and designers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Converter Section -->
+    <section class="converter-section">
+        <div class="container">
+            <div class="converter-container">
+                <div class="upload-section">
+                    <div class="upload-header">
+                        <h2>Upload Images</h2>
+                        <div class="upload-actions">
+                            <button id="clear-btn" class="clear-btn" onclick="clearAll()">
+                                <i class="fas fa-trash"></i>
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="file-upload-area" id="file-upload-area">
+                        <div class="file-upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drop images here or click to upload</h3>
+                            <p>Supports SVG, JPG, PNG, WebP, GIF, and more</p>
+                            <input type="file" id="file-input" multiple accept="image/*,.svg" style="display: none;" onchange="handleFileUpload()">
+                        </div>
+                    </div>
+                    
+                    <div id="file-list" class="file-list">
+                        <!-- Uploaded files will be listed here -->
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-header">
+                        <h2>Conversion Settings</h2>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <label for="output-format">Output Format:</label>
+                            <select id="output-format" onchange="updateFormatOptions()">
+                                <option value="jpeg">JPEG (JPG)</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                                <option value="svg">SVG</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-group">
+                            <label for="output-quality">Quality (JPEG/WebP):</label>
+                            <div class="range-container">
+                                <input type="range" id="output-quality" min="10" max="100" value="90" oninput="updateQualityDisplay()">
+                                <span id="quality-display">90%</span>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label for="output-size">Output Size:</label>
+                            <select id="output-size" onchange="updateSizeOptions()">
+                                <option value="original">Keep Original Size</option>
+                                <option value="custom">Custom Size</option>
+                                <option value="preset">Preset Sizes</option>
+                            </select>
+                        </div>
+
+                        <div id="custom-size-group" class="setting-group" style="display: none;">
+                            <label for="custom-width">Custom Dimensions:</label>
+                            <div class="dimensions-container">
+                                <input type="number" id="custom-width" placeholder="Width" min="1" max="10000">
+                                <span>×</span>
+                                <input type="number" id="custom-height" placeholder="Height" min="1" max="10000">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="maintain-aspect" checked>
+                                    <span class="checkmark"></span>
+                                    Maintain Aspect Ratio
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="preset-size-group" class="setting-group" style="display: none;">
+                            <label for="preset-size">Preset Size:</label>
+                            <select id="preset-size" onchange="applyPreset()">
+                                <option value="">Select preset...</option>
+                                <option value="thumbnail">Thumbnail (150×150)</option>
+                                <option value="small">Small (300×300)</option>
+                                <option value="medium">Medium (600×600)</option>
+                                <option value="large">Large (1200×1200)</option>
+                                <option value="hd">HD (1920×1080)</option>
+                                <option value="4k">4K (3840×2160)</option>
+                            </select>
+                        </div>
+
+                        <!-- SVG to JPG specific options -->
+                        <div id="svg-options" class="setting-group" style="display: none;">
+                            <label>SVG to JPG Options:</label>
+                            <div class="svg-options-container">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="handle-transparency" checked>
+                                    <span class="checkmark"></span>
+                                    Handle Transparency (Add white background)
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="preserve-vector">
+                                    <span class="checkmark"></span>
+                                    Preserve Vector Quality
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label for="background-color">Background Color (for transparency):</label>
+                            <div class="color-container">
+                                <input type="color" id="background-color" value="#ffffff">
+                                <input type="text" id="background-color-text" value="#ffffff" placeholder="#ffffff">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="convert-btn" class="convert-btn" onclick="convertImages()">
+                            <i class="fas fa-exchange-alt"></i>
+                            Convert Images
+                        </button>
+                        <button id="download-all-btn" class="download-all-btn" onclick="downloadAll()" style="display: none;">
+                            <i class="fas fa-download"></i>
+                            Download All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section" style="display: none;">
+                <h3>Converted Images</h3>
+                <div id="results-grid" class="results-grid">
+                    <!-- Converted images will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Presets Section -->
+    <section class="presets-section">
+        <div class="container">
+            <h2>Quick Conversion Presets</h2>
+            <div class="presets-grid">
+                <div class="preset-item" onclick="applyQuickPreset('svg-to-jpg')">
+                    <h4>SVG → JPG</h4>
+                    <p>High Quality</p>
+                    <span class="preset-desc">Perfect for web use</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('svg-to-png')">
+                    <h4>SVG → PNG</h4>
+                    <p>With Transparency</p>
+                    <span class="preset-desc">Preserves transparency</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('jpg-to-webp')">
+                    <h4>JPG → WebP</h4>
+                    <p>Optimized</p>
+                    <span class="preset-desc">Smaller file sizes</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('png-to-jpg')">
+                    <h4>PNG → JPG</h4>
+                    <p>Compressed</p>
+                    <span class="preset-desc">Remove transparency</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('web-optimized')">
+                    <h4>Web Optimized</h4>
+                    <p>WebP Format</p>
+                    <span class="preset-desc">Best for websites</span>
+                </div>
+                <div class="preset-item" onclick="applyQuickPreset('print-ready')">
+                    <h4>Print Ready</h4>
+                    <p>High Resolution</p>
+                    <span class="preset-desc">300 DPI quality</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SVG to JPG Special Section -->
+    <section class="svg-special-section">
+        <div class="container">
+            <h2>SVG to JPG Conversion</h2>
+            <div class="svg-features">
+                <div class="svg-feature">
+                    <i class="fas fa-magic"></i>
+                    <h3>Transparency Handling</h3>
+                    <p>Automatically adds background color to transparent SVG elements when converting to JPG format.</p>
+                </div>
+                <div class="svg-feature">
+                    <i class="fas fa-vector-square"></i>
+                    <h3>Vector Quality</h3>
+                    <p>Preserves the crisp, scalable quality of SVG graphics at any resolution.</p>
+                </div>
+                <div class="svg-feature">
+                    <i class="fas fa-palette"></i>
+                    <h3>Custom Backgrounds</h3>
+                    <p>Choose any background color or keep transparency when converting to PNG.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Image Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Conversion</h3>
+                    <p>Convert images instantly in your browser. No uploads, no waiting, no server processing.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-images"></i>
+                    <h3>Multiple Formats</h3>
+                    <p>Support for SVG, JPG, PNG, WebP, GIF, and more. Convert between any formats.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Advanced Options</h3>
+                    <p>Quality control, size adjustment, transparency handling, and custom backgrounds.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens in your browser. Images never leave your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Upload Images</h3>
+                    <p>Drag and drop or click to upload your images. Support for multiple files and formats.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose Settings</h3>
+                    <p>Select output format, quality, size, and special options like transparency handling.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Download Results</h3>
+                    <p>Download individual images or all at once. See conversion details and file size changes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How does SVG to JPG conversion handle transparency?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>When converting SVG to JPG, transparent areas are automatically filled with a background color (default white). You can choose any background color or convert to PNG to preserve transparency.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What image formats are supported?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We support all common image formats including SVG, JPG, PNG, WebP, GIF, BMP, and TIFF. You can convert between any of these formats.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is there a file size limit?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>File size is limited by your browser's memory. Very large images (over 50MB) may cause performance issues, but most common images work perfectly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I convert multiple images at once?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! You can upload multiple images and convert them all with the same settings. Download them individually or all at once.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are my images secure?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All image processing happens locally in your browser. Images are never uploaded to our servers or stored anywhere.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Image Converter</span>
+                    </div>
+                    <p>Convert images between formats instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Presets</h4>
+                    <ul>
+                        <li><a href="#" onclick="applyQuickPreset('svg-to-jpg')">SVG → JPG</a></li>
+                        <li><a href="#" onclick="applyQuickPreset('svg-to-png')">SVG → PNG</a></li>
+                        <li><a href="#" onclick="applyQuickPreset('jpg-to-webp')">JPG → WebP</a></li>
+                        <li><a href="#" onclick="applyQuickPreset('web-optimized')">Web Optimized</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Image Converter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Robots.txt for FreeThings.dev
+# https://freethings.win/robots.txt
+
+User-agent: *
+Allow: /
+
+# Block access to development and build files
+Disallow: /node_modules/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /Makefile
+Disallow: /dev-server.sh
+Disallow: /DEVELOPMENT.md
+Disallow: /TODO.md
+Disallow: /Tools.md
+
+# Block access to deployment files
+Disallow: /_headers
+Disallow: /_redirects
+Disallow: /deploy.md
+
+# Allow all tool directories and documentation
+Allow: /unit-converter/
+Allow: /image-converter/
+Allow: /image-resizer/
+Allow: /word-counter/
+Allow: /text-case-converter/
+Allow: /password-generator/
+Allow: /uuid-generator/
+Allow: /base64-converter/
+Allow: /qrcode-site/
+Allow: /frontpage/
+Allow: /docs/
+
+# Sitemap location
+Sitemap: https://freethings.win/sitemap.xml
+
+# Crawl delay (optional - helps prevent server overload)
+Crawl-delay: 1

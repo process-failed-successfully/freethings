@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Base64 Encoder/Decoder - Convert Text & Files Instantly</title>
+    <meta name="description" content="Encode and decode Base64 strings instantly. Support for text and file uploads. Perfect for developers working with data encoding and APIs.">
+    <meta name="keywords" content="base64 encoder, base64 decoder, base64 converter, encode decode, file converter, developer tools">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/base64-converter/">
+    <meta property="og:title" content="Free Base64 Encoder/Decoder - Convert Text & Files Instantly">
+    <meta property="og:description" content="Encode and decode Base64 strings instantly. Support for text and file uploads. Perfect for developers.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/base64-converter/">
+    <meta property="twitter:title" content="Free Base64 Encoder/Decoder - Convert Text & Files Instantly">
+    <meta property="twitter:description" content="Encode and decode Base64 strings instantly. Support for text and file uploads. Perfect for developers.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../password-generator/">Password Gen</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Base64 Encoder/Decoder</h1>
+                <p>Encode and decode Base64 strings instantly. Support for text and file uploads. Perfect for developers working with data encoding and APIs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Converter Section -->
+    <section class="converter-section">
+        <div class="container">
+            <div class="converter-container">
+                <div class="input-section">
+                    <div class="input-header">
+                        <h2>Input</h2>
+                        <div class="input-mode-selector">
+                            <button class="mode-btn active" onclick="setInputMode('text')" id="text-mode-btn">
+                                <i class="fas fa-font"></i>
+                                Text
+                            </button>
+                            <button class="mode-btn" onclick="setInputMode('file')" id="file-mode-btn">
+                                <i class="fas fa-file-upload"></i>
+                                File
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="text-input-container" class="input-container">
+                        <div class="input-group">
+                            <textarea id="text-input" placeholder="Enter text to encode or paste Base64 string to decode..." rows="8"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="file-input-container" class="input-container" style="display: none;">
+                        <div class="file-upload-area" id="file-upload-area">
+                            <div class="file-upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3>Drop files here or click to upload</h3>
+                                <p>Supports images, documents, and other files</p>
+                                <input type="file" id="file-input" style="display: none;" onchange="handleFileUpload()">
+                            </div>
+                        </div>
+                        <div id="file-info" class="file-info" style="display: none;">
+                            <div class="file-details">
+                                <i class="fas fa-file"></i>
+                                <div class="file-text">
+                                    <div class="file-name" id="file-name"></div>
+                                    <div class="file-size" id="file-size"></div>
+                                </div>
+                            </div>
+                            <button class="remove-file-btn" onclick="removeFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">
+                        <h2>Output</h2>
+                        <div class="result-actions">
+                            <button id="copy-btn" class="copy-btn" onclick="copyResult()">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button id="download-btn" class="download-btn" onclick="downloadResult()" style="display: none;">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button id="clear-btn" class="clear-btn" onclick="clearResults()">
+                                <i class="fas fa-trash"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="operation-selector">
+                        <button class="operation-btn active" onclick="setOperation('encode')" id="encode-btn">
+                            <i class="fas fa-arrow-right"></i>
+                            Encode to Base64
+                        </button>
+                        <button class="operation-btn" onclick="setOperation('decode')" id="decode-btn">
+                            <i class="fas fa-arrow-left"></i>
+                            Decode from Base64
+                        </button>
+                    </div>
+
+                    <div id="result-output" class="result-output">
+                        <div class="result-placeholder">
+                            <i class="fas fa-exchange-alt"></i>
+                            <p>Your converted result will appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="result-info">
+                        <div class="info-item">
+                            <span class="info-label">Operation:</span>
+                            <span class="info-value" id="operation-display">Encode</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Size:</span>
+                            <span class="info-value" id="size-display">- characters</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Status:</span>
+                            <span class="info-value" id="status-display">Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Examples Section -->
+    <section class="examples-section">
+        <div class="container">
+            <h2>Quick Examples</h2>
+            <div class="examples-grid">
+                <div class="example-item" onclick="loadExample('hello')">
+                    <h4>Hello World</h4>
+                    <p class="example-text">"Hello World"</p>
+                    <p class="example-base64">SGVsbG8gV29ybGQ=</p>
+                </div>
+                <div class="example-item" onclick="loadExample('json')">
+                    <h4>JSON Data</h4>
+                    <p class="example-text">{"name": "John", "age": 30}</p>
+                    <p class="example-base64">eyJuYW1lIjogIkpvaG4iLCAiYWdlIjogMzB9</p>
+                </div>
+                <div class="example-item" onclick="loadExample('url')">
+                    <h4>URL</h4>
+                    <p class="example-text">https://example.com</p>
+                    <p class="example-base64">aHR0cHM6Ly9leGFtcGxlLmNvbQ==</p>
+                </div>
+                <div class="example-item" onclick="loadExample('binary')">
+                    <h4>Binary Data</h4>
+                    <p class="example-text">Binary: 01001000 01100101 01101100 01101100 01101111</p>
+                    <p class="example-base64">SGVsbG8=</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Base64 Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Conversion</h3>
+                    <p>Encode and decode Base64 strings instantly with real-time processing.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-file-upload"></i>
+                    <h3>File Support</h3>
+                    <p>Upload and convert files directly to Base64 or decode Base64 back to files.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Developer Friendly</h3>
+                    <p>Perfect for API development, data storage, and web applications.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Input</h3>
+                    <p>Enter text directly or upload a file to convert to/from Base64 format.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Select Operation</h3>
+                    <p>Choose whether to encode text/files to Base64 or decode Base64 back to original format.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Copy or Download</h3>
+                    <p>Copy the result to clipboard or download the converted file for use in your projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is Base64 encoding?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used for data transmission and storage.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What file types are supported?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>All file types are supported! Images, documents, videos, audio files, and any other binary data can be converted to Base64.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is there a file size limit?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>File size is limited by your browser's memory. Very large files (hundreds of MB) may cause performance issues, but most common files work perfectly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are my files secure?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All file processing happens locally in your browser. Files are never uploaded to our servers or stored anywhere.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Base64 Converter</span>
+                    </div>
+                    <p>Encode and decode Base64 strings instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Common Uses</h4>
+                    <ul>
+                        <li><a href="#" onclick="loadExample('hello')">Text Encoding</a></li>
+                        <li><a href="#" onclick="loadExample('json')">JSON Data</a></li>
+                        <li><a href="#" onclick="setInputMode('file')">File Upload</a></li>
+                        <li><a href="#" onclick="setOperation('decode')">Base64 Decode</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Base64 Converter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

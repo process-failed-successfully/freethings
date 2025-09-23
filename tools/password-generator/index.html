@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Password Generator - Create Secure Passwords Instantly</title>
+    <meta name="description" content="Generate secure, random passwords with customizable options. Choose length, character types, and more. Perfect for creating strong passwords for any account.">
+    <meta name="keywords" content="password generator, secure password, random password, strong password, password creator">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/password-generator/">
+    <meta property="og:title" content="Free Password Generator - Create Secure Passwords Instantly">
+    <meta property="og:description" content="Generate secure, random passwords with customizable options. Choose length, character types, and more.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/password-generator/">
+    <meta property="twitter:title" content="Free Password Generator - Create Secure Passwords Instantly">
+    <meta property="twitter:description" content="Generate secure, random passwords with customizable options. Choose length, character types, and more.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Password Generator</h1>
+                <p>Create secure, random passwords with customizable options. Choose length, character types, and more. Perfect for creating strong passwords for any account.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-form">
+                    <h2>Generate Secure Password</h2>
+                    
+                    <div class="input-group">
+                        <label for="password-length">Password Length:</label>
+                        <div class="length-control">
+                            <input type="range" id="password-length" min="4" max="128" value="16" oninput="updateLengthDisplay()">
+                            <span id="length-display">16</span>
+                        </div>
+                    </div>
+
+                    <div class="options-group">
+                        <h3>Character Types:</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-uppercase" checked>
+                                <span class="checkmark"></span>
+                                Uppercase Letters (A-Z)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-lowercase" checked>
+                                <span class="checkmark"></span>
+                                Lowercase Letters (a-z)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-numbers" checked>
+                                <span class="checkmark"></span>
+                                Numbers (0-9)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-symbols" checked>
+                                <span class="checkmark"></span>
+                                Symbols (!@#$%^&*)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="options-group">
+                        <h3>Advanced Options:</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="exclude-similar">
+                                <span class="checkmark"></span>
+                                Exclude Similar Characters (0, O, l, 1, I)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="exclude-ambiguous">
+                                <span class="checkmark"></span>
+                                Exclude Ambiguous Characters ({ } [ ] ( ) / \ ~ |)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="require-one-of-each">
+                                <span class="checkmark"></span>
+                                Require at least one of each selected type
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="generate-actions">
+                        <button id="generate-btn" class="generate-btn" onclick="generatePassword()">
+                            <i class="fas fa-key"></i>
+                            Generate Password
+                        </button>
+                        <button id="generate-multiple-btn" class="generate-multiple-btn" onclick="generateMultiplePasswords()">
+                            <i class="fas fa-layer-group"></i>
+                            Generate Multiple
+                        </button>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">
+                        <h3>Generated Password</h3>
+                        <div class="result-actions">
+                            <button id="copy-btn" class="copy-btn" onclick="copyPassword()">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button id="refresh-btn" class="refresh-btn" onclick="generatePassword()">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="password-output" class="password-output">
+                        <div class="password-placeholder">
+                            <i class="fas fa-lock"></i>
+                            <p>Your secure password will appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="password-strength">
+                        <div class="strength-label">Password Strength:</div>
+                        <div class="strength-meter">
+                            <div class="strength-bar" id="strength-bar"></div>
+                        </div>
+                        <div class="strength-text" id="strength-text">-</div>
+                    </div>
+
+                    <div class="password-info">
+                        <div class="info-item">
+                            <span class="info-label">Entropy:</span>
+                            <span class="info-value" id="entropy-value">- bits</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Time to Crack:</span>
+                            <span class="info-value" id="crack-time">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multiple Passwords Section -->
+            <div id="multiple-passwords-section" class="multiple-passwords-section" style="display: none;">
+                <h3>Multiple Passwords</h3>
+                <div id="multiple-passwords-list" class="multiple-passwords-list">
+                    <!-- Multiple passwords will be generated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preset Templates Section -->
+    <section class="presets-section">
+        <div class="container">
+            <h2>Quick Templates</h2>
+            <div class="presets-grid">
+                <div class="preset-item" onclick="applyPreset('basic')">
+                    <h4>Basic</h4>
+                    <p>8-12 characters, letters & numbers</p>
+                    <span class="preset-settings">Length: 10, Letters + Numbers</span>
+                </div>
+                <div class="preset-item" onclick="applyPreset('strong')">
+                    <h4>Strong</h4>
+                    <p>16 characters, all character types</p>
+                    <span class="preset-settings">Length: 16, All Types</span>
+                </div>
+                <div class="preset-item" onclick="applyPreset('pin')">
+                    <h4>PIN Code</h4>
+                    <p>4-6 digit numbers only</p>
+                    <span class="preset-settings">Length: 4, Numbers Only</span>
+                </div>
+                <div class="preset-item" onclick="applyPreset('memorable')">
+                    <h4>Memorable</h4>
+                    <p>12 characters, exclude similar</p>
+                    <span class="preset-settings">Length: 12, No Similar</span>
+                </div>
+                <div class="preset-item" onclick="applyPreset('maximum')">
+                    <h4>Maximum Security</h4>
+                    <p>32 characters, all options enabled</p>
+                    <span class="preset-settings">Length: 32, Maximum Security</span>
+                </div>
+                <div class="preset-item" onclick="applyPreset('pronounceable')">
+                    <h4>Pronounceable</h4>
+                    <p>Easy to remember format</p>
+                    <span class="preset-settings">Length: 12, Mixed Format</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Password Generator?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Cryptographically Secure</h3>
+                    <p>Uses browser's built-in crypto API for truly random password generation.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Highly Customizable</h3>
+                    <p>Choose length, character types, and advanced options to fit your needs.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Strength Analysis</h3>
+                    <p>See password strength, entropy, and estimated time to crack.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All generation happens in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Customize Options</h3>
+                    <p>Set password length, choose character types, and configure advanced options.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Generate Password</h3>
+                    <p>Click generate to create a secure password using cryptographically secure random numbers.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy your password and use it to secure your accounts. Check the strength analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How secure are the generated passwords?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our passwords are generated using the browser's cryptographically secure random number generator (Crypto.getRandomValues), making them truly random and secure.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is password entropy?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Entropy measures the randomness of a password. Higher entropy means more possible combinations and greater security. It's measured in bits.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are my passwords stored anywhere?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No! All password generation happens locally in your browser. We don't store, transmit, or have access to any generated passwords.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What's the recommended password length?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>For maximum security, use at least 16 characters with mixed character types. Longer passwords with more character variety are always better.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-lock"></i>
+                        <span>Password Generator</span>
+                    </div>
+                    <p>Generate secure passwords instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Templates</h4>
+                    <ul>
+                        <li><a href="#" onclick="applyPreset('basic')">Basic</a></li>
+                        <li><a href="#" onclick="applyPreset('strong')">Strong</a></li>
+                        <li><a href="#" onclick="applyPreset('pin')">PIN Code</a></li>
+                        <li><a href="#" onclick="applyPreset('memorable')">Memorable</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Password Generator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

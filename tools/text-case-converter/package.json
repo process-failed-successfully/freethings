@@ -1,0 +1,38 @@
+{
+  "name": "text-case-converter-website",
+  "version": "1.0.0",
+  "description": "Convert text case instantly - uppercase, lowercase, title case, sentence case, camelCase, and more",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "text-case",
+    "converter",
+    "uppercase",
+    "lowercase",
+    "camel-case",
+    "pascal-case",
+    "snake-case",
+    "kebab-case",
+    "title-case",
+    "sentence-case"
+  ],
+  "author": "FreeThings",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freethings/text-case-converter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freethings/text-case-converter/issues"
+  },
+  "homepage": "https://freethings.win/text-case-converter/",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

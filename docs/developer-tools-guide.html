@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Tools Guide - UUID Generator & Base64 Converter</title>
+    <meta name="description" content="Complete guide to using our free developer tools. Learn how to generate UUIDs, encode/decode Base64, and use these tools in your development workflow.">
+    <meta name="keywords" content="UUID generator guide, Base64 converter guide, developer tools, unique identifiers, encoding decoding">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/docs/developer-tools-guide.html">
+    <meta property="og:title" content="Developer Tools Guide - UUID Generator & Base64 Converter">
+    <meta property="og:description" content="Complete guide to using our free developer tools. Learn how to generate UUIDs, encode/decode Base64, and use these tools in development.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/docs/developer-tools-guide.html">
+    <meta property="twitter:title" content="Developer Tools Guide - UUID Generator & Base64 Converter">
+    <meta property="twitter:description" content="Complete guide to using our free developer tools. Learn how to generate UUIDs, encode/decode Base64, and use these tools in development.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="../frontpage/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../uuid-generator/">UUID Gen</a>
+                    <a href="../base64-converter/">Base64</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="#quick-start">Quick Start</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Developer Tools Guide</h1>
+                <p>Master essential developer tools for modern web development. Learn how to generate UUIDs, encode/decode Base64, and integrate these tools into your workflow.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Dev Tools</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">UUID Versions</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quick-start" class="tools-section">
+        <div class="container">
+            <h2>Quick Start Guide</h2>
+            <p class="section-subtitle">Get started with developer tools in simple steps</p>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3>UUID Generator</h3>
+                    <p>Generate unique identifiers for databases, APIs, and distributed systems. Choose from multiple UUID versions.</p>
+                    <div class="tool-tags">
+                        <span class="tag">Unique ID</span>
+                        <span class="tag">Database</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Base64 Converter</h3>
+                    <p>Encode and decode text, images, and binary data using Base64 encoding for web development and data transmission.</p>
+                    <div class="tool-tags">
+                        <span class="tag">Encoding</span>
+                        <span class="tag">Data Transfer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UUID Generator Guide -->
+    <section class="features">
+        <div class="container">
+            <h2>UUID Generator Guide</h2>
+            
+            <!-- What is UUID -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-info-circle" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                    <h3 style="margin: 0;">What is a UUID?</h3>
+                </div>
+                <p>A UUID (Universally Unique Identifier) is a 128-bit identifier that is guaranteed to be unique across time and space. UUIDs are commonly used in software development for generating unique identifiers for database records, API endpoints, and distributed systems.</p>
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <h4 style="margin-bottom: 0.5rem;">UUID Format:</h4>
+                    <p style="font-family: monospace; background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        550e8400-e29b-41d4-a716-446655440000
+                    </p>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
+                        32 hexadecimal digits displayed in 5 groups separated by hyphens: 8-4-4-4-12
+                    </p>
+                </div>
+            </div>
+
+            <!-- How to Use UUID Generator -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-mouse-pointer" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                    <h3 style="margin: 0;">How to Use UUID Generator</h3>
+                </div>
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <h4 style="margin-bottom: 0.5rem;">Step-by-step instructions:</h4>
+                    <ol style="margin-left: 1.5rem; line-height: 1.8;">
+                        <li>Visit the <a href="../uuid-generator/" style="color: #2563eb;">UUID Generator</a> tool</li>
+                        <li>Select the UUID version you need (v1, v4, or v5)</li>
+                        <li>Choose the quantity of UUIDs to generate (1-100)</li>
+                        <li>Click "Generate UUIDs" to create new identifiers</li>
+                        <li>Copy individual UUIDs or all generated UUIDs</li>
+                        <li>Use the UUIDs in your application or database</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- UUID Versions -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-list" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                    <h3 style="margin: 0;">UUID Versions Explained</h3>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">UUID Version 1 (v1)</h4>
+                        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Time-based UUID with MAC address.</p>
+                        <p style="font-family: monospace; background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                            6ba7b810-9dad-11d1-80b4-00c04fd430c8
+                        </p>
+                        <ul style="margin-left: 1rem; font-size: 0.8rem; margin-top: 0.5rem;">
+                            <li>Includes timestamp</li>
+                            <li>Includes MAC address</li>
+                            <li>Sortable by creation time</li>
+                            <li>Good for distributed systems</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">UUID Version 4 (v4)</h4>
+                        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Random or pseudo-random UUID.</p>
+                        <p style="font-family: monospace; background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                            f47ac10b-58cc-4372-a567-0e02b2c3d479
+                        </p>
+                        <ul style="margin-left: 1rem; font-size: 0.8rem; margin-top: 0.5rem;">
+                            <li>Completely random</li>
+                            <li>Most commonly used</li>
+                            <li>No predictable pattern</li>
+                            <li>Best for general use</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">UUID Version 5 (v5)</h4>
+                        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Name-based UUID using SHA-1.</p>
+                        <p style="font-family: monospace; background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                            886313e1-3b8a-5372-9b90-0c9aee199e5d
+                        </p>
+                        <ul style="margin-left: 1rem; font-size: 0.8rem; margin-top: 0.5rem;">
+                            <li>Deterministic</li>
+                            <li>Same input = same UUID</li>
+                            <li>Good for namespaces</li>
+                            <li>Requires namespace and name</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UUID Use Cases -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-lightbulb" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                    <h3 style="margin: 0;">Common Use Cases</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">Database Primary Keys</h4>
+                        <ul style="margin-left: 1rem; font-size: 0.9rem;">
+                            <li>User IDs</li>
+                            <li>Order IDs</li>
+                            <li>Session IDs</li>
+                            <li>Transaction IDs</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">API Development</h4>
+                        <ul style="margin-left: 1rem; font-size: 0.9rem;">
+                            <li>Resource identifiers</li>
+                            <li>Request tracking</li>
+                            <li>Correlation IDs</li>
+                            <li>API keys</li>
+                        </ul>
+                    </div>
+                    <div style="background: #fefce8; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">Distributed Systems</h4>
+                        <ul style="margin-left: 1rem; font-size: 0.9rem;">
+                            <li>Microservice IDs</li>
+                            <li>Message IDs</li>
+                            <li>Event IDs</li>
+                            <li>Process IDs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Base64 Converter Guide -->
+    <section class="about">
+        <div class="container">
+            <h2>Base64 Converter Guide</h2>
+            <div class="about-content">
+                <p>Base64 encoding is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used in web development for data transmission and storage.</p>
+                
+                <!-- What is Base64 -->
+                <div class="feature-card" style="text-align: left; margin: 2rem 0;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <i class="fas fa-info-circle" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                        <h3 style="margin: 0;">What is Base64?</h3>
+                    </div>
+                    <p>Base64 is an encoding scheme that converts binary data into a text format using 64 different ASCII characters. It's widely used in web development for embedding images, transmitting data over HTTP, and storing binary data in text-based formats.</p>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 0.5rem;">Base64 Character Set:</h4>
+                        <p style="font-family: monospace; background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                            ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+                        </p>
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">
+                            64 characters: A-Z (26), a-z (26), 0-9 (10), +, /, and = for padding
+                        </p>
+                    </div>
+                </div>
+
+                <!-- How to Use Base64 Converter -->
+                <div class="feature-card" style="text-align: left; margin: 2rem 0;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <i class="fas fa-mouse-pointer" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                        <h3 style="margin: 0;">How to Use Base64 Converter</h3>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 0.5rem;">Step-by-step instructions:</h4>
+                        <ol style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Visit the <a href="../base64-converter/" style="color: #2563eb;">Base64 Converter</a> tool</li>
+                            <li>Choose your operation: Encode or Decode</li>
+                            <li>Enter your text or Base64 string in the input area</li>
+                            <li>Click "Encode" or "Decode" to process the data</li>
+                            <li>Copy the result from the output area</li>
+                            <li>Use the encoded/decoded data in your application</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="features-grid" style="margin-top: 2rem;">
+                    <div class="feature-card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h3>Base64 Encoding</h3>
+                        <p>Convert text, images, or binary data into Base64 format for safe transmission and storage.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h3>Base64 Decoding</h3>
+                        <p>Convert Base64 encoded strings back to their original text or binary format.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-copy"></i>
+                        <h3>Copy Results</h3>
+                        <p>Easily copy encoded or decoded results with a single click for use in your code.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Base64 Examples -->
+    <section class="features">
+        <div class="container">
+            <h2>Base64 Examples</h2>
+            
+            <!-- Encoding Examples -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <h3>Base64 Encoding Examples</h3>
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">Text Encoding</h4>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+                                <strong>Input:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">Hello World!</span>
+                            </div>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px;">
+                                <strong>Base64:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">SGVsbG8gV29ybGQh</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">JSON Encoding</h4>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+                                <strong>Input:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">{"name": "John", "age": 30}</span>
+                            </div>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px;">
+                                <strong>Base64:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">eyJuYW1lIjogIkpvaG4iLCAiYWdlIjogMzB9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decoding Examples -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <h3>Base64 Decoding Examples</h3>
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">Text Decoding</h4>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+                                <strong>Base64:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">SGVsbG8gV29ybGQh</span>
+                            </div>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px;">
+                                <strong>Decoded:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">Hello World!</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">URL Decoding</h4>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+                                <strong>Base64:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">aHR0cHM6Ly9leGFtcGxlLmNvbQ==</span>
+                            </div>
+                            <div style="background: white; padding: 0.5rem; border-radius: 4px;">
+                                <strong>Decoded:</strong><br>
+                                <span style="font-family: monospace; font-size: 0.8rem;">https://example.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Use Cases -->
+            <div class="feature-card" style="text-align: left; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-lightbulb" style="font-size: 2rem; color: #2563eb; margin-right: 1rem;"></i>
+                    <h3 style="margin: 0;">Common Use Cases</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">Web Development</h4>
+                        <ul style="margin-left: 1rem; font-size: 0.9rem;">
+                            <li>Data URLs for images</li>
+                            <li>HTTP Basic Authentication</li>
+                            <li>API data transmission</li>
+                            <li>Cookie values</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">Email & Messaging</h4>
+                        <ul style="margin-left: 1rem; font-size: 0.9rem;">
+                            <li>Email attachments</li>
+                            <li>MIME encoding</li>
+                            <li>Binary data in emails</li>
+                            <li>Message payloads</li>
+                        </ul>
+                    </div>
+                    <div style="background: #fefce8; padding: 1rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem;">Data Storage</h4>
+                        <ul style="margin-left: 1rem; font-size: 0.9rem;">
+                            <li>Database BLOB storage</li>
+                            <li>Configuration files</li>
+                            <li>Serialized objects</li>
+                            <li>Binary file encoding</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples -->
+    <section class="about">
+        <div class="container">
+            <h2>Code Examples</h2>
+            <div class="about-content">
+                <p>Here are practical code examples showing how to use UUIDs and Base64 in your development projects.</p>
+                
+                <!-- UUID Code Examples -->
+                <div class="feature-card" style="text-align: left; margin: 2rem 0;">
+                    <h3>UUID Implementation Examples</h3>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 0.5rem;">JavaScript/Node.js</h4>
+                        <div style="background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem;">
+                            <span style="color: #fbbf24;">// Generate UUID v4</span><br>
+                            <span style="color: #34d399;">const</span> <span style="color: #e2e8f0;">uuid</span> = <span style="color: #34d399;">require</span>(<span style="color: #fbbf24;">'uuid'</span>);<br>
+                            <span style="color: #34d399;">const</span> <span style="color: #e2e8f0;">id</span> = <span style="color: #e2e8f0;">uuid.v4();</span><br>
+                            <span style="color: #34d399;">console</span>.<span style="color: #e2e8f0;">log</span>(<span style="color: #e2e8f0;">id);</span> <span style="color: #64748b;">// f47ac10b-58cc-4372-a567-0e02b2c3d479</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 0.5rem;">Python</h4>
+                        <div style="background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem;">
+                            <span style="color: #fbbf24;">import</span> <span style="color: #e2e8f0;">uuid</span><br><br>
+                            <span style="color: #fbbf24;"># Generate UUID v4</span><br>
+                            <span style="color: #e2e8f0;">id</span> = <span style="color: #e2e8f0;">uuid.uuid4()</span><br>
+                            <span style="color: #34d399;">print</span>(<span style="color: #e2e8f0;">id)</span> <span style="color: #64748b;"># f47ac10b-58cc-4372-a567-0e02b2c3d479</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Base64 Code Examples -->
+                <div class="feature-card" style="text-align: left; margin: 2rem 0;">
+                    <h3>Base64 Implementation Examples</h3>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 0.5rem;">JavaScript</h4>
+                        <div style="background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem;">
+                            <span style="color: #fbbf24;">// Encode</span><br>
+                            <span style="color: #34d399;">const</span> <span style="color: #e2e8f0;">text</span> = <span style="color: #fbbf24;">'Hello World!'</span>;<br>
+                            <span style="color: #34d399;">const</span> <span style="color: #e2e8f0;">encoded</span> = <span style="color: #34d399;">btoa</span>(<span style="color: #e2e8f0;">text);</span><br>
+                            <span style="color: #34d399;">console</span>.<span style="color: #e2e8f0;">log</span>(<span style="color: #e2e8f0;">encoded);</span> <span style="color: #64748b;">// SGVsbG8gV29ybGQh</span><br><br>
+                            <span style="color: #fbbf24;">// Decode</span><br>
+                            <span style="color: #34d399;">const</span> <span style="color: #e2e8f0;">decoded</span> = <span style="color: #34d399;">atob</span>(<span style="color: #e2e8f0;">encoded);</span><br>
+                            <span style="color: #34d399;">console</span>.<span style="color: #e2e8f0;">log</span>(<span style="color: #e2e8f0;">decoded);</span> <span style="color: #64748b;">// Hello World!</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 0.5rem;">Python</h4>
+                        <div style="background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem;">
+                            <span style="color: #fbbf24;">import</span> <span style="color: #e2e8f0;">base64</span><br><br>
+                            <span style="color: #fbbf24;"># Encode</span><br>
+                            <span style="color: #e2e8f0;">text</span> = <span style="color: #fbbf24;">'Hello World!'</span><br>
+                            <span style="color: #e2e8f0;">encoded</span> = <span style="color: #34d399;">base64.b64encode</span>(<span style="color: #e2e8f0;">text.encode()).decode()</span><br>
+                            <span style="color: #34d399;">print</span>(<span style="color: #e2e8f0;">encoded)</span> <span style="color: #64748b;"># SGVsbG8gV29ybGQh</span><br><br>
+                            <span style="color: #fbbf24;"># Decode</span><br>
+                            <span style="color: #e2e8f0;">decoded</span> = <span style="color: #34d399;">base64.b64decode</span>(<span style="color: #e2e8f0;">encoded).decode()</span><br>
+                            <span style="color: #34d399;">print</span>(<span style="color: #e2e8f0;">decoded)</span> <span style="color: #64748b;"># Hello World!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="features-grid">
+                <div class="feature-card" style="text-align: left;">
+                    <h3>What's the difference between UUID versions?</h3>
+                    <p>UUID v1 includes timestamp and MAC address, v4 is completely random, and v5 is deterministic based on a namespace and name. Choose v4 for most use cases.</p>
+                </div>
+                <div class="feature-card" style="text-align: left;">
+                    <h3>Are UUIDs guaranteed to be unique?</h3>
+                    <p>UUIDs are designed to be unique across time and space. The probability of collision is extremely low, making them suitable for most applications.</p>
+                </div>
+                <div class="feature-card" style="text-align: left;">
+                    <h3>When should I use Base64 encoding?</h3>
+                    <p>Use Base64 when you need to transmit binary data over text-based protocols, embed data in URLs, or store binary data in text formats.</p>
+                </div>
+                <div class="feature-card" style="text-align: left;">
+                    <h3>Is Base64 encoding secure?</h3>
+                    <p>Base64 is encoding, not encryption. It's not secure for sensitive data. Use proper encryption for security-sensitive applications.</p>
+                </div>
+                <div class="feature-card" style="text-align: left;">
+                    <h3>Can I use these tools for commercial projects?</h3>
+                    <p>Yes! All our developer tools are free to use for any purpose, including commercial projects. No attribution required.</p>
+                </div>
+                <div class="feature-card" style="text-align: left;">
+                    <h3>How do I integrate these tools into my workflow?</h3>
+                    <p>Use our tools for quick testing and validation. For production code, use proper libraries like uuid for Node.js or uuid module for Python.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-code"></i>
+                        <span>Developer Tools Guide</span>
+                    </div>
+                    <p>Complete guide to UUID generation and Base64 encoding for developers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../uuid-generator/">UUID Generator</a></li>
+                        <li><a href="../base64-converter/">Base64 Converter</a></li>
+                        <li><a href="#quick-start">Quick Start</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="#uuid-guide">UUID Generator</a></li>
+                        <li><a href="#base64-guide">Base64 Converter</a></li>
+                        <li><a href="#examples">Code Examples</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>More Tools</h4>
+                    <ul>
+                        <li><a href="../qrcode-site/">QR Generator</a></li>
+                        <li><a href="../unit-converter/">Unit Converter</a></li>
+                        <li><a href="../text-case-converter/">Text Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FreeThings.win. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Word & Character Counter - Analyze Text Instantly</title>
+    <meta name="description" content="Count words, characters, sentences, paragraphs, and more. Perfect for writers, students, and content creators. Real-time text analysis.">
+    <meta name="keywords" content="word counter, character counter, text analyzer, word count, character count, text statistics">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/word-counter/">
+    <meta property="og:title" content="Free Word & Character Counter - Analyze Text Instantly">
+    <meta property="og:description" content="Count words, characters, sentences, paragraphs, and more. Perfect for writers, students, and content creators.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/word-counter/">
+    <meta property="twitter:title" content="Free Word & Character Counter - Analyze Text Instantly">
+    <meta property="twitter:description" content="Count words, characters, sentences, paragraphs, and more. Perfect for writers, students, and content creators.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Word & Character Counter</h1>
+                <p>Count words, characters, sentences, paragraphs, and more. Get detailed text analysis instantly. Perfect for writers, students, and content creators.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Counter Section -->
+    <section class="counter-section">
+        <div class="container">
+            <div class="counter-container">
+                <div class="input-section">
+                    <div class="input-header">
+                        <h2>Enter Your Text</h2>
+                        <div class="input-actions">
+                            <button id="clear-btn" class="clear-btn" onclick="clearText()">
+                                <i class="fas fa-trash"></i>
+                                Clear
+                            </button>
+                            <button id="paste-btn" class="paste-btn" onclick="pasteText()">
+                                <i class="fas fa-paste"></i>
+                                Paste
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <textarea id="text-input" placeholder="Type or paste your text here to start counting..." rows="12"></textarea>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-header">
+                        <h3>Text Statistics</h3>
+                        <div class="stats-actions">
+                            <button id="copy-stats-btn" class="copy-stats-btn" onclick="copyStats()">
+                                <i class="fas fa-copy"></i>
+                                Copy Stats
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <!-- Basic Stats -->
+                        <div class="stat-card primary">
+                            <div class="stat-icon">
+                                <i class="fas fa-font"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="char-count">0</div>
+                                <div class="stat-label">Characters</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card primary">
+                            <div class="stat-icon">
+                                <i class="fas fa-font"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="char-no-spaces">0</div>
+                                <div class="stat-label">Characters (no spaces)</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card primary">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="word-count">0</div>
+                                <div class="stat-label">Words</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card primary">
+                            <div class="stat-icon">
+                                <i class="fas fa-paragraph"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="sentence-count">0</div>
+                                <div class="stat-label">Sentences</div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Stats -->
+                        <div class="stat-card secondary">
+                            <div class="stat-icon">
+                                <i class="fas fa-align-left"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="paragraph-count">0</div>
+                                <div class="stat-label">Paragraphs</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card secondary">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="reading-time">0 min</div>
+                                <div class="stat-label">Reading Time</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card secondary">
+                            <div class="stat-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="avg-words-per-sentence">0</div>
+                                <div class="stat-label">Avg Words/Sentence</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card secondary">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="avg-chars-per-word">0</div>
+                                <div class="stat-label">Avg Characters/Word</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reading Level Analysis -->
+                    <div class="reading-level-section">
+                        <h4>Reading Level Analysis</h4>
+                        <div class="reading-level-grid">
+                            <div class="reading-level-item">
+                                <span class="level-label">Flesch Reading Ease:</span>
+                                <span class="level-value" id="flesch-score">-</span>
+                                <span class="level-description" id="flesch-description">-</span>
+                            </div>
+                            <div class="reading-level-item">
+                                <span class="level-label">Grade Level:</span>
+                                <span class="level-value" id="grade-level">-</span>
+                                <span class="level-description">U.S. School Grade</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Examples Section -->
+    <section class="examples-section">
+        <div class="container">
+            <h2>Quick Examples</h2>
+            <div class="examples-grid">
+                <div class="example-item" onclick="loadExample('short')">
+                    <h4>Short Text</h4>
+                    <p>Perfect for social media posts</p>
+                </div>
+                <div class="example-item" onclick="loadExample('medium')">
+                    <h4>Medium Text</h4>
+                    <p>Blog post or article excerpt</p>
+                </div>
+                <div class="example-item" onclick="loadExample('long')">
+                    <h4>Long Text</h4>
+                    <p>Essay or research paper</p>
+                </div>
+                <div class="example-item" onclick="loadExample('technical')">
+                    <h4>Technical Text</h4>
+                    <p>Code documentation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Word Counter?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Real-time Analysis</h3>
+                    <p>Get instant word and character counts as you type. No need to click or wait.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Detailed Statistics</h3>
+                    <p>Get comprehensive text analysis including reading time and difficulty level.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clipboard"></i>
+                    <h3>Easy Copy</h3>
+                    <p>Copy your statistics with one click for easy sharing and reporting.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All analysis happens in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Enter Text</h3>
+                    <p>Type or paste your text into the input area. The counter updates automatically as you type.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>View Statistics</h3>
+                    <p>See detailed statistics including word count, character count, reading time, and more.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Copy & Share</h3>
+                    <p>Copy your statistics or clear the text to start analyzing new content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How accurate is the word count?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our word counter uses standard algorithms to count words, characters, and sentences. It matches the counting methods used by most word processors and writing tools.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is reading time based on?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Reading time is calculated based on an average reading speed of 200 words per minute, which is the standard for adult readers.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I count text in different languages?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Our word counter works with text in any language. It counts words based on spaces and punctuation, regardless of the language used.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is my text data secure?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All text analysis happens locally in your browser. We don't store or transmit any of your text data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Word Counter</span>
+                    </div>
+                    <p>Count words and analyze text instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Uses</h4>
+                    <ul>
+                        <li><a href="#" onclick="loadExample('short')">Social Media</a></li>
+                        <li><a href="#" onclick="loadExample('medium')">Blog Posts</a></li>
+                        <li><a href="#" onclick="loadExample('long')">Academic Papers</a></li>
+                        <li><a href="#" onclick="loadExample('technical')">Technical Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Word Counter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

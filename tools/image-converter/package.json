@@ -1,0 +1,31 @@
+{
+  "name": "image-converter",
+  "version": "1.0.0",
+  "description": "Free image converter tool with SVG to JPG transparency support",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "image",
+    "converter",
+    "svg",
+    "jpg",
+    "png",
+    "webp",
+    "transparency",
+    "web",
+    "tool"
+  ],
+  "author": "FreeThings.win",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freethings/image-converter"
+  },
+  "bugs": {
+    "url": "https://github.com/freethings/image-converter/issues"
+  },
+  "homepage": "https://freethings.win/image-converter/"
+}

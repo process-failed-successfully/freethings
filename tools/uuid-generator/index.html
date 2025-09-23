@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free UUID Generator - Generate Unique Identifiers Instantly</title>
+    <meta name="description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats. Perfect for developers and database applications.">
+    <meta name="keywords" content="uuid generator, unique identifier, guid generator, uuid v4, uuid v1, developer tools">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/uuid-generator/">
+    <meta property="og:title" content="Free UUID Generator - Generate Unique Identifiers Instantly">
+    <meta property="og:description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/uuid-generator/">
+    <meta property="twitter:title" content="Free UUID Generator - Generate Unique Identifiers Instantly">
+    <meta property="twitter:description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🆔</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../password-generator/">Password Gen</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free UUID Generator</h1>
+                <p>Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats. Perfect for developers and database applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-form">
+                    <h2>Generate UUIDs</h2>
+                    
+                    <div class="input-group">
+                        <label for="uuid-type">UUID Version:</label>
+                        <select id="uuid-type" onchange="updateOptions()">
+                            <option value="v4">UUID v4 (Random)</option>
+                            <option value="v1">UUID v1 (Timestamp)</option>
+                            <option value="timestamp">Timestamp-based</option>
+                            <option value="nanoid">Nano ID</option>
+                        </select>
+                    </div>
+
+                    <div id="options-container">
+                        <!-- Dynamic options will be inserted here -->
+                    </div>
+
+                    <div class="generate-actions">
+                        <button id="generate-btn" class="generate-btn" onclick="generateUUID()">
+                            <i class="fas fa-plus"></i>
+                            Generate UUID
+                        </button>
+                        <button id="generate-multiple-btn" class="generate-multiple-btn" onclick="generateMultipleUUIDs()">
+                            <i class="fas fa-layer-group"></i>
+                            Generate Multiple
+                        </button>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">
+                        <h3>Generated UUID</h3>
+                        <div class="result-actions">
+                            <button id="copy-btn" class="copy-btn" onclick="copyUUID()">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button id="clear-btn" class="clear-btn" onclick="clearResults()">
+                                <i class="fas fa-trash"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="uuid-output" class="uuid-output">
+                        <div class="uuid-placeholder">
+                            <i class="fas fa-fingerprint"></i>
+                            <p>Your UUID will appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="uuid-info">
+                        <div class="info-item">
+                            <span class="info-label">Type:</span>
+                            <span class="info-value" id="uuid-type-display">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Length:</span>
+                            <span class="info-value" id="uuid-length">- characters</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Format:</span>
+                            <span class="info-value" id="uuid-format">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multiple UUIDs Section -->
+            <div id="multiple-uuids-section" class="multiple-uuids-section" style="display: none;">
+                <h3>Multiple UUIDs</h3>
+                <div id="multiple-uuids-list" class="multiple-uuids-list">
+                    <!-- Multiple UUIDs will be generated here -->
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div id="history-section" class="history-section">
+                <h3>Generation History</h3>
+                <div id="history-list" class="history-list">
+                    <!-- History items will be added here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Examples Section -->
+    <section class="examples-section">
+        <div class="container">
+            <h2>UUID Examples</h2>
+            <div class="examples-grid">
+                <div class="example-item">
+                    <h4>UUID v4 (Random)</h4>
+                    <p class="example-uuid" id="example-v4">550e8400-e29b-41d4-a716-446655440000</p>
+                    <p>Cryptographically random UUID</p>
+                </div>
+                <div class="example-item">
+                    <h4>UUID v1 (Timestamp)</h4>
+                    <p class="example-uuid" id="example-v1">6ba7b810-9dad-11d1-80b4-00c04fd430c8</p>
+                    <p>Time-based UUID with MAC address</p>
+                </div>
+                <div class="example-item">
+                    <h4>Timestamp-based</h4>
+                    <p class="example-uuid" id="example-timestamp">1640995200000-abc123</p>
+                    <p>Custom timestamp format</p>
+                </div>
+                <div class="example-item">
+                    <h4>Nano ID</h4>
+                    <p class="example-uuid" id="example-nanoid">V1StGXR8_Z5jdHi6B-myT</p>
+                    <p>URL-safe unique ID</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our UUID Generator?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Cryptographically Secure</h3>
+                    <p>Uses browser's crypto API for truly random UUID generation.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Multiple Formats</h3>
+                    <p>Generate UUID v1, v4, timestamp-based, and Nano ID formats.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-history"></i>
+                    <h3>Generation History</h3>
+                    <p>Keep track of recently generated UUIDs for easy reference.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All generation happens in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Format</h3>
+                    <p>Select the UUID type and configure any specific options for your use case.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Generate UUID</h3>
+                    <p>Click generate to create a unique identifier using cryptographically secure methods.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy the generated UUID and use it in your applications, databases, or APIs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is a UUID?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A UUID (Universally Unique Identifier) is a 128-bit identifier that is unique across time and space. It's commonly used in software development for unique keys.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What's the difference between UUID v1 and v4?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>UUID v1 includes timestamp and MAC address information, while UUID v4 is completely random. v4 is more commonly used for privacy reasons.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are the generated UUIDs truly unique?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! UUIDs are designed to be globally unique. The probability of generating duplicate UUIDs is astronomically small.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I use these UUIDs in production?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! These UUIDs are generated using standard algorithms and are suitable for production use in databases, APIs, and applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-fingerprint"></i>
+                        <span>UUID Generator</span>
+                    </div>
+                    <p>Generate unique identifiers instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>UUID Types</h4>
+                    <ul>
+                        <li><a href="#" onclick="setUUIDType('v4')">UUID v4 (Random)</a></li>
+                        <li><a href="#" onclick="setUUIDType('v1')">UUID v1 (Timestamp)</a></li>
+                        <li><a href="#" onclick="setUUIDType('timestamp')">Timestamp-based</a></li>
+                        <li><a href="#" onclick="setUUIDType('nanoid')">Nano ID</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 UUID Generator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

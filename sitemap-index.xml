@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main sitemap -->
+  <sitemap>
+    <loc>https://freethings.win/sitemap.xml</loc>
+    <lastmod>2024-01-15</lastmod>
+  </sitemap>
+
+  <!-- Future: Tool-specific sitemaps can be added here -->
+  <!-- Example:
+  <sitemap>
+    <loc>https://freethings.win/sitemap-tools.xml</loc>
+    <lastmod>2024-01-15</lastmod>
+  </sitemap>
+  -->
+
+  <!-- Future: Documentation sitemap -->
+  <!-- Example:
+  <sitemap>
+    <loc>https://freethings.win/sitemap-docs.xml</loc>
+    <lastmod>2024-01-15</lastmod>
+  </sitemap>
+  -->
+
+</sitemapindex>

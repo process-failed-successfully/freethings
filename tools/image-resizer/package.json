@@ -1,0 +1,28 @@
+{
+  "name": "image-resizer",
+  "version": "1.0.0",
+  "description": "Free image resizer and compressor tool",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "image",
+    "resizer",
+    "compressor",
+    "optimizer",
+    "web",
+    "tool"
+  ],
+  "author": "FreeThings.win",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freethings/image-resizer"
+  },
+  "bugs": {
+    "url": "https://github.com/freethings/image-resizer/issues"
+  },
+  "homepage": "https://freethings.win/image-resizer/"
+}

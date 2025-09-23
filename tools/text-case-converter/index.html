@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Text Case Converter - Transform Text Case Instantly</title>
+    <meta name="description" content="Convert text case instantly - uppercase, lowercase, title case, sentence case, camelCase, and more. Perfect for developers and content creators.">
+    <meta name="keywords" content="text case converter, uppercase, lowercase, title case, camel case, sentence case, text transformer">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/text-case-converter/">
+    <meta property="og:title" content="Free Text Case Converter - Transform Text Case Instantly">
+    <meta property="og:description" content="Convert text case instantly - uppercase, lowercase, title case, sentence case, camelCase, and more.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/text-case-converter/">
+    <meta property="twitter:title" content="Free Text Case Converter - Transform Text Case Instantly">
+    <meta property="twitter:description" content="Convert text case instantly - uppercase, lowercase, title case, sentence case, camelCase, and more.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../password-generator/">Password Gen</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Text Case Converter</h1>
+                <p>Transform text case instantly - uppercase, lowercase, title case, sentence case, camelCase, and more. Perfect for developers and content creators.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Converter Section -->
+    <section class="converter-section">
+        <div class="container">
+            <div class="converter-container">
+                <div class="converter-form">
+                    <h2>Convert Text Case</h2>
+                    
+                    <div class="input-group">
+                        <label for="text-input">Enter your text:</label>
+                        <textarea id="text-input" placeholder="Type or paste your text here..." rows="8"></textarea>
+                        <div class="input-stats">
+                            <span id="char-count">0 characters</span>
+                            <span id="word-count">0 words</span>
+                            <span id="line-count">0 lines</span>
+                        </div>
+                    </div>
+
+                    <div class="case-options">
+                        <h3>Choose case format:</h3>
+                        <div class="case-grid">
+                            <button class="case-btn" onclick="convertText('uppercase')">
+                                <i class="fas fa-text-height"></i>
+                                UPPERCASE
+                            </button>
+                            <button class="case-btn" onclick="convertText('lowercase')">
+                                <i class="fas fa-text-height"></i>
+                                lowercase
+                            </button>
+                            <button class="case-btn" onclick="convertText('title')">
+                                <i class="fas fa-heading"></i>
+                                Title Case
+                            </button>
+                            <button class="case-btn" onclick="convertText('sentence')">
+                                <i class="fas fa-paragraph"></i>
+                                Sentence case
+                            </button>
+                            <button class="case-btn" onclick="convertText('camel')">
+                                <i class="fas fa-code"></i>
+                                camelCase
+                            </button>
+                            <button class="case-btn" onclick="convertText('pascal')">
+                                <i class="fas fa-code"></i>
+                                PascalCase
+                            </button>
+                            <button class="case-btn" onclick="convertText('snake')">
+                                <i class="fas fa-code"></i>
+                                snake_case
+                            </button>
+                            <button class="case-btn" onclick="convertText('kebab')">
+                                <i class="fas fa-code"></i>
+                                kebab-case
+                            </button>
+                            <button class="case-btn" onclick="convertText('constant')">
+                                <i class="fas fa-code"></i>
+                                CONSTANT_CASE
+                            </button>
+                            <button class="case-btn" onclick="convertText('alternating')">
+                                <i class="fas fa-random"></i>
+                                AlTeRnAtInG cAsE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">
+                        <h3>Converted Text</h3>
+                        <div class="result-actions">
+                            <button id="copy-btn" class="copy-btn" onclick="copyResult()">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button id="clear-btn" class="clear-btn" onclick="clearResult()">
+                                <i class="fas fa-trash"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="result-output" class="result-output">
+                        <div class="result-placeholder">
+                            <i class="fas fa-font"></i>
+                            <p>Your converted text will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Examples Section -->
+    <section class="examples-section">
+        <div class="container">
+            <h2>Quick Examples</h2>
+            <div class="examples-grid">
+                <div class="example-item" onclick="loadExample('hello world')">
+                    <h4>hello world</h4>
+                    <p>Simple text</p>
+                </div>
+                <div class="example-item" onclick="loadExample('The quick brown fox jumps over the lazy dog.')">
+                    <h4>The quick brown fox...</h4>
+                    <p>Sentence with punctuation</p>
+                </div>
+                <div class="example-item" onclick="loadExample('userName firstName lastName')">
+                    <h4>userName firstName lastName</h4>
+                    <p>Variable names</p>
+                </div>
+                <div class="example-item" onclick="loadExample('API_KEY database_url config_file')">
+                    <h4>API_KEY database_url config_file</h4>
+                    <p>Configuration values</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Text Case Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Conversion</h3>
+                    <p>Transform text case instantly with a single click. No waiting, no delays.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Developer Friendly</h3>
+                    <p>Perfect for coding with camelCase, PascalCase, snake_case, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clipboard"></i>
+                    <h3>Easy Copy</h3>
+                    <p>One-click copy to clipboard for easy pasting into your projects.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens in your browser. No data is sent to our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Enter Text</h3>
+                    <p>Type or paste your text into the input area. See real-time character, word, and line counts.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose Format</h3>
+                    <p>Select from various case formats including programming conventions and standard text formats.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy the converted text with one click and use it in your projects or documents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What text case formats are supported?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We support uppercase, lowercase, title case, sentence case, camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and alternating case.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is this tool really free?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Our text case converter is completely free to use. There are no hidden costs, subscriptions, or limitations.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I convert large amounts of text?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! The tool can handle large amounts of text efficiently. All processing happens in your browser for fast performance.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Is my text data secure?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All text processing happens locally in your browser. We don't store or transmit any of your text data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-font"></i>
+                        <span>Case Converter</span>
+                    </div>
+                    <p>Transform text case instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How it Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Formats</h4>
+                    <ul>
+                        <li><a href="#" onclick="convertText('uppercase')">UPPERCASE</a></li>
+                        <li><a href="#" onclick="convertText('lowercase')">lowercase</a></li>
+                        <li><a href="#" onclick="convertText('title')">Title Case</a></li>
+                        <li><a href="#" onclick="convertText('camel')">camelCase</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Text Case Converter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

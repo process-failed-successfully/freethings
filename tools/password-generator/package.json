@@ -1,0 +1,35 @@
+{
+  "name": "password-generator-website",
+  "version": "1.0.0",
+  "description": "Generate secure, random passwords with customizable options. Choose length, character types, and more.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "password-generator",
+    "secure-password",
+    "random-password",
+    "strong-password",
+    "password-creator",
+    "security"
+  ],
+  "author": "FreeThings",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freethings/password-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freethings/password-generator/issues"
+  },
+  "homepage": "https://freethings.win/password-generator/",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+
