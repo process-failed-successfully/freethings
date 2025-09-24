@@ -1,8 +1,0 @@
-# Redirect common paths to main page
-/qr / 301
-/generator / 301
-/qrcode / 301
-
-# Handle trailing slashes and other paths (except index.html to avoid infinite loop)
-/* /index.html 200
-!/index.html

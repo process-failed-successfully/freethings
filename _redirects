@@ -25,8 +25,8 @@
 /image /tools/image-converter/ 301
 /resize /tools/image-resizer/ 301
 
-# Handle SPA routing for tools (fallback to index.html)
-/tools/* /tools/:splat/index.html 200
+# Handle SPA routing for tools (fallback to index.html) - only for non-existent paths
+# Note: This should only catch requests that don't match actual directories
 
 # Handle documentation routing
 /docs/* /docs/:splat 200
