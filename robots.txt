@@ -20,16 +20,7 @@ Disallow: /_redirects
 Disallow: /deploy.md
 
 # Allow all tool directories and documentation
-Allow: /unit-converter/
-Allow: /image-converter/
-Allow: /image-resizer/
-Allow: /word-counter/
-Allow: /text-case-converter/
-Allow: /password-generator/
-Allow: /uuid-generator/
-Allow: /base64-converter/
-Allow: /qrcode-site/
-Allow: /frontpage/
+Allow: /tools/
 Allow: /docs/
 
 # Sitemap location
