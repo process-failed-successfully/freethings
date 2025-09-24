@@ -14,11 +14,17 @@ help:
 	@echo "======================================"
 	@echo ""
 	@echo "Available commands:"
-	@echo "  make serve     - Start local development server"
+	@echo "  make serve     - Start local development server (auto-finds available port)"
+	@echo "  make serve-port PORT=8001 - Start server on specific port"
+	@echo "  make stop      - Stop any running development servers"
 	@echo "  make test      - Test all tool pages and navigation"
+	@echo "  make test-tool TOOL=name - Test specific tool"
 	@echo "  make clean     - Clean up temporary files"
 	@echo "  make check     - Check for broken links and missing files"
 	@echo "  make validate  - Validate HTML and CSS"
+	@echo "  make structure - Show project structure"
+	@echo "  make setup     - Setup development environment"
+	@echo "  make dev       - Run check, validate, and serve"
 	@echo "  make help      - Show this help message"
 	@echo ""
 	@echo "Server will be available at: $(SITE_URL)"
@@ -27,24 +33,60 @@ help:
 # Start local development server
 .PHONY: serve
 serve:
-	@echo "Starting FreeThings.win local development server..."
+	@echo "Starting FreeThings monorepo local development server..."
 	@echo "Server will be available at: $(SITE_URL)"
 	@echo "Press Ctrl+C to stop the server"
 	@echo ""
-	@if command -v $(PYTHON) >/dev/null 2>&1; then \
-		$(PYTHON) -m http.server $(PORT); \
-	else \
-		echo "Python3 not found. Trying alternative methods..."; \
-		if command -v python >/dev/null 2>&1; then \
-			python -m http.server $(PORT); \
-		elif command -v php >/dev/null 2>&1; then \
-			php -S $(HOST):$(PORT); \
-		elif command -v node >/dev/null 2>&1; then \
-			npx http-server -p $(PORT) -o; \
-		else \
-			echo "No suitable server found. Please install Python3, PHP, or Node.js"; \
+	@# Check if port is already in use and find available port
+	@available_port=$(PORT); \
+	if lsof -i :$(PORT) >/dev/null 2>&1 || netstat -tulpn 2>/dev/null | grep -q ":$(PORT) "; then \
+		echo "⚠️  Port $(PORT) is already in use. Trying alternative ports..."; \
+		for alt_port in 8001 8002 8003 8080 3000; do \
+			if ! lsof -i :$$alt_port >/dev/null 2>&1 && ! netstat -tulpn 2>/dev/null | grep -q ":$$alt_port "; then \
+				echo "✓ Using port $$alt_port instead"; \
+				available_port=$$alt_port; \
+				break; \
+			fi; \
+		done; \
+		if [ "$$available_port" = "$(PORT)" ]; then \
+			echo "✗ No available ports found. Please stop other servers or use a different port."; \
+			echo "   You can specify a custom port with: make serve-port PORT=9000"; \
 			exit 1; \
 		fi; \
+	fi; \
+	echo "Starting server on port $$available_port..."; \
+	echo "Server will be available at: http://$(HOST):$$available_port"; \
+	echo ""; \
+	if command -v $(PYTHON) >/dev/null 2>&1; then \
+		$(PYTHON) -m http.server $$available_port; \
+	elif command -v python >/dev/null 2>&1; then \
+		python -m http.server $$available_port; \
+	elif command -v php >/dev/null 2>&1; then \
+		php -S $(HOST):$$available_port; \
+	elif command -v node >/dev/null 2>&1; then \
+		npx http-server -p $$available_port -o; \
+	else \
+		echo "✗ No suitable server found. Please install Python3, PHP, or Node.js"; \
+		exit 1; \
+	fi
+
+# Serve on specific port
+.PHONY: serve-port
+serve-port:
+	@echo "Starting server on port $(PORT)..."
+	@echo "Server will be available at: http://$(HOST):$(PORT)"
+	@echo ""
+	@if command -v $(PYTHON) >/dev/null 2>&1; then \
+		$(PYTHON) -m http.server $(PORT); \
+	elif command -v python >/dev/null 2>&1; then \
+		python -m http.server $(PORT); \
+	elif command -v php >/dev/null 2>&1; then \
+		php -S $(HOST):$(PORT); \
+	elif command -v node >/dev/null 2>&1; then \
+		npx http-server -p $(PORT) -o; \
+	else \
+		echo "✗ No suitable server found. Please install Python3, PHP, or Node.js"; \
+		exit 1; \
 	fi
 
 # Test all tool pages and navigation
@@ -168,13 +210,36 @@ setup:
 	@echo ""
 	@echo "Setup complete! Run 'make serve' to start the development server."
 
+# Stop any running development servers
+.PHONY: stop
+stop:
+	@echo "Stopping any running development servers..."
+	@for port in 8000 8001 8002 8003 8080 3000; do \
+		pid=$$(lsof -ti :$$port 2>/dev/null || netstat -tulpn 2>/dev/null | grep ":$$port " | awk '{print $$7}' | cut -d'/' -f1); \
+		if [ -n "$$pid" ] && [ "$$pid" != "-" ]; then \
+			echo "Stopping server on port $$port (PID: $$pid)"; \
+			kill $$pid 2>/dev/null || true; \
+		fi; \
+	done
+	@echo "Done!"
+
 # Show project structure
 .PHONY: structure
 structure:
-	@echo "FreeThings.win Project Structure"
-	@echo "================================"
+	@echo "FreeThings Monorepo Project Structure"
+	@echo "====================================="
 	@echo ""
-	@tree -I 'node_modules|.git' . 2>/dev/null || find . -type d | head -20
+	@if command -v tree >/dev/null 2>&1; then \
+		tree -I 'node_modules|.git|*.pyc|__pycache__' -a -L 3 . 2>/dev/null || echo "Tree command failed, using alternative display"; \
+	fi
+	@echo "Directory structure:"
+	@find . -type d -not -path './.git*' -not -path './node_modules*' | sort | head -20
+	@echo ""
+	@echo "Main files:"
+	@ls -la | grep -E '\.(html|css|js|json|md|xml|toml)$|^[^.]' | head -10
+	@echo ""
+	@echo "Tools directory:"
+	@ls -la tools/ | head -10
 
 # Test specific tool
 .PHONY: test-tool

@@ -8,11 +8,17 @@
     "tools/*"
   ],
   "scripts": {
-    "start": "npx http-server -p 8000 -o",
-    "serve": "npx http-server -p 8000 -o",
-    "dev": "npx http-server -p 8000 -o -c-1",
-    "test": "echo 'Visit http://localhost:8000 to test the site'",
-    "check": "node -e \"console.log('Checking project structure...'); const fs = require('fs'); const tools = ['frontpage', 'qrcode-site', 'unit-converter', 'text-case-converter', 'password-generator', 'uuid-generator', 'base64-converter', 'word-counter', 'image-converter', 'image-resizer']; let missing = 0; tools.forEach(tool => { if (!fs.existsSync(tool + '/index.html')) { console.log('✗ ' + tool + '/index.html missing'); missing++; } else { console.log('✓ ' + tool + '/index.html'); } }); if (missing === 0) { console.log('All files present!'); } else { console.log(missing + ' files missing'); }\"",
+    "start": "make serve",
+    "serve": "make serve",
+    "dev": "make serve",
+    "test": "make test",
+    "check": "make check",
+    "validate": "make validate",
+    "clean": "make clean",
+    "stop": "make stop",
+    "structure": "make structure",
+    "setup": "make setup",
+    "test-tool": "make test-tool",
     "build": "echo 'No build step required for static site'",
     "lint": "echo 'No linting configured yet'",
     "format": "echo 'No formatting configured yet'"
