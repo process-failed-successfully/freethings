@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acknowledgements - FreeThings.win</title>
+    <meta name="description" content="Credits and acknowledgements for the open-source libraries, tools, and services that power FreeThings.win.">
+    <link rel="canonical" href="https://freethings.win/acknowledgements/">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .content-wrapper {
+            max-width: 1000px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0f172a;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .credits-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .credit-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+            transition: all 0.3s ease;
+        }
+
+        .credit-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .credit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .credit-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .credit-version {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .credit-description {
+            color: #475569;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .credit-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .credit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .credit-link:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .license-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .highlight-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .highlight-box p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .footer {
+            background: #1e293b;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        a {
+            color: #2563eb;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .credit-header {
+                flex-direction: column;
+            }
+
+            .credit-links {
+                flex-direction: column;
+            }
+
+            .credit-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../tools/frontpage/">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <h1>Acknowledgements</h1>
+        <p class="subtitle">FreeThings.win is built with amazing open-source libraries, fonts, and services. We're grateful to all the developers and organizations who make these tools freely available.</p>
+
+        <!-- Front-End Libraries -->
+        <h2>
+            <div class="category-icon"><i class="fas fa-code"></i></div>
+            JavaScript Libraries
+        </h2>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">QRCode.js</div>
+                    <div class="credit-version">Latest</div>
+                </div>
+                <p class="credit-description">
+                    Cross-browser QRCode generator for JavaScript. Used in our QR Code Generator tool to create high-quality QR codes in the browser.
+                </p>
+                <div class="credit-links">
+                    <a href="https://github.com/davidshimjs/qrcodejs" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://davidshimjs.github.io/qrcodejs/" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+                <span class="license-badge">MIT License</span>
+            </div>
+        </div>
+
+        <!-- Fonts & Icons -->
+        <h2>
+            <div class="category-icon"><i class="fas fa-font"></i></div>
+            Fonts & Icons
+        </h2>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Font Awesome</div>
+                    <div class="credit-version">v6.0.0</div>
+                </div>
+                <p class="credit-description">
+                    The internet's icon library and toolkit, used across all pages for consistent, beautiful icons. Provides the visual language for our interface.
+                </p>
+                <div class="credit-links">
+                    <a href="https://fontawesome.com" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                    <a href="https://github.com/FortAwesome/Font-Awesome" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://fontawesome.com/license/free" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-file-contract"></i> License
+                    </a>
+                </div>
+                <span class="license-badge">Font Awesome Free License</span>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Google Fonts - Inter</div>
+                    <div class="credit-version">Variable</div>
+                </div>
+                <p class="credit-description">
+                    A carefully crafted, highly legible typeface designed for computer screens. Used as our primary font across all tools for excellent readability and modern aesthetics.
+                </p>
+                <div class="credit-links">
+                    <a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Google Fonts
+                    </a>
+                    <a href="https://github.com/rsms/inter" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+                <span class="license-badge">SIL Open Font License</span>
+            </div>
+        </div>
+
+        <!-- Services & Infrastructure -->
+        <h2>
+            <div class="category-icon"><i class="fas fa-server"></i></div>
+            Hosting & Services
+        </h2>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Cloudflare Pages</div>
+                </div>
+                <p class="credit-description">
+                    Lightning-fast static site hosting with global CDN. Provides the infrastructure that makes FreeThings.win fast and reliable worldwide.
+                </p>
+                <div class="credit-links">
+                    <a href="https://pages.cloudflare.com" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                    <a href="https://developers.cloudflare.com/pages" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-book"></i> Docs
+                    </a>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Cloudflare CDN</div>
+                </div>
+                <p class="credit-description">
+                    Content Delivery Network that serves Font Awesome and other libraries with exceptional speed and reliability.
+                </p>
+                <div class="credit-links">
+                    <a href="https://www.cloudflare.com" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                    <a href="https://cdnjs.com" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> CDNJS
+                    </a>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Google AdSense</div>
+                </div>
+                <p class="credit-description">
+                    Advertising platform that helps keep FreeThings.win free by displaying relevant advertisements. All ad revenue helps maintain and improve our tools.
+                </p>
+                <div class="credit-links">
+                    <a href="https://www.google.com/adsense" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                    <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-shield-alt"></i> Privacy
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Browser APIs -->
+        <h2>
+            <div class="category-icon"><i class="fas fa-window-maximize"></i></div>
+            Browser Technologies
+        </h2>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Web Crypto API</div>
+                </div>
+                <p class="credit-description">
+                    Browser built-in cryptographic functions used in our Password Generator for creating cryptographically secure random passwords.
+                </p>
+                <div class="credit-links">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-book"></i> MDN Docs
+                    </a>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Canvas API</div>
+                </div>
+                <p class="credit-description">
+                    Browser graphics API used for image conversion, resizing, and QR code generation. Enables all processing to happen locally in your browser.
+                </p>
+                <div class="credit-links">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-book"></i> MDN Docs
+                    </a>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">File API</div>
+                </div>
+                <p class="credit-description">
+                    Browser API for reading files locally without server upload. Enables privacy-first file processing in Image Converter and Image Resizer.
+                </p>
+                <div class="credit-links">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-book"></i> MDN Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Development Tools -->
+        <h2>
+            <div class="category-icon"><i class="fas fa-tools"></i></div>
+            Development Tools
+        </h2>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Node.js</div>
+                </div>
+                <p class="credit-description">
+                    JavaScript runtime used for development server and build tools during development.
+                </p>
+                <div class="credit-links">
+                    <a href="https://nodejs.org" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                    <a href="https://github.com/nodejs/node" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+                <span class="license-badge">MIT License</span>
+            </div>
+
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">Git</div>
+                </div>
+                <p class="credit-description">
+                    Distributed version control system used for source code management and deployment.
+                </p>
+                <div class="credit-links">
+                    <a href="https://git-scm.com" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+                <span class="license-badge">GPL v2</span>
+            </div>
+        </div>
+
+        <!-- Standards & Specifications -->
+        <h2>
+            <div class="category-icon"><i class="fas fa-file-code"></i></div>
+            Web Standards
+        </h2>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <div class="credit-header">
+                    <div class="credit-name">HTML5, CSS3, JavaScript (ES6+)</div>
+                </div>
+                <p class="credit-description">
+                    Modern web standards maintained by W3C, WHATWG, and TC39 that make the modern web possible. FreeThings.win is built entirely with vanilla web technologies.
+                </p>
+                <div class="credit-links">
+                    <a href="https://www.w3.org" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> W3C
+                    </a>
+                    <a href="https://whatwg.org" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> WHATWG
+                    </a>
+                    <a href="https://tc39.es" target="_blank" rel="noopener" class="credit-link">
+                        <i class="fas fa-globe"></i> TC39
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thank You Section -->
+        <div class="highlight-box">
+            <h3><i class="fas fa-heart"></i> Thank You!</h3>
+            <p>FreeThings.win wouldn't exist without these incredible open-source projects and services. We're deeply grateful to all the developers, designers, and organizations who contribute to making the web better for everyone.</p>
+        </div>
+
+        <!-- Additional Info -->
+        <div style="background: #f1f5f9; padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+            <h3 style="margin-bottom: 1rem; color: #1e293b; text-align: center;">
+                <i class="fas fa-info-circle"></i> License Information
+            </h3>
+            <p style="color: #475569; text-align: center; margin-bottom: 1rem;">
+                All tools on FreeThings.win are provided free of charge. We respect the licenses of all third-party libraries and services we use.
+            </p>
+            <p style="color: #475569; text-align: center;">
+                If you notice any attribution issues or have questions about our use of any library, please <a href="/contact/">contact us</a>.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 FreeThings.win. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="../tools/frontpage/" style="color: #94a3b8; margin: 0 1rem;">Home</a>
+                <a href="/privacy/" style="color: #94a3b8; margin: 0 1rem;">Privacy Policy</a>
+                <a href="/terms/" style="color: #94a3b8; margin: 0 1rem;">Terms of Service</a>
+                <a href="/acknowledgements/" style="color: #94a3b8; margin: 0 1rem;">Acknowledgements</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
+

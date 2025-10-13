@@ -22,6 +22,10 @@ Disallow: /deploy.md
 # Allow all tool directories and documentation
 Allow: /tools/
 Allow: /docs/
+Allow: /privacy/
+Allow: /terms/
+Allow: /contact/
+Allow: /acknowledgements/
 
 # Sitemap location
 Sitemap: https://freethings.win/sitemap.xml
