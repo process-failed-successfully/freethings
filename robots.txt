@@ -27,5 +27,6 @@ Allow: /terms/
 Allow: /contact/
 Allow: /acknowledgements/
 
-# Sitemap location
+# Sitemap locations
 Sitemap: https://freethings.win/sitemap.xml
+Sitemap: https://freethings.win/sitemap-index.xml

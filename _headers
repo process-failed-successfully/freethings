@@ -1,16 +1,24 @@
 # Cloudflare Pages headers for FreeThings monorepo
 
-# Security headers for all pages
-/*
+# XML files (sitemaps, feeds) - minimal headers for crawler compatibility
+/*.xml
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: all
+  Access-Control-Allow-Origin: *
+
+# robots.txt - minimal headers
+/robots.txt
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: all
+
+# Security headers for HTML pages
+/*.html
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; connect-src 'self' https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com;
-
-# Cache control for HTML files
-/*.html
   Cache-Control: public, max-age=3600
 
 # Cache control for CSS files
@@ -52,11 +60,3 @@
 
 /*.eot
   Cache-Control: public, max-age=31536000
-
-# Cache control for XML files (sitemaps)
-/*.xml
-  Cache-Control: public, max-age=86400
-
-# Cache control for robots.txt
-/robots.txt
-  Cache-Control: public, max-age=86400
