@@ -13,6 +13,32 @@
         dataLayer.push(arguments);
     }
 
+    // Dynamically load Google AdSense only after advertising consent is granted
+    function loadAdSenseScript() {
+        try {
+            if (window.__adsenseLoaded) return;
+
+            // Ensure account meta exists for Auto ads
+            var meta = document.querySelector('meta[name="google-adsense-account"]');
+            if (!meta) {
+                meta = document.createElement('meta');
+                meta.setAttribute('name', 'google-adsense-account');
+                meta.setAttribute('content', 'ca-pub-6242151456790313');
+                document.head.appendChild(meta);
+            }
+
+            var script = document.createElement('script');
+            script.async = true;
+            script.crossOrigin = 'anonymous';
+            script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313';
+            document.head.appendChild(script);
+
+            window.__adsenseLoaded = true;
+        } catch (e) {
+            // Fail silently; ads are non-essential
+        }
+    }
+
     // Set default consent state (denied) before any Google services load
     gtag('consent', 'default', {
         'ad_storage': 'denied',
@@ -79,6 +105,11 @@
                 'functionality_storage': preferences.functional ? 'granted' : 'denied',
                 'personalization_storage': preferences.functional ? 'granted' : 'denied'
             });
+
+            // Load AdSense library after advertising consent is granted
+            if (preferences.advertising) {
+                loadAdSenseScript();
+            }
 
             // Reload ads if consent is given
             if (preferences.advertising && window.adsbygoogle) {
@@ -335,6 +366,9 @@
         window.manageCookieConsent = function() {
             BannerUI.showSettings();
         };
+
+        // Expose AdSense loader for pages that may want to trigger it
+        window.loadAdSense = loadAdSenseScript;
 
         // Add global function to check consent status
         window.hasUserConsent = function() {
