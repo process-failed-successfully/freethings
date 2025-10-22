@@ -134,10 +134,23 @@ check:
 	@echo "Checking internal links in HTML files..."
 	@for html_file in $$(find . -name "*.html" -type f); do \
 		echo "Checking $$html_file..."; \
-		grep -o 'href="[^"]*"' "$$html_file" | grep -v 'http' | grep -v '#' | while read link; do \
+		html_dir=$$(dirname "$$html_file"); \
+		grep -o 'href="[^"]*"' "$$html_file" | grep -v 'http' | grep -v '#' | grep -v 'mailto:' | while read link; do \
 			link_path=$$(echo "$$link" | sed 's/href="//;s/"//'); \
-			if [ ! -f "$$link_path" ] && [ ! -d "$$link_path" ]; then \
-				echo "  ⚠️  Broken link: $$link_path"; \
+			# Skip javascript:void(0) links as they are intentional \
+			if echo "$$link_path" | grep -q '^javascript:'; then \
+				continue; \
+			fi; \
+			# Handle absolute paths (starting with /) by checking from project root \
+			if echo "$$link_path" | grep -q '^/'; then \
+				link_path=$$(echo "$$link_path" | sed 's|^/||'); \
+				if [ ! -f "$$link_path" ] && [ ! -d "$$link_path" ] && [ ! -f "$$link_path/index.html" ]; then \
+					echo "  ⚠️  Broken link: $$link_path"; \
+				fi; \
+			else \
+				if [ ! -f "$$html_dir/$$link_path" ] && [ ! -d "$$html_dir/$$link_path" ] && [ ! -f "$$html_dir/$$link_path/index.html" ]; then \
+					echo "  ⚠️  Broken link: $$link_path"; \
+				fi; \
 			fi; \
 		done; \
 	done

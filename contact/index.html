@@ -4,361 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - FreeThings.win</title>
-    <meta name="description" content="Contact FreeThings.win - Get in touch with us for questions, feedback, or support regarding our free online tools.">
-    <link rel="canonical" href="https://freethings.win/contact/">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #1e293b;
-            background: #f8fafc;
-        }
-
-        .header {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #2563eb;
-        }
-
-        .logo a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .content-wrapper {
-            max-width: 800px;
-            margin: 3rem auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #0f172a;
-            text-align: center;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-methods {
-            display: grid;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .contact-card {
-            background: #f8fafc;
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1);
-        }
-
-        .contact-card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .contact-card h2 {
-            font-size: 1.5rem;
-            color: #1e293b;
-            margin: 0;
-        }
-
-        .contact-card p {
-            color: #475569;
-            margin-bottom: 1rem;
-        }
-
-        .contact-link {
-            display: inline-block;
-            color: #2563eb;
-            font-weight: 600;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            background: white;
-            border: 2px solid #2563eb;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            background: #2563eb;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .faq-section {
-            margin-top: 3rem;
-            padding-top: 3rem;
-            border-top: 2px solid #e2e8f0;
-        }
-
-        .faq-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            color: #0f172a;
-        }
-
-        .faq-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .faq-item {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #2563eb;
-        }
-
-        .faq-item h3 {
-            font-size: 1.1rem;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .faq-item p {
-            color: #475569;
-            margin: 0;
-        }
-
-        .footer {
-            background: #1e293b;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 4rem;
-            text-align: center;
-        }
-
-        a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper {
-                padding: 1.5rem;
-                margin: 1.5rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .contact-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../tools/frontpage/styles.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="nav">
-                <div class="logo">
-                    <a href="../tools/frontpage/">
-                        <i class="fas fa-tools"></i>
-                        <span>FreeThings.win</span>
-                    </a>
-                </div>
+                <a href="../tools/frontpage/" class="logo">FreeThings.win</a>
+                <nav class="nav-links">
+                    <a href="../tools/frontpage/">Home</a>
+                    <a href="../tools/qrcode-site/">QR Generator</a>
+                    <a href="../tools/unit-converter/">Unit Converter</a>
+                    <a href="../tools/text-case-converter/">Text Tools</a>
+                </nav>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="content-wrapper">
-        <h1>Contact Us</h1>
-        <p class="subtitle">Have questions, feedback, or need help? We'd love to hear from you!</p>
-
-        <div class="contact-methods">
-            <!-- Email Support -->
-            <div class="contact-card">
-                <div class="contact-card-header">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h2>Email Support</h2>
-                </div>
-                <p>For general inquiries, questions, or feedback about our tools.</p>
-                <a href="mailto:support@freethings.win" class="contact-link">
-                    <i class="fas fa-paper-plane"></i> support@freethings.win
-                </a>
+    <main class="main">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you! Get in touch with us for support, feedback, or general inquiries.</p>
+            
+            <h2>Contact Information</h2>
+            <div class="contact-info">
+                <p><strong>General Support:</strong> <a href="mailto:support@freethings.win">support@freethings.win</a></p>
+                <p><strong>Privacy Questions:</strong> <a href="mailto:privacy@freethings.win">privacy@freethings.win</a></p>
+                <p><strong>Legal Inquiries:</strong> <a href="mailto:legal@freethings.win">legal@freethings.win</a></p>
+                <p><strong>Bug Reports:</strong> <a href="mailto:bugs@freethings.win">bugs@freethings.win</a></p>
             </div>
-
-            <!-- Privacy Inquiries -->
-            <div class="contact-card">
-                <div class="contact-card-header">
-                    <div class="contact-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h2>Privacy Inquiries</h2>
-                </div>
-                <p>Questions about data privacy, GDPR, or CCPA requests.</p>
-                <a href="mailto:privacy@freethings.win" class="contact-link">
-                    <i class="fas fa-paper-plane"></i> privacy@freethings.win
-                </a>
-            </div>
-
-            <!-- Legal Matters -->
-            <div class="contact-card">
-                <div class="contact-card-header">
-                    <div class="contact-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h2>Legal & Terms</h2>
-                </div>
-                <p>Legal inquiries, terms of service questions, or copyright matters.</p>
-                <a href="mailto:legal@freethings.win" class="contact-link">
-                    <i class="fas fa-paper-plane"></i> legal@freethings.win
-                </a>
-            </div>
-
-            <!-- Bug Reports -->
-            <div class="contact-card">
-                <div class="contact-card-header">
-                    <div class="contact-icon">
-                        <i class="fas fa-bug"></i>
-                    </div>
-                    <h2>Bug Reports</h2>
-                </div>
-                <p>Found a bug or issue? Let us know so we can fix it!</p>
-                <a href="mailto:bugs@freethings.win" class="contact-link">
-                    <i class="fas fa-paper-plane"></i> bugs@freethings.win
-                </a>
-            </div>
+            
+            <h2>Help & Support</h2>
+            <p>For detailed help and troubleshooting, please visit our <a href="../docs/help-and-troubleshooting.html">Help & Troubleshooting</a> guide.</p>
+            
+            <h2>Documentation</h2>
+            <p>Browse our comprehensive <a href="../docs/">documentation</a> for detailed guides on all our tools.</p>
         </div>
+    </main>
 
-        <!-- FAQ Section -->
-        <div class="faq-section">
-            <h2>Quick Answers</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h3><i class="fas fa-clock"></i> What's your response time?</h3>
-                    <p>We typically respond within 24-48 hours during business days. Complex inquiries may take longer.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-question-circle"></i> Need immediate help?</h3>
-                    <p>Check our <a href="../docs/help-and-troubleshooting.html">Help & Troubleshooting Guide</a> for instant answers to common questions.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-lightbulb"></i> Have a feature suggestion?</h3>
-                    <p>We welcome suggestions! Email us at support@freethings.win with your ideas for new tools or features.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-code"></i> Technical Support</h3>
-                    <p>For technical issues, please include: browser version, device type, steps to reproduce the issue, and any error messages.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-file-alt"></i> Business Inquiries</h3>
-                    <p>For partnership opportunities, advertising, or business inquiries, please email support@freethings.win.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Additional Info -->
-        <div style="background: #f1f5f9; padding: 2rem; border-radius: 12px; margin-top: 3rem; text-align: center;">
-            <h3 style="margin-bottom: 1rem; color: #1e293b;">
-                <i class="fas fa-info-circle"></i> Additional Resources
-            </h3>
-            <p style="color: #475569; margin-bottom: 1.5rem;">
-                Before contacting us, you might find answers in our documentation:
-            </p>
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <a href="../docs/" style="color: #2563eb; font-weight: 600;">
-                    <i class="fas fa-book"></i> Documentation
-                </a>
-                <a href="../docs/help-and-troubleshooting.html" style="color: #2563eb; font-weight: 600;">
-                    <i class="fas fa-life-ring"></i> Help Center
-                </a>
-                <a href="/privacy/" style="color: #2563eb; font-weight: 600;">
-                    <i class="fas fa-shield-alt"></i> Privacy Policy
-                </a>
-                <a href="/terms/" style="color: #2563eb; font-weight: 600;">
-                    <i class="fas fa-file-contract"></i> Terms of Service
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 FreeThings.win. All rights reserved.</p>
-            <p style="margin-top: 0.5rem;">
-                <a href="../tools/frontpage/" style="color: #94a3b8; margin: 0 1rem;">Home</a>
-                <a href="/privacy/" style="color: #94a3b8; margin: 0 1rem;">Privacy Policy</a>
-                <a href="/terms/" style="color: #94a3b8; margin: 0 1rem;">Terms of Service</a>
-                <a href="/contact/" style="color: #94a3b8; margin: 0 1rem;">Contact</a>
-                <a href="/acknowledgements/" style="color: #94a3b8; margin: 0 1rem;">Credits</a>
-            </p>
+            <p>&copy; 2024 FreeThings.win. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/privacy/">Privacy</a>
+                <a href="/terms/">Terms</a>
+                <a href="../tools/frontpage/">Home</a>
+            </div>
         </div>
     </footer>
 </body>
 </html>
-
