@@ -1118,15 +1118,6 @@ function fallbackCopy(text) {
     document.body.removeChild(textArea);
 }
 
-// Copy regex pattern to clipboard
-function copyRegex() {
-    if (!window.lastRegexPattern) {
-        showNotification('No regex pattern to copy');
-        return;
-    }
-
-    copyToClipboard(window.lastRegexPattern);
-}
 
 // Clear results
 function clearResults() {
@@ -1378,4 +1369,14 @@ window.testUUIDGenerator = function() {
     
     console.log('UUID generator test completed');
 };
+
+// Copy regex pattern to clipboard
+function copyRegex() {
+    if (!window.lastRegexPattern) {
+        showNotification('No regex pattern to copy');
+        return;
+    }
+
+    copyToClipboard(window.lastRegexPattern);
+}
 
