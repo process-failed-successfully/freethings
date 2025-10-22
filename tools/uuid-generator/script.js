@@ -1370,7 +1370,7 @@ window.testUUIDGenerator = function() {
     console.log('UUID generator test completed');
 };
 
-// Copy regex pattern to clipboard
+// Copy regex pattern to clipboard - Fixed deployment issue
 function copyRegex() {
     if (!window.lastRegexPattern) {
         showNotification('No regex pattern to copy');
