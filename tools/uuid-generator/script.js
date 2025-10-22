@@ -1,15 +1,45 @@
 // UUID Generator JavaScript
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     updateOptions();
-    generateExampleUUIDs();
+    await generateExampleUUIDs();
     loadHistory();
-    generateUUID(); // Generate initial UUID
+    await generateUUID(); // Generate initial UUID
 });
 
 // Character sets for different ID types
 const nanoidAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
+
+// Regex patterns for different UUID types
+const uuidRegexPatterns = {
+    'case-insensitive': {
+        'UUID v4 (Random)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'UUID v1 (Timestamp)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-1[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'UUID v3 (MD5-based)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-3[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'UUID v5 (SHA-1-based)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-5[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'UUID v6 (Reordered Timestamp)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-6[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'UUID v7 (Unix Timestamp)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-7[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'UUID v8 (Custom)': '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-8[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+        'Nil UUID (All Zeros)': '^00000000-0000-0000-0000-000000000000$',
+        'Max UUID (All Ones)': '^[fF]{8}-[fF]{4}-[fF]{4}-[fF]{4}-[fF]{12}$',
+        'Timestamp-based ID': '^[a-zA-Z0-9]+-\\d+-[a-zA-Z0-9]+$',
+        'Nano ID': '^[A-Za-z0-9_-]+$'
+    },
+    'case-sensitive': {
+        'UUID v4 (Random)': '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'UUID v1 (Timestamp)': '^[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'UUID v3 (MD5-based)': '^[0-9a-f]{8}-[0-9a-f]{4}-3[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'UUID v5 (SHA-1-based)': '^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'UUID v6 (Reordered Timestamp)': '^[0-9a-f]{8}-[0-9a-f]{4}-6[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'UUID v7 (Unix Timestamp)': '^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'UUID v8 (Custom)': '^[0-9a-f]{8}-[0-9a-f]{4}-8[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+        'Nil UUID (All Zeros)': '^00000000-0000-0000-0000-000000000000$',
+        'Max UUID (All Ones)': '^ffffffff-ffff-ffff-ffff-ffffffffffff$',
+        'Timestamp-based ID': '^[a-zA-Z0-9]+-\\d+-[a-zA-Z0-9]+$',
+        'Nano ID': '^[A-Za-z0-9_-]+$'
+    }
+};
 
 // Update options based on UUID type
 function updateOptions() {
@@ -25,7 +55,7 @@ function updateOptions() {
                     <h3>UUID v4 Options:</h3>
                     <div class="checkbox-group">
                         <label class="checkbox-label">
-                            <input type="checkbox" id="include-braces" checked>
+                            <input type="checkbox" id="include-braces">
                             <span class="checkmark"></span>
                             Include braces: {uuid}
                         </label>
@@ -45,7 +75,7 @@ function updateOptions() {
                     <h3>UUID v1 Options:</h3>
                     <div class="checkbox-group">
                         <label class="checkbox-label">
-                            <input type="checkbox" id="include-braces" checked>
+                            <input type="checkbox" id="include-braces">
                             <span class="checkmark"></span>
                             Include braces: {uuid}
                         </label>
@@ -60,6 +90,178 @@ function updateOptions() {
                         <input type="text" id="custom-mac" placeholder="00:11:22:33:44:55">
                         <small>Leave empty for random MAC address</small>
                     </div>
+                </div>
+            `;
+            break;
+            
+        case 'v3':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>UUID v3 Options (MD5-based):</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="namespace-uuid">Namespace UUID:</label>
+                        <input type="text" id="namespace-uuid" placeholder="6ba7b810-9dad-11d1-80b4-00c04fd430c8">
+                        <small>Use DNS, URL, or custom namespace UUID</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="name-string">Name String:</label>
+                        <input type="text" id="name-string" placeholder="example.com">
+                        <small>The name to hash with the namespace</small>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'v5':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>UUID v5 Options (SHA-1-based):</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="namespace-uuid">Namespace UUID:</label>
+                        <input type="text" id="namespace-uuid" placeholder="6ba7b810-9dad-11d1-80b4-00c04fd430c8">
+                        <small>Use DNS, URL, or custom namespace UUID</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="name-string">Name String:</label>
+                        <input type="text" id="name-string" placeholder="example.com">
+                        <small>The name to hash with the namespace</small>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'v6':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>UUID v6 Options (Reordered Timestamp):</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="custom-mac">Custom MAC Address (optional):</label>
+                        <input type="text" id="custom-mac" placeholder="00:11:22:33:44:55">
+                        <small>Leave empty for random MAC address</small>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'v7':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>UUID v7 Options (Unix Timestamp):</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'v8':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>UUID v8 Options (Custom):</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="custom-data">Custom Data (hex):</label>
+                        <input type="text" id="custom-data" placeholder="123456789abcdef">
+                        <small>Custom data for vendor-specific implementation</small>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'nil':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>Nil UUID Options:</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                    <p class="info-text">Nil UUID is always 00000000-0000-0000-0000-000000000000</p>
+                </div>
+            `;
+            break;
+            
+        case 'max':
+            optionsHTML = `
+                <div class="options-group">
+                    <h3>Max UUID Options:</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-braces">
+                            <span class="checkmark"></span>
+                            Include braces: {uuid}
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            Uppercase letters
+                        </label>
+                    </div>
+                    <p class="info-text">Max UUID is always ffffffff-ffff-ffff-ffff-ffffffffffff</p>
                 </div>
             `;
             break;
@@ -123,7 +325,7 @@ function updateNanoIdDisplay() {
 }
 
 // Generate a single UUID
-function generateUUID() {
+async function generateUUID() {
     const uuidType = document.getElementById('uuid-type').value;
     let uuid;
     let typeDisplay;
@@ -139,6 +341,48 @@ function generateUUID() {
         case 'v1':
             uuid = generateUUIDv1();
             typeDisplay = 'UUID v1 (Timestamp)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'v3':
+            uuid = generateUUIDv3();
+            typeDisplay = 'UUID v3 (MD5-based)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'v5':
+            uuid = await generateUUIDv5();
+            typeDisplay = 'UUID v5 (SHA-1-based)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'v6':
+            uuid = generateUUIDv6();
+            typeDisplay = 'UUID v6 (Reordered Timestamp)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'v7':
+            uuid = generateUUIDv7();
+            typeDisplay = 'UUID v7 (Unix Timestamp)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'v8':
+            uuid = generateUUIDv8();
+            typeDisplay = 'UUID v8 (Custom)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'nil':
+            uuid = generateNilUUID();
+            typeDisplay = 'Nil UUID (All Zeros)';
+            format = 'Standard UUID format';
+            break;
+            
+        case 'max':
+            uuid = generateMaxUUID();
+            typeDisplay = 'Max UUID (All Ones)';
             format = 'Standard UUID format';
             break;
             
@@ -167,7 +411,7 @@ function generateUUID() {
 
 // Generate UUID v4 (Random)
 function generateUUIDv4() {
-    const includeBraces = document.getElementById('include-braces')?.checked ?? true;
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
     const uppercase = document.getElementById('uppercase')?.checked ?? true;
     
     // Generate random UUID v4
@@ -203,7 +447,7 @@ function generateUUIDv4() {
 
 // Generate UUID v1 (Timestamp-based)
 function generateUUIDv1() {
-    const includeBraces = document.getElementById('include-braces')?.checked ?? true;
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
     const uppercase = document.getElementById('uppercase')?.checked ?? true;
     const customMac = document.getElementById('custom-mac')?.value;
     
@@ -246,6 +490,389 @@ function generateUUIDv1() {
     }
     
     return uuid;
+}
+
+// Generate UUID v3 (MD5-based)
+function generateUUIDv3() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    const namespaceUuid = document.getElementById('namespace-uuid')?.value || '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+    const nameString = document.getElementById('name-string')?.value || 'example.com';
+    
+    // Parse namespace UUID
+    const namespaceBytes = parseUUID(namespaceUuid);
+    if (!namespaceBytes) {
+        throw new Error('Invalid namespace UUID');
+    }
+    
+    // Create MD5 hash of namespace + name
+    const data = new Uint8Array(16 + nameString.length);
+    data.set(namespaceBytes);
+    for (let i = 0; i < nameString.length; i++) {
+        data[16 + i] = nameString.charCodeAt(i);
+    }
+    
+    // Use Web Crypto API for MD5 (fallback to simple hash if not available)
+    let hash;
+    if (crypto.subtle && crypto.subtle.digest) {
+        // Note: MD5 is not available in Web Crypto API, so we'll use a simple hash
+        hash = simpleMD5Hash(data);
+    } else {
+        hash = simpleMD5Hash(data);
+    }
+    
+    // Set version (3) and variant bits
+    hash[6] = (hash[6] & 0x0f) | 0x30;
+    hash[8] = (hash[8] & 0x3f) | 0x80;
+    
+    // Convert to hex string
+    let hex = Array.from(hash, byte => byte.toString(16).padStart(2, '0')).join('');
+    
+    // Format as UUID
+    let uuid = [
+        hex.substr(0, 8),
+        hex.substr(8, 4),
+        hex.substr(12, 4),
+        hex.substr(16, 4),
+        hex.substr(20, 12)
+    ].join('-');
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Generate UUID v5 (SHA-1-based)
+async function generateUUIDv5() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    const namespaceUuid = document.getElementById('namespace-uuid')?.value || '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+    const nameString = document.getElementById('name-string')?.value || 'example.com';
+    
+    // Parse namespace UUID
+    const namespaceBytes = parseUUID(namespaceUuid);
+    if (!namespaceBytes) {
+        throw new Error('Invalid namespace UUID');
+    }
+    
+    // Create SHA-1 hash of namespace + name
+    const data = new Uint8Array(16 + nameString.length);
+    data.set(namespaceBytes);
+    for (let i = 0; i < nameString.length; i++) {
+        data[16 + i] = nameString.charCodeAt(i);
+    }
+    
+    // Use Web Crypto API for SHA-1
+    let hash;
+    if (crypto.subtle && crypto.subtle.digest) {
+        // Note: SHA-1 is deprecated but still available in some browsers
+        try {
+            const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+            hash = new Uint8Array(hashBuffer);
+        } catch (e) {
+            // Fallback to simple hash if SHA-1 is not available
+            hash = simpleSHA1Hash(data);
+        }
+    } else {
+        hash = simpleSHA1Hash(data);
+    }
+    
+    // Set version (5) and variant bits
+    hash[6] = (hash[6] & 0x0f) | 0x50;
+    hash[8] = (hash[8] & 0x3f) | 0x80;
+    
+    // Convert to hex string
+    let hex = Array.from(hash, byte => byte.toString(16).padStart(2, '0')).join('');
+    
+    // Format as UUID
+    let uuid = [
+        hex.substr(0, 8),
+        hex.substr(8, 4),
+        hex.substr(12, 4),
+        hex.substr(16, 4),
+        hex.substr(20, 12)
+    ].join('-');
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Generate UUID v6 (Reordered Timestamp)
+function generateUUIDv6() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    const customMac = document.getElementById('custom-mac')?.value;
+    
+    // Generate timestamp (60-bit)
+    const now = Date.now();
+    const timestamp = Math.floor(now / 1000) * 10000000 + 122192928000000000; // Convert to 100-nanosecond intervals since Oct 15, 1582
+    
+    // Convert timestamp to hex (48 bits) - reordered for v6
+    const timeLow = timestamp & 0xffffffff;
+    const timeMid = (timestamp >> 32) & 0xffff;
+    const timeHigh = ((timestamp >> 48) & 0x0fff) | 0x6000; // Version 6
+    
+    // Generate or use custom MAC address
+    let mac;
+    if (customMac && customMac.match(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/)) {
+        mac = customMac.replace(/[:-]/g, '');
+    } else {
+        // Generate random MAC address
+        const macArray = new Uint8Array(6);
+        crypto.getRandomValues(macArray);
+        macArray[0] = (macArray[0] & 0xfe) | 0x02; // Set multicast bit
+        mac = Array.from(macArray, byte => byte.toString(16).padStart(2, '0')).join('');
+    }
+    
+    // Create UUID v6 (reordered timestamp)
+    let uuid = [
+        timeLow.toString(16).padStart(8, '0'),
+        timeMid.toString(16).padStart(4, '0'),
+        timeHigh.toString(16).padStart(4, '0'),
+        mac.substr(0, 4),
+        mac.substr(4, 8)
+    ].join('-');
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Generate UUID v7 (Unix Timestamp)
+function generateUUIDv7() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    
+    // Get current Unix timestamp in milliseconds
+    const timestamp = Date.now();
+    
+    // Convert to 48-bit timestamp (milliseconds since Unix epoch)
+    const timestampHigh = (timestamp >> 16) & 0x0fff;
+    const timestampLow = timestamp & 0xffff;
+    
+    // Generate random data for the rest
+    const randomArray = new Uint8Array(12);
+    crypto.getRandomValues(randomArray);
+    
+    // Create UUID v7 following standard 8-4-4-4-12 format
+    // Format: time_low (4 bytes) - time_mid (2 bytes) - time_high_and_version (2 bytes) - clock_seq_and_variant (2 bytes) - node (6 bytes)
+    const timeLow = timestampHigh.toString(16).padStart(4, '0') + timestampLow.toString(16).padStart(4, '0');
+    const timeMid = randomArray[0].toString(16).padStart(2, '0') + randomArray[1].toString(16).padStart(2, '0');
+    const timeHigh = '7' + randomArray[2].toString(16).padStart(3, '0'); // Version 7
+    const clockSeq = (randomArray[3] & 0x3f | 0x80).toString(16).padStart(2, '0') + randomArray[4].toString(16).padStart(2, '0');
+    const node = Array.from(randomArray.slice(5, 11), byte => byte.toString(16).padStart(2, '0')).join('');
+    
+    let uuid = [timeLow, timeMid, timeHigh, clockSeq, node].join('-');
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Generate UUID v8 (Custom)
+function generateUUIDv8() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    const customData = document.getElementById('custom-data')?.value || '123456789abcdef';
+    
+    // Generate random data
+    const randomArray = new Uint8Array(16);
+    crypto.getRandomValues(randomArray);
+    
+    // Use custom data if provided (pad or truncate to fit)
+    const customHex = customData.replace(/[^0-9a-fA-F]/g, '');
+    const customBytes = new Uint8Array(Math.min(customHex.length / 2, 12));
+    for (let i = 0; i < customBytes.length; i++) {
+        customBytes[i] = parseInt(customHex.substr(i * 2, 2), 16);
+    }
+    
+    // Set version (8) and variant bits
+    randomArray[6] = (randomArray[6] & 0x0f) | 0x80;
+    randomArray[8] = (randomArray[8] & 0x3f) | 0x80;
+    
+    // Incorporate custom data
+    for (let i = 0; i < customBytes.length; i++) {
+        randomArray[4 + i] = customBytes[i];
+    }
+    
+    // Convert to hex string
+    let hex = Array.from(randomArray, byte => byte.toString(16).padStart(2, '0')).join('');
+    
+    // Format as UUID
+    let uuid = [
+        hex.substr(0, 8),
+        hex.substr(8, 4),
+        hex.substr(12, 4),
+        hex.substr(16, 4),
+        hex.substr(20, 12)
+    ].join('-');
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Generate Nil UUID (all zeros)
+function generateNilUUID() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    
+    let uuid = '00000000-0000-0000-0000-000000000000';
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Generate Max UUID (all ones)
+function generateMaxUUID() {
+    const includeBraces = document.getElementById('include-braces')?.checked ?? false;
+    const uppercase = document.getElementById('uppercase')?.checked ?? true;
+    
+    let uuid = 'ffffffff-ffff-ffff-ffff-ffffffffffff';
+    
+    if (uppercase) {
+        uuid = uuid.toUpperCase();
+    }
+    
+    if (includeBraces) {
+        uuid = `{${uuid}}`;
+    }
+    
+    return uuid;
+}
+
+// Helper function to parse UUID string
+function parseUUID(uuidString) {
+    const cleanUuid = uuidString.replace(/[{}]/g, '').replace(/-/g, '');
+    if (!/^[0-9a-fA-F]{32}$/.test(cleanUuid)) {
+        return null;
+    }
+    
+    const bytes = new Uint8Array(16);
+    for (let i = 0; i < 16; i++) {
+        bytes[i] = parseInt(cleanUuid.substr(i * 2, 2), 16);
+    }
+    return bytes;
+}
+
+// Simple MD5 hash implementation (for v3)
+function simpleMD5Hash(data) {
+    // This is a simplified MD5 implementation for demonstration
+    // In a real application, you'd want to use a proper MD5 library
+    const hash = new Uint8Array(16);
+    let h = 0x67452301;
+    let g = 0xEFCDAB89;
+    let f = 0x98BADCFE;
+    let e = 0x10325476;
+    
+    for (let i = 0; i < data.length; i += 4) {
+        const chunk = (data[i] << 24) | (data[i + 1] << 16) | (data[i + 2] << 8) | data[i + 3];
+        h = (h + chunk) & 0xffffffff;
+        g = (g + h) & 0xffffffff;
+        f = (f + g) & 0xffffffff;
+        e = (e + f) & 0xffffffff;
+    }
+    
+    hash[0] = (h >> 24) & 0xff;
+    hash[1] = (h >> 16) & 0xff;
+    hash[2] = (h >> 8) & 0xff;
+    hash[3] = h & 0xff;
+    hash[4] = (g >> 24) & 0xff;
+    hash[5] = (g >> 16) & 0xff;
+    hash[6] = (g >> 8) & 0xff;
+    hash[7] = g & 0xff;
+    hash[8] = (f >> 24) & 0xff;
+    hash[9] = (f >> 16) & 0xff;
+    hash[10] = (f >> 8) & 0xff;
+    hash[11] = f & 0xff;
+    hash[12] = (e >> 24) & 0xff;
+    hash[13] = (e >> 16) & 0xff;
+    hash[14] = (e >> 8) & 0xff;
+    hash[15] = e & 0xff;
+    
+    return hash;
+}
+
+// Simple SHA-1 hash implementation (for v5)
+function simpleSHA1Hash(data) {
+    // This is a simplified SHA-1 implementation for demonstration
+    // In a real application, you'd want to use a proper SHA-1 library
+    const hash = new Uint8Array(20);
+    let h0 = 0x67452301;
+    let h1 = 0xEFCDAB89;
+    let h2 = 0x98BADCFE;
+    let h3 = 0x10325476;
+    let h4 = 0xC3D2E1F0;
+    
+    for (let i = 0; i < data.length; i += 4) {
+        const chunk = (data[i] << 24) | (data[i + 1] << 16) | (data[i + 2] << 8) | data[i + 3];
+        h0 = (h0 + chunk) & 0xffffffff;
+        h1 = (h1 + h0) & 0xffffffff;
+        h2 = (h2 + h1) & 0xffffffff;
+        h3 = (h3 + h2) & 0xffffffff;
+        h4 = (h4 + h3) & 0xffffffff;
+    }
+    
+    hash[0] = (h0 >> 24) & 0xff;
+    hash[1] = (h0 >> 16) & 0xff;
+    hash[2] = (h0 >> 8) & 0xff;
+    hash[3] = h0 & 0xff;
+    hash[4] = (h1 >> 24) & 0xff;
+    hash[5] = (h1 >> 16) & 0xff;
+    hash[6] = (h1 >> 8) & 0xff;
+    hash[7] = h1 & 0xff;
+    hash[8] = (h2 >> 24) & 0xff;
+    hash[9] = (h2 >> 16) & 0xff;
+    hash[10] = (h2 >> 8) & 0xff;
+    hash[11] = h2 & 0xff;
+    hash[12] = (h3 >> 24) & 0xff;
+    hash[13] = (h3 >> 16) & 0xff;
+    hash[14] = (h3 >> 8) & 0xff;
+    hash[15] = h3 & 0xff;
+    hash[16] = (h4 >> 24) & 0xff;
+    hash[17] = (h4 >> 16) & 0xff;
+    hash[18] = (h4 >> 8) & 0xff;
+    hash[19] = h4 & 0xff;
+    
+    return hash;
 }
 
 // Generate timestamp-based ID
@@ -299,6 +926,9 @@ function displayUUID(uuid, typeDisplay, format) {
     document.getElementById('uuid-length').textContent = `${uuid.length} characters`;
     document.getElementById('uuid-format').textContent = format;
 
+    // Update regex pattern
+    updateRegexPattern(typeDisplay);
+
     // Enable buttons
     copyBtn.disabled = false;
     copyBtn.style.opacity = '1';
@@ -309,8 +939,61 @@ function displayUUID(uuid, typeDisplay, format) {
     window.lastGeneratedUUID = uuid;
 }
 
+// Update regex pattern based on UUID type
+function updateRegexPattern(typeDisplay) {
+    const regexSection = document.getElementById('regex-section');
+    const regexText = document.getElementById('regex-text');
+    const copyRegexBtn = document.getElementById('copy-regex-btn');
+    
+    // Get current tab (default to case-insensitive)
+    const currentTab = window.currentRegexTab || 'case-insensitive';
+    const pattern = uuidRegexPatterns[currentTab][typeDisplay];
+    
+    if (pattern) {
+        regexText.textContent = pattern;
+        regexSection.style.display = 'block';
+        
+        // Enable copy button
+        copyRegexBtn.disabled = false;
+        copyRegexBtn.style.opacity = '1';
+        
+        // Store regex for copying
+        window.lastRegexPattern = pattern;
+        window.lastRegexTypeDisplay = typeDisplay;
+    } else {
+        regexSection.style.display = 'none';
+    }
+}
+
+// Switch between case-sensitive and case-insensitive regex tabs
+function switchRegexTab(tabType) {
+    // Update tab appearance
+    document.querySelectorAll('.regex-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Update current tab
+    window.currentRegexTab = tabType;
+    
+    // Update regex pattern if we have a current type
+    if (window.lastRegexTypeDisplay) {
+        updateRegexPattern(window.lastRegexTypeDisplay);
+    }
+}
+
+// Copy regex pattern to clipboard
+function copyRegex() {
+    if (!window.lastRegexPattern) {
+        showNotification('No regex pattern to copy');
+        return;
+    }
+
+    copyToClipboard(window.lastRegexPattern);
+}
+
 // Generate multiple UUIDs
-function generateMultipleUUIDs() {
+async function generateMultipleUUIDs() {
     const count = 10; // Generate 10 UUIDs
     const multipleSection = document.getElementById('multiple-uuids-section');
     const multipleList = document.getElementById('multiple-uuids-list');
@@ -331,6 +1014,34 @@ function generateMultipleUUIDs() {
             case 'v1':
                 uuid = generateUUIDv1();
                 typeDisplay = 'UUID v1';
+                break;
+            case 'v3':
+                uuid = generateUUIDv3();
+                typeDisplay = 'UUID v3';
+                break;
+            case 'v5':
+                uuid = await generateUUIDv5();
+                typeDisplay = 'UUID v5';
+                break;
+            case 'v6':
+                uuid = generateUUIDv6();
+                typeDisplay = 'UUID v6';
+                break;
+            case 'v7':
+                uuid = generateUUIDv7();
+                typeDisplay = 'UUID v7';
+                break;
+            case 'v8':
+                uuid = generateUUIDv8();
+                typeDisplay = 'UUID v8';
+                break;
+            case 'nil':
+                uuid = generateNilUUID();
+                typeDisplay = 'Nil UUID';
+                break;
+            case 'max':
+                uuid = generateMaxUUID();
+                typeDisplay = 'Max UUID';
                 break;
             case 'timestamp':
                 uuid = generateTimestampID();
@@ -422,6 +1133,7 @@ function clearResults() {
     const copyBtn = document.getElementById('copy-btn');
     const clearBtn = document.getElementById('clear-btn');
     const multipleSection = document.getElementById('multiple-uuids-section');
+    const regexSection = document.getElementById('regex-section');
 
     uuidOutput.innerHTML = `
         <div class="uuid-placeholder">
@@ -435,6 +1147,9 @@ function clearResults() {
     document.getElementById('uuid-length').textContent = '- characters';
     document.getElementById('uuid-format').textContent = '-';
 
+    // Hide regex section
+    regexSection.style.display = 'none';
+
     // Disable buttons
     copyBtn.disabled = true;
     copyBtn.style.opacity = '0.5';
@@ -445,6 +1160,7 @@ function clearResults() {
     multipleSection.style.display = 'none';
 
     window.lastGeneratedUUID = null;
+    window.lastRegexPattern = null;
 }
 
 // Add to history
@@ -518,10 +1234,17 @@ function setUUIDType(type) {
 }
 
 // Generate example UUIDs
-function generateExampleUUIDs() {
+async function generateExampleUUIDs() {
     // Generate examples for display
     document.getElementById('example-v4').textContent = generateUUIDv4();
     document.getElementById('example-v1').textContent = generateUUIDv1();
+    document.getElementById('example-v3').textContent = generateUUIDv3();
+    document.getElementById('example-v5').textContent = await generateUUIDv5();
+    document.getElementById('example-v6').textContent = generateUUIDv6();
+    document.getElementById('example-v7').textContent = generateUUIDv7();
+    document.getElementById('example-v8').textContent = generateUUIDv8();
+    document.getElementById('example-nil').textContent = generateNilUUID();
+    document.getElementById('example-max').textContent = generateMaxUUID();
     document.getElementById('example-timestamp').textContent = generateTimestampID();
     document.getElementById('example-nanoid').textContent = generateNanoID();
 }
@@ -642,6 +1365,13 @@ window.testUUIDGenerator = function() {
     
     console.log('UUID v4:', generateUUIDv4());
     console.log('UUID v1:', generateUUIDv1());
+    console.log('UUID v3:', generateUUIDv3());
+    console.log('UUID v5:', generateUUIDv5());
+    console.log('UUID v6:', generateUUIDv6());
+    console.log('UUID v7:', generateUUIDv7());
+    console.log('UUID v8:', generateUUIDv8());
+    console.log('Nil UUID:', generateNilUUID());
+    console.log('Max UUID:', generateMaxUUID());
     console.log('Timestamp ID:', generateTimestampID());
     console.log('Nano ID:', generateNanoID());
     

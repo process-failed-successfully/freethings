@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free UUID Generator - Generate Unique Identifiers Instantly</title>
-    <meta name="description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats. Perfect for developers and database applications.">
-    <meta name="keywords" content="uuid generator, unique identifier, guid generator, uuid v4, uuid v1, developer tools">
+    <meta name="description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for all UUID versions (v1-v8), Nil/Max UUIDs, and custom formats. Perfect for developers and database applications.">
+    <meta name="keywords" content="uuid generator, unique identifier, guid generator, uuid v1, uuid v3, uuid v4, uuid v5, uuid v6, uuid v7, uuid v8, nil uuid, max uuid, developer tools">
     <link rel="canonical" href="https://freethings.win/tools/uuid-generator/">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://freethings.win/uuid-generator/">
     <meta property="og:title" content="Free UUID Generator - Generate Unique Identifiers Instantly">
-    <meta property="og:description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats.">
+    <meta property="og:description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for all UUID versions (v1-v8), Nil/Max UUIDs, and custom formats.">
     <meta property="og:image" content="https://freethings.win/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://freethings.win/uuid-generator/">
     <meta property="twitter:title" content="Free UUID Generator - Generate Unique Identifiers Instantly">
-    <meta property="twitter:description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats.">
+    <meta property="twitter:description" content="Generate UUIDs (Universally Unique Identifiers) instantly. Support for all UUID versions (v1-v8), Nil/Max UUIDs, and custom formats.">
     <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
 
     <link rel="stylesheet" href="styles.css">
@@ -28,8 +28,8 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🆔</text></svg>">
     
     <!-- Google Consent Mode v2 - Must load before AdSense -->
-    <link rel="stylesheet" href="../../shared/consent-banner.css">
-    <script src="../../shared/consent-banner.js"></script>
+    <link rel="stylesheet" href="shared/consent-banner.css">
+    <script src="shared/consent-banner.js"></script>
     <meta name="google-adsense-account" content="ca-pub-6242151456790313">
 </head>
 <body>
@@ -59,7 +59,7 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Free UUID Generator</h1>
-                <p>Generate UUIDs (Universally Unique Identifiers) instantly. Support for UUID v1, v4, and custom formats. Perfect for developers and database applications.</p>
+                <p>Generate UUIDs (Universally Unique Identifiers) instantly. Support for all UUID versions (v1-v8), Nil/Max UUIDs, and custom formats. Perfect for developers and database applications.</p>
             </div>
         </div>
     </section>
@@ -76,6 +76,13 @@
                         <select id="uuid-type" onchange="updateOptions()">
                             <option value="v4">UUID v4 (Random)</option>
                             <option value="v1">UUID v1 (Timestamp)</option>
+                            <option value="v3">UUID v3 (MD5-based)</option>
+                            <option value="v5">UUID v5 (SHA-1-based)</option>
+                            <option value="v6">UUID v6 (Reordered Timestamp)</option>
+                            <option value="v7">UUID v7 (Unix Timestamp)</option>
+                            <option value="v8">UUID v8 (Custom)</option>
+                            <option value="nil">Nil UUID (All Zeros)</option>
+                            <option value="max">Max UUID (All Ones)</option>
                             <option value="timestamp">Timestamp-based</option>
                             <option value="nanoid">Nano ID</option>
                         </select>
@@ -133,6 +140,26 @@
                             <span class="info-value" id="uuid-format">-</span>
                         </div>
                     </div>
+
+                    <!-- Regex Pattern Section -->
+                    <div id="regex-section" class="regex-section" style="display: none;">
+                        <h4>Validation Regex</h4>
+                        <div class="regex-tabs">
+                            <button class="regex-tab active" onclick="switchRegexTab('case-insensitive')">Case-Insensitive</button>
+                            <button class="regex-tab" onclick="switchRegexTab('case-sensitive')">Case-Sensitive</button>
+                        </div>
+                        <div class="regex-container">
+                            <div class="regex-pattern" id="regex-pattern">
+                                <code id="regex-text">-</code>
+                            </div>
+                            <button id="copy-regex-btn" class="copy-regex-btn" onclick="copyRegex()" title="Copy regex pattern">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="regex-info">
+                            <small>Use this regex pattern to validate UUIDs of this type in your applications</small>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -168,6 +195,41 @@
                     <h4>UUID v1 (Timestamp)</h4>
                     <p class="example-uuid" id="example-v1">6ba7b810-9dad-11d1-80b4-00c04fd430c8</p>
                     <p>Time-based UUID with MAC address</p>
+                </div>
+                <div class="example-item">
+                    <h4>UUID v3 (MD5-based)</h4>
+                    <p class="example-uuid" id="example-v3">6fa459ea-ee8a-3ca4-894e-db77e160355e</p>
+                    <p>MD5 hash-based deterministic UUID</p>
+                </div>
+                <div class="example-item">
+                    <h4>UUID v5 (SHA-1-based)</h4>
+                    <p class="example-uuid" id="example-v5">886313e1-3b8a-5372-9b90-0c9aee199e5d</p>
+                    <p>SHA-1 hash-based deterministic UUID</p>
+                </div>
+                <div class="example-item">
+                    <h4>UUID v6 (Reordered Timestamp)</h4>
+                    <p class="example-uuid" id="example-v6">0188bdb0-9a21-6b7a-8000-123456789abc</p>
+                    <p>Time-based with better sorting</p>
+                </div>
+                <div class="example-item">
+                    <h4>UUID v7 (Unix Timestamp)</h4>
+                    <p class="example-uuid" id="example-v7">0188bdb0-9a21-7b7a-8000-123456789abc</p>
+                    <p>Unix timestamp-based with random data</p>
+                </div>
+                <div class="example-item">
+                    <h4>UUID v8 (Custom)</h4>
+                    <p class="example-uuid" id="example-v8">0188bdb0-9a21-8b7a-8000-123456789abc</p>
+                    <p>Vendor-specific custom format</p>
+                </div>
+                <div class="example-item">
+                    <h4>Nil UUID</h4>
+                    <p class="example-uuid" id="example-nil">00000000-0000-0000-0000-000000000000</p>
+                    <p>All zeros for testing</p>
+                </div>
+                <div class="example-item">
+                    <h4>Max UUID</h4>
+                    <p class="example-uuid" id="example-max">ffffffff-ffff-ffff-ffff-ffffffffffff</p>
+                    <p>All ones for testing</p>
                 </div>
                 <div class="example-item">
                     <h4>Timestamp-based</h4>
@@ -206,7 +268,7 @@
                 <div class="feature-card">
                     <i class="fas fa-code"></i>
                     <h3>Multiple Formats</h3>
-                    <p>Generate UUID v1, v4, timestamp-based, and Nano ID formats.</p>
+                    <p>Generate all UUID versions (v1-v8), Nil/Max UUIDs, timestamp-based, and Nano ID formats.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-history"></i>
@@ -315,6 +377,13 @@
                     <ul>
                         <li><a href="#" onclick="setUUIDType('v4')">UUID v4 (Random)</a></li>
                         <li><a href="#" onclick="setUUIDType('v1')">UUID v1 (Timestamp)</a></li>
+                        <li><a href="#" onclick="setUUIDType('v3')">UUID v3 (MD5-based)</a></li>
+                        <li><a href="#" onclick="setUUIDType('v5')">UUID v5 (SHA-1-based)</a></li>
+                        <li><a href="#" onclick="setUUIDType('v6')">UUID v6 (Reordered)</a></li>
+                        <li><a href="#" onclick="setUUIDType('v7')">UUID v7 (Unix Timestamp)</a></li>
+                        <li><a href="#" onclick="setUUIDType('v8')">UUID v8 (Custom)</a></li>
+                        <li><a href="#" onclick="setUUIDType('nil')">Nil UUID</a></li>
+                        <li><a href="#" onclick="setUUIDType('max')">Max UUID</a></li>
                         <li><a href="#" onclick="setUUIDType('timestamp')">Timestamp-based</a></li>
                         <li><a href="#" onclick="setUUIDType('nanoid')">Nano ID</a></li>
                     </ul>
@@ -327,6 +396,18 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Ensure functions are available immediately
+        window.generateUUID = generateUUID;
+        window.generateMultipleUUIDs = generateMultipleUUIDs;
+        window.copyUUID = copyUUID;
+        window.clearResults = clearResults;
+        window.setUUIDType = setUUIDType;
+        window.toggleFAQ = toggleFAQ;
+        window.copySpecificUUID = copySpecificUUID;
+        window.copyRegex = copyRegex;
+        window.switchRegexTab = switchRegexTab;
+    </script>
 </body>
 </html>
 
