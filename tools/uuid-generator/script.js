@@ -982,15 +982,6 @@ function switchRegexTab(tabType) {
     }
 }
 
-// Copy regex pattern to clipboard
-function copyRegex() {
-    if (!window.lastRegexPattern) {
-        showNotification('No regex pattern to copy');
-        return;
-    }
-
-    copyToClipboard(window.lastRegexPattern);
-}
 
 // Generate multiple UUIDs
 async function generateMultipleUUIDs() {
@@ -1125,6 +1116,16 @@ function fallbackCopy(text) {
     }
 
     document.body.removeChild(textArea);
+}
+
+// Copy regex pattern to clipboard
+function copyRegex() {
+    if (!window.lastRegexPattern) {
+        showNotification('No regex pattern to copy');
+        return;
+    }
+
+    copyToClipboard(window.lastRegexPattern);
 }
 
 // Clear results

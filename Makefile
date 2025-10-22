@@ -148,7 +148,14 @@ check:
 					echo "  ⚠️  Broken link: $$link_path"; \
 				fi; \
 			else \
-				if [ ! -f "$$html_dir/$$link_path" ] && [ ! -d "$$html_dir/$$link_path" ] && [ ! -f "$$html_dir/$$link_path/index.html" ]; then \
+				# Normalize the path by resolving .. and . components \
+				resolved_path=$$(cd "$$html_dir" && readlink -f "$$link_path" 2>/dev/null || echo "$$html_dir/$$link_path"); \
+				# Check if the resolved path exists relative to project root \
+				project_relative_path=$$(echo "$$resolved_path" | sed "s|^$$(pwd)/||"); \
+				# Also check if it exists in tools/ subdirectory (for links like ../frontpage/ -> tools/frontpage/) \
+				tools_path="tools/$$(basename "$$link_path" | sed 's|/$$||')"; \
+				if [ ! -f "$$project_relative_path" ] && [ ! -d "$$project_relative_path" ] && [ ! -f "$$project_relative_path/index.html" ] && \
+				   [ ! -f "$$tools_path" ] && [ ! -d "$$tools_path" ] && [ ! -f "$$tools_path/index.html" ]; then \
 					echo "  ⚠️  Broken link: $$link_path"; \
 				fi; \
 			fi; \
