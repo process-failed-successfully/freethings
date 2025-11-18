@@ -13,7 +13,7 @@ A monorepo containing a collection of free, useful online tools and utilities. A
 
 ## 📊 Project Status
 
-- **✅ 10 Complete Tools** - Fully functional and documented
+- **✅ 11 Complete Tools** - Fully functional and documented
 - **🚧 9+ Planned Tools** - In development pipeline
 - **📚 Complete Documentation** - Comprehensive guides for all tools
 - **🎨 Consistent Design** - Unified user experience across all tools
@@ -30,6 +30,7 @@ A monorepo containing a collection of free, useful online tools and utilities. A
 - **[Word Counter](tools/word-counter/)** - Count words, characters, and analyze text
 - **[Image Converter](tools/image-converter/)** - Convert between JPG, PNG, WebP, and other image formats
 - **[Image Resizer](tools/image-resizer/)** - Resize and compress images while maintaining quality
+- **[Worksheet Generator](tools/worksheet-generator/)** - Create custom educational worksheets for children with math, English, and science problems
 - **[Frontpage](tools/frontpage/)** - Main homepage with tool selector
 
 ## 📚 Documentation & Guides
@@ -101,7 +102,8 @@ freethings/
 │   ├── base64-converter/    # Base64 Converter ✅
 │   ├── word-counter/        # Word Counter ✅
 │   ├── image-converter/     # Image Converter ✅
-│   └── image-resizer/       # Image Resizer ✅
+│   ├── image-resizer/       # Image Resizer ✅
+│   └── worksheet-generator/ # Worksheet Generator ✅
 ├── docs/                    # Documentation and guides
 ├── index.html              # Root redirect to frontpage
 ├── package.json            # Monorepo configuration

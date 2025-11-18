@@ -22,6 +22,7 @@
 - ✅ **Password Generator** – random secure strings (Complete)
 - ✅ **UUID Generator** – quick unique IDs (Complete)
 - ✅ **Base64 Encoder/Decoder** – for dev tasks (Complete)
+- ✅ **Worksheet Generator** – create educational worksheets for children (Complete)
 
 # Final steps
 

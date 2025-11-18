@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Children's Worksheet Generator - Create Educational Worksheets Instantly</title>
+    <meta name="description" content="Generate fun, educational worksheets for children. Create math problems with customizable levels and beautiful templates.">
+    <meta name="keywords" content="worksheet generator, children worksheets, educational worksheets, math worksheets, printable worksheets">
+    <link rel="canonical" href="https://freethings.win/tools/worksheet-generator/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/tools/worksheet-generator/">
+    <meta property="og:title" content="Free Children's Worksheet Generator - Create Educational Worksheets Instantly">
+    <meta property="og:description" content="Generate fun, educational worksheets for children. Create math problems with customizable levels and beautiful templates.">
+    <meta property="og:image" content="https://freethings.win/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/tools/worksheet-generator/">
+    <meta property="twitter:title" content="Free Children's Worksheet Generator - Create Educational Worksheets Instantly">
+    <meta property="twitter:description" content="Generate fun, educational worksheets for children. Create math problems with customizable levels and beautiful templates.">
+    <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    
+    <!-- Google Consent Mode v2 - Must load before AdSense -->
+    <link rel="stylesheet" href="shared/consent-banner.css">
+    <script src="shared/consent-banner.js"></script>
+    <meta name="google-adsense-account" content="ca-pub-6242151456790313">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../qrcode-site/">QR Generator</a>
+                    <a href="../unit-converter/">Unit Converter</a>
+                    <a href="../text-case-converter/">Text Tools</a>
+                    <a href="#features">Features</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Free Children's Worksheet Generator</h1>
+                <p>Create fun, educational worksheets for children instantly. Generate math problems with customizable levels and beautiful templates.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-form">
+                    <h2>Create Your Worksheet</h2>
+                    
+                    <div class="input-group">
+                        <label for="subject-select">Subject:</label>
+                        <select id="subject-select" class="form-select" onchange="updateLearningOptions()">
+                            <option value="maths">Maths</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="learning-select">Learning Type:</label>
+                        <select id="learning-select" class="form-select">
+                            <option value="addition">Addition</option>
+                            <option value="subtraction">Subtraction</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="level-select">Level:</label>
+                        <select id="level-select" class="form-select">
+                            <option value="1">Level 1</option>
+                            <option value="2">Level 2</option>
+                            <option value="3">Level 3</option>
+                            <option value="4">Level 4</option>
+                            <option value="5">Level 5</option>
+                            <option value="6">Level 6</option>
+                            <option value="7">Level 7</option>
+                            <option value="8">Level 8</option>
+                            <option value="9">Level 9</option>
+                            <option value="10">Level 10</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="template-select">Template:</label>
+                        <select id="template-select" class="form-select">
+                            <option value="basic">Basic</option>
+                            <option value="colourful">Colourful</option>
+                            <option value="flowers">Flowers</option>
+                            <option value="dinosaurs">Dinosaurs</option>
+                            <option value="rainbow">Rainbow</option>
+                            <option value="animals">Animals</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="page-size-select">Page Size:</label>
+                        <select id="page-size-select" class="form-select" onchange="calculateProblemsCount()">
+                            <option value="A4">A4</option>
+                            <option value="Letter">Letter (US)</option>
+                            <option value="Legal">Legal (US)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="page-count">Number of Pages:</label>
+                        <input type="number" id="page-count" class="form-select" min="1" max="10" value="1" oninput="calculateProblemsCount()">
+                        <p class="input-hint" id="problems-hint">Calculating problems...</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-counting-aids">
+                            <span class="checkmark"></span>
+                            Show counting aids (visual indicators)
+                        </label>
+                        <p class="input-hint">Display objects like apples, bananas, etc. to help with counting</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-problem-numbers">
+                            <span class="checkmark"></span>
+                            Show problem numbers
+                        </label>
+                        <p class="input-hint">Display numbers (1., 2., etc.) before each problem</p>
+                    </div>
+
+                    <div class="generate-actions">
+                        <button id="generate-btn" class="generate-btn" onclick="generateWorksheet()">
+                            <i class="fas fa-magic"></i>
+                            Generate Worksheet
+                        </button>
+                    </div>
+                    
+                    <div class="print-tips">
+                        <h4><i class="fas fa-info-circle"></i> Print Tips</h4>
+                        <ul>
+                            <li>Use "Print Preview" to review before printing</li>
+                            <li>Worksheets are optimized for A4 paper</li>
+                            <li>Ensure "Background graphics" is enabled in print settings</li>
+                            <li>Download option saves a print-ready HTML file</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <div class="preview-header">
+                        <h3>Worksheet Preview</h3>
+                        <div class="preview-actions">
+                            <button id="print-preview-btn" class="action-btn action-btn-secondary" onclick="printPreview()" style="display: none;">
+                                <i class="fas fa-eye"></i>
+                                Print Preview
+                            </button>
+                            <button id="print-btn" class="action-btn" onclick="printWorksheet()" style="display: none;">
+                                <i class="fas fa-print"></i>
+                                Print
+                            </button>
+                            <button id="download-btn" class="action-btn action-btn-secondary" onclick="downloadWorksheet()" style="display: none;">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="worksheet-preview" class="worksheet-preview">
+                        <div class="worksheet-placeholder">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Your worksheet will appear here</p>
+                            <p class="placeholder-hint">Select your options and click "Generate Worksheet"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Our Worksheet Generator?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Educational</h3>
+                    <p>Designed by educators to help children learn effectively through practice.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Beautiful Templates</h3>
+                    <p>Multiple fun templates to keep children engaged and motivated.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sliders-h"></i>
+                    <h3>Customizable</h3>
+                    <p>Adjust difficulty levels and number of problems to match your child's needs.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-print"></i>
+                    <h3>Printable</h3>
+                    <p>Print directly or download as PDF for offline use.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All generation happens in your browser. No data is sent to our servers.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>100% Free</h3>
+                    <p>No hidden costs, no subscriptions, no watermarks. Completely free to use.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Worksheet Generator</span>
+                    </div>
+                    <p>Create educational worksheets instantly and for free.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="../frontpage/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Worksheet Generator. All rights reserved. | <a href="/privacy/">Privacy Policy</a> | <a href="/terms/">Terms of Service</a> | <a href="/contact/">Contact</a> | <a href="javascript:void(0)" onclick="window.manageCookieConsent()">Manage Cookies</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

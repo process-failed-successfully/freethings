@@ -57,8 +57,12 @@ serve:
 	echo "Starting server on port $$available_port..."; \
 	echo "Server will be available at: http://$(HOST):$$available_port"; \
 	echo ""; \
-	if command -v $(PYTHON) >/dev/null 2>&1; then \
+	if command -v $(PYTHON) >/dev/null 2>&1 && [ -f "serve.py" ]; then \
+		$(PYTHON) serve.py $$available_port; \
+	elif command -v $(PYTHON) >/dev/null 2>&1; then \
 		$(PYTHON) -m http.server $$available_port; \
+	elif command -v python >/dev/null 2>&1 && [ -f "serve.py" ]; then \
+		python serve.py $$available_port; \
 	elif command -v python >/dev/null 2>&1; then \
 		python -m http.server $$available_port; \
 	elif command -v php >/dev/null 2>&1; then \
@@ -76,8 +80,12 @@ serve-port:
 	@echo "Starting server on port $(PORT)..."
 	@echo "Server will be available at: http://$(HOST):$(PORT)"
 	@echo ""
-	@if command -v $(PYTHON) >/dev/null 2>&1; then \
+	@if command -v $(PYTHON) >/dev/null 2>&1 && [ -f "serve.py" ]; then \
+		$(PYTHON) serve.py $(PORT); \
+	elif command -v $(PYTHON) >/dev/null 2>&1; then \
 		$(PYTHON) -m http.server $(PORT); \
+	elif command -v python >/dev/null 2>&1 && [ -f "serve.py" ]; then \
+		python serve.py $(PORT); \
 	elif command -v python >/dev/null 2>&1; then \
 		python -m http.server $(PORT); \
 	elif command -v php >/dev/null 2>&1; then \
