@@ -559,7 +559,9 @@ function displayWorksheet(problems, subject, learningType, level, template, show
                     </div>
                     ${isFirstPage ? `
                     <div class="worksheet-footer">
-                        <div class="worksheet-info">Generated on ${new Date().toLocaleDateString()}</div>
+                        <div class="worksheet-info">
+                            <a href="https://freethings.win/tools/worksheet-generator/" target="_blank" rel="noopener noreferrer">FreeThings.win Worksheet Generator</a>
+                        </div>
                     </div>
                     ` : ''}
                 </div>
@@ -1058,8 +1060,8 @@ function getPrintStyles(template, showProblemNumbers = false, pageSize = 'A4') {
             page-break-inside: avoid;
             width: 100%;
             min-height: 0.5cm;
-            max-height: 0.5cm;
-            overflow: hidden;
+            max-height: none !important;
+            overflow: visible !important;
         }
         
         .counting-object {
@@ -1120,6 +1122,16 @@ function getPrintStyles(template, showProblemNumbers = false, pageSize = 'A4') {
             padding-top: 0.3cm;
             border-top: 1px solid #ccc;
             page-break-inside: avoid;
+        }
+        
+        .worksheet-footer a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        
+        .worksheet-footer a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
         }
         
         /* Print-specific optimizations */

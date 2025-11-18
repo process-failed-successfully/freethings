@@ -603,6 +603,17 @@ input[type="number"].form-select::-webkit-inner-spin-button {
     border-top: 1px solid #e5e7eb;
 }
 
+.worksheet-footer a {
+    color: #2563eb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.worksheet-footer a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
 /* Template: Basic */
 .template-basic .worksheet-header {
     border-bottom-color: #64748b;
@@ -1079,6 +1090,12 @@ input[type="number"].form-select::-webkit-inner-spin-button {
     @page {
         size: A4;
         margin: 1.5cm;
+    }
+    
+    .counting-aids {
+        max-height: none !important;
+        overflow: visible !important;
+        min-height: auto !important;
     }
     
     * {
