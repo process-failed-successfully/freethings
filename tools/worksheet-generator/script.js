@@ -21,6 +21,306 @@ const subjectConfig = {
             'number-bonds': generateNumberBondsProblem,
             'comparing-numbers': generateComparingNumbersProblem
         }
+    },
+    english: {
+        learningTypes: ['spelling', 'vocabulary', 'grammar'],
+        generators: {
+            spelling: generateSpellingProblem,
+            vocabulary: generateVocabularyProblem,
+            grammar: generateGrammarProblem
+        }
+    },
+    science: {
+        learningTypes: ['facts', 'experiments', 'observations'],
+        generators: {
+            facts: generateScienceFactProblem,
+            experiments: generateExperimentProblem,
+            observations: generateObservationProblem
+        }
+    }
+};
+
+// Data for English and Science
+const worksheetData = {
+    spelling: {
+        level1: ['cat', 'dog', 'sun', 'bat', 'hat', 'run', 'fun', 'big', 'red', 'ten'], // CVC
+        level2: ['ship', 'chop', 'that', 'with', 'sing', 'king', 'duck', 'bell', 'fish', 'math'], // Digraphs
+        level3: ['play', 'rain', 'boat', 'coat', 'team', 'leaf', 'light', 'night', 'high', 'moon'], // Long vowels
+        level4: ['star', 'park', 'bird', 'girl', 'turn', 'corn', 'fork', 'house', 'mouse', 'down'], // R-controlled & diphthongs
+        level5: ['happy', 'little', 'apple', 'rabbit', 'summer', 'better', 'letter', 'yellow', 'funny', 'puppy'], // Double consonants
+        level6: ['table', 'bottle', 'circle', 'people', 'simple', 'candle', 'middle', 'gentle', 'uncle', 'handle'], // le ending
+        level7: ['action', 'nation', 'future', 'nature', 'picture', 'measure', 'treasure', 'famous', 'nervous', 'various'], // Suffixes
+        level8: ['because', 'friend', 'people', 'could', 'should', 'would', 'laugh', 'enough', 'through', 'thought'], // Tricky words
+        level9: ['accident', 'business', 'calendar', 'complete', 'describe', 'imagine', 'interest', 'mention', 'promise', 'separate'], // Multi-syllable
+        level10: ['accommodate', 'appreciate', 'communicate', 'conscience', 'determined', 'embarrass', 'guarantee', 'necessary', 'restaurant', 'vehicle'] // Challenge
+    },
+    vocabulary: {
+        level1: [
+            { word: 'big', definition: 'Large in size' },
+            { word: 'small', definition: 'Not big' },
+            { word: 'fast', definition: 'Moving quickly' },
+            { word: 'slow', definition: 'Moving not quickly' },
+            { word: 'hot', definition: 'Having a high temperature' }
+        ],
+        level2: [
+            { word: 'happy', definition: 'Feeling or showing pleasure' },
+            { word: 'sad', definition: 'Feeling or showing sorrow' },
+            { word: 'angry', definition: 'Feeling or showing strong annoyance' },
+            { word: 'scared', definition: 'Fearful; frightened' },
+            { word: 'brave', definition: 'Ready to face and endure danger' }
+        ],
+        level3: [
+            { word: 'begin', definition: 'Start' },
+            { word: 'finish', definition: 'End' },
+            { word: 'above', definition: 'In a higher place' },
+            { word: 'below', definition: 'In a lower place' },
+            { word: 'create', definition: 'Make' }
+        ],
+        level4: [
+            { word: 'ancient', definition: 'Very old' },
+            { word: 'modern', definition: 'Relating to the present' },
+            { word: 'common', definition: 'Happening often' },
+            { word: 'rare', definition: 'Not happening often' },
+            { word: 'vast', definition: 'Of very great extent or quantity' }
+        ],
+        level5: [
+            { word: 'habitat', definition: 'The natural home of an animal' },
+            { word: 'predator', definition: 'An animal that hunts others' },
+            { word: 'prey', definition: 'An animal that is hunted' },
+            { word: 'adapt', definition: 'Change to suit a new purpose' },
+            { word: 'survive', definition: 'Continue to live' }
+        ],
+        level6: [
+            { word: 'gravity', definition: 'Force that attracts a body to the earth' },
+            { word: 'energy', definition: 'Strength and vitality required for activity' },
+            { word: 'force', definition: 'Strength or energy as an attribute of action' },
+            { word: 'matter', definition: 'Physical substance' },
+            { word: 'mass', definition: 'A large body of matter with no definite shape' }
+        ],
+        level7: [
+            { word: 'democracy', definition: 'A system of government by the whole population' },
+            { word: 'citizen', definition: 'A legally recognized subject or national' },
+            { word: 'election', definition: 'A formal and organized choice by vote' },
+            { word: 'parliament', definition: 'The highest legislature' },
+            { word: 'government', definition: 'The governing body of a nation' }
+        ],
+        level8: [
+            { word: 'ecosystem', definition: 'A biological community of interacting organisms' },
+            { word: 'environment', definition: 'The surroundings or conditions' },
+            { word: 'pollution', definition: 'The presence in or introduction into the environment of a substance or thing that has harmful or poisonous effects' },
+            { word: 'conservation', definition: 'Prevention of wasteful use of a resource' },
+            { word: 'renewable', definition: 'Capable of being renewed' }
+        ],
+        level9: [
+            { word: 'hypothesis', definition: 'A supposition or proposed explanation' },
+            { word: 'experiment', definition: 'A scientific procedure undertaken to make a discovery' },
+            { word: 'conclusion', definition: 'The end or finish of an event or process' },
+            { word: 'observation', definition: 'The action or process of observing something' },
+            { word: 'variable', definition: 'Not consistent or having a fixed pattern' }
+        ],
+        level10: [
+            { word: 'metaphor', definition: 'A figure of speech in which a word or phrase is applied to an object or action to which it is not literally applicable' },
+            { word: 'simile', definition: 'A figure of speech involving the comparison of one thing with another thing of a different kind' },
+            { word: 'alliteration', definition: 'The occurrence of the same letter or sound at the beginning of adjacent or closely connected words' },
+            { word: 'personification', definition: 'The attribution of a personal nature or human characteristics to something nonhuman' },
+            { word: 'hyperbole', definition: 'Exaggerated statements or claims not meant to be taken literally' }
+        ]
+    },
+    grammar: {
+        level1: [
+            { question: 'Circle the noun (person, place, or thing): "The cat ran."', answer: 'cat' },
+            { question: 'Circle the noun: "I see a dog."', answer: 'dog' },
+            { question: 'Circle the noun: "The sun is hot."', answer: 'sun' },
+            { question: 'Circle the noun: "My hat is red."', answer: 'hat' },
+            { question: 'Circle the noun: "The ball is blue."', answer: 'ball' }
+        ],
+        level2: [
+            { question: 'Circle the verb (action word): "The dog runs."', answer: 'runs' },
+            { question: 'Circle the verb: "I jump high."', answer: 'jump' },
+            { question: 'Circle the verb: "She sings a song."', answer: 'sings' },
+            { question: 'Circle the verb: "We play tag."', answer: 'play' },
+            { question: 'Circle the verb: "He eats an apple."', answer: 'eats' }
+        ],
+        level3: [
+            { question: 'Circle the adjective (describing word): "The red ball."', answer: 'red' },
+            { question: 'Circle the adjective: "A big house."', answer: 'big' },
+            { question: 'Circle the adjective: "The happy dog."', answer: 'happy' },
+            { question: 'Circle the adjective: "A fast car."', answer: 'fast' },
+            { question: 'Circle the adjective: "The hot sun."', answer: 'hot' }
+        ],
+        level4: [
+            { question: 'Correct the sentence: "i like dogs"', answer: 'I like dogs.' },
+            { question: 'Correct the sentence: "he is my friend"', answer: 'He is my friend.' },
+            { question: 'Correct the sentence: "where is the cat"', answer: 'Where is the cat?' },
+            { question: 'Correct the sentence: "the sky is blue"', answer: 'The sky is blue.' },
+            { question: 'Correct the sentence: "we go to school"', answer: 'We go to school.' }
+        ],
+        level5: [
+            { question: 'Identify the subject: "The cat chased the mouse."', answer: 'The cat' },
+            { question: 'Identify the subject: "My brother plays soccer."', answer: 'My brother' },
+            { question: 'Identify the subject: "The sun shines brightly."', answer: 'The sun' },
+            { question: 'Identify the subject: "We are going to the park."', answer: 'We' },
+            { question: 'Identify the subject: "The bird sings sweetly."', answer: 'The bird' }
+        ],
+        level6: [
+            { question: 'Choose the correct word: "They [are/is] playing."', answer: 'are' },
+            { question: 'Choose the correct word: "He [runs/run] fast."', answer: 'runs' },
+            { question: 'Choose the correct word: "We [was/were] happy."', answer: 'were' },
+            { question: 'Choose the correct word: "She [has/have] a book."', answer: 'has' },
+            { question: 'Choose the correct word: "I [am/is] reading."', answer: 'am' }
+        ],
+        level7: [
+            { question: 'Identify the adverb: "He ran quickly."', answer: 'quickly' },
+            { question: 'Identify the adverb: "She sings beautifully."', answer: 'beautifully' },
+            { question: 'Identify the adverb: "They played happily."', answer: 'happily' },
+            { question: 'Identify the adverb: "The dog barked loudly."', answer: 'loudly' },
+            { question: 'Identify the adverb: "He spoke softly."', answer: 'softly' }
+        ],
+        level8: [
+            { question: 'Choose the correct homophone: "I [see/sea] the ocean."', answer: 'see' },
+            { question: 'Choose the correct homophone: "The [sun/son] is hot."', answer: 'sun' },
+            { question: 'Choose the correct homophone: "I [won/one] the game."', answer: 'won' },
+            { question: 'Choose the correct homophone: "She [ate/eight] the apple."', answer: 'ate' },
+            { question: 'Choose the correct homophone: "The [bear/bare] is big."', answer: 'bear' }
+        ],
+        level9: [
+            { question: 'Active or Passive voice? "The ball was thrown by John."', answer: 'Passive' },
+            { question: 'Active or Passive voice? "John threw the ball."', answer: 'Active' },
+            { question: 'Active or Passive voice? "The cake was eaten by me."', answer: 'Passive' },
+            { question: 'Active or Passive voice? "I ate the cake."', answer: 'Active' },
+            { question: 'Active or Passive voice? "The song was sung by her."', answer: 'Passive' }
+        ],
+        level10: [
+            { question: 'Identify the clause type: "[When it rains], we stay inside."', answer: 'Dependent' },
+            { question: 'Identify the clause type: "We stay inside [when it rains]."', answer: 'Dependent' },
+            { question: 'Identify the clause type: "[I like apples] because they are sweet."', answer: 'Independent' },
+            { question: 'Identify the clause type: "I like apples [because they are sweet]."', answer: 'Dependent' },
+            { question: 'Identify the clause type: "[The dog barked] and the cat ran."', answer: 'Independent' }
+        ]
+    },
+    science: {
+        facts: {
+            level1: [
+                { question: 'Is a rock living or non-living?', answer: 'Non-living' },
+                { question: 'Is a tree living or non-living?', answer: 'Living' },
+                { question: 'Is a dog living or non-living?', answer: 'Living' },
+                { question: 'Is water living or non-living?', answer: 'Non-living' },
+                { question: 'Is a bird living or non-living?', answer: 'Living' }
+            ],
+            level2: [
+                { question: 'What do we call the time when the sun is out?', answer: 'Day' },
+                { question: 'What do we call the time when the moon is out?', answer: 'Night' },
+                { question: 'What season is hot?', answer: 'Summer' },
+                { question: 'What season is cold?', answer: 'Winter' },
+                { question: 'What falls from the sky when it rains?', answer: 'Water' }
+            ],
+            level3: [
+                { question: 'What does a plant need to grow?', answer: 'Sunlight and Water' },
+                { question: 'What part of the plant grows underground?', answer: 'Roots' },
+                { question: 'What part of the plant is green?', answer: 'Leaves' },
+                { question: 'What do bees collect from flowers?', answer: 'Nectar' },
+                { question: 'What grows into a new plant?', answer: 'Seed' }
+            ],
+            level4: [
+                { question: 'What is the solid form of water?', answer: 'Ice' },
+                { question: 'What is the gas form of water?', answer: 'Steam' },
+                { question: 'What happens to ice when it gets hot?', answer: 'Melts' },
+                { question: 'What happens to water when it gets very cold?', answer: 'Freezes' },
+                { question: 'What state of matter is air?', answer: 'Gas' }
+            ],
+            level5: [
+                { question: 'Which planet do we live on?', answer: 'Earth' },
+                { question: 'What gives us light and heat during the day?', answer: 'Sun' },
+                { question: 'Does the Earth go around the Sun or the Moon?', answer: 'Sun' },
+                { question: 'How many planets are in our solar system?', answer: 'Eight' },
+                { question: 'What is the name of our galaxy?', answer: 'Milky Way' }
+            ],
+            level6: [
+                { question: 'What force pulls things down to Earth?', answer: 'Gravity' },
+                { question: 'What force slows things down when they rub together?', answer: 'Friction' },
+                { question: 'What do magnets attract?', answer: 'Iron/Metal' },
+                { question: 'What poles of a magnet repel each other?', answer: 'Like poles' },
+                { question: 'What poles of a magnet attract each other?', answer: 'Opposite poles' }
+            ],
+            level7: [
+                { question: 'What is the basic unit of life?', answer: 'Cell' },
+                { question: 'What gas do we breathe in?', answer: 'Oxygen' },
+                { question: 'What gas do we breathe out?', answer: 'Carbon Dioxide' },
+                { question: 'What pumps blood around our body?', answer: 'Heart' },
+                { question: 'What organ helps us breathe?', answer: 'Lungs' }
+            ],
+            level8: [
+                { question: 'What is the center of an atom called?', answer: 'Nucleus' },
+                { question: 'What charge does a proton have?', answer: 'Positive' },
+                { question: 'What charge does an electron have?', answer: 'Negative' },
+                { question: 'What charge does a neutron have?', answer: 'Neutral' },
+                { question: 'What is H2O?', answer: 'Water' }
+            ],
+            level9: [
+                { question: 'What is the process where plants make food?', answer: 'Photosynthesis' },
+                { question: 'What green pigment is used in photosynthesis?', answer: 'Chlorophyll' },
+                { question: 'What energy source is used in photosynthesis?', answer: 'Sunlight' },
+                { question: 'What gas do plants release?', answer: 'Oxygen' },
+                { question: 'What gas do plants take in?', answer: 'Carbon Dioxide' }
+            ],
+            level10: [
+                { question: 'What is the study of genes called?', answer: 'Genetics' },
+                { question: 'What molecule carries genetic information?', answer: 'DNA' },
+                { question: 'What is a change in DNA called?', answer: 'Mutation' },
+                { question: 'Who is the father of evolution?', answer: 'Charles Darwin' },
+                { question: 'What is survival of the fittest?', answer: 'Natural Selection' }
+            ]
+        },
+        experiments: {
+            // Generic templates that can be used across levels
+            general: [
+                { question: 'Experiment: Sink or Float?\nFind 5 objects. Predict if they will sink or float in water.', answer: 'Record your results.' },
+                { question: 'Experiment: Shadow Play\nGo outside at different times. How does your shadow change?', answer: 'Draw your shadow.' },
+                { question: 'Experiment: Plant Growth\nPlant a seed. Measure how tall it grows each week.', answer: 'Keep a growth chart.' },
+                { question: 'Experiment: Magnetic Hunt\nUse a magnet to find 5 things that are magnetic.', answer: 'List the items.' },
+                { question: 'Experiment: Dissolving\nWhich dissolves faster in water: sugar or salt?', answer: 'Time it and record.' },
+                { question: 'Experiment: Static Electricity\nRub a balloon on your hair. Can it pick up small paper pieces?', answer: 'Yes/No' },
+                { question: 'Experiment: Melting Ice\nPut an ice cube in a cup with salt and one without. Which melts faster?', answer: 'Observation' },
+                { question: 'Experiment: Bean in a Bag\nPut a wet paper towel and a bean in a ziplock bag. Tape to window.', answer: 'Watch it grow' },
+                { question: 'Experiment: Oil and Water\nMix oil and water in a jar. Shake it. What happens?', answer: 'They separate' },
+                { question: 'Experiment: Volcano\nMix baking soda and vinegar. What happens?', answer: 'Eruption!' },
+                { question: 'Experiment: Rainbow\nUse a glass of water and sunlight to make a rainbow on paper.', answer: 'Draw colors' },
+                { question: 'Experiment: Sound Vibrations\nTie a spoon to a string. Hold string to ears and hit spoon.', answer: 'Describe sound' },
+                { question: 'Experiment: Density Tower\nLayer honey, dish soap, water, and oil in a glass.', answer: 'Draw layers' },
+                { question: 'Experiment: Paper Airplanes\nFold two different planes. Which one flies further?', answer: 'Measure distance' },
+                { question: 'Experiment: Leaf Rubbing\nPut a leaf under paper and rub with a crayon. See the veins?', answer: 'Attach rubbing' },
+                { question: 'Experiment: Rock Inspection\nFind 3 different rocks. Are they smooth or rough?', answer: 'Describe texture' },
+                { question: 'Experiment: Evaporation\nPut a saucer of water in the sun. How long until it dries?', answer: 'Time taken' },
+                { question: 'Experiment: Heart Rate\nCount your pulse. Jump 10 times. Count again.', answer: 'Compare numbers' },
+                { question: 'Experiment: Taste Test\nClose your eyes. Taste apple vs. pear. Can you tell?', answer: 'Yes/No' },
+                { question: 'Experiment: Smelling Test\nCan you identify 3 foods just by smell?', answer: 'List foods' }
+            ]
+        },
+        observations: {
+             // Generic templates
+            general: [
+                { question: 'Observation: Go outside. Draw 3 different leaves you see.', answer: 'Drawings' },
+                { question: 'Observation: Look at the sky. What shape are the clouds?', answer: 'Description' },
+                { question: 'Observation: Find an insect. How many legs does it have?', answer: 'Count legs' },
+                { question: 'Observation: Listen for 1 minute. What sounds do you hear?', answer: 'List sounds' },
+                { question: 'Observation: Look at the moon tonight. Draw its shape.', answer: 'Drawing' },
+                { question: 'Observation: Watch an ant. Follow its path. Where does it go?', answer: 'Draw path' },
+                { question: 'Observation: Bird Watch. Count how many birds you see in 5 minutes.', answer: 'Number' },
+                { question: 'Observation: Shadows. Trace your shadow in the morning and afternoon.', answer: 'Compare' },
+                { question: 'Observation: Flower Petals. Find a flower. How many petals does it have?', answer: 'Count' },
+                { question: 'Observation: Raindrops. Watch rain hit a puddle. Draw the ripples.', answer: 'Drawing' },
+                { question: 'Observation: Soil Texture. Touch some dirt. Is it sandy, sticky, or dry?', answer: 'Describe' },
+                { question: 'Observation: Night Sky. Count how many stars you can see.', answer: 'Number' },
+                { question: 'Observation: Wind Direction. Wet your finger. Which way is the wind blowing?', answer: 'Direction' },
+                { question: 'Observation: Squirrel/Bird Feeder. What food do they like best?', answer: 'Observation' },
+                { question: 'Observation: Sunrise/Sunset. What colors do you see in the sky?', answer: 'List colors' },
+                { question: 'Observation: Puddle Drying. Draw the shape of a puddle as it dries.', answer: 'Drawings' },
+                { question: 'Observation: Spider Web. Find a web. Draw its pattern.', answer: 'Drawing' },
+                { question: 'Observation: Condensation. Breathe on a cold window. What happens?', answer: 'Describe' },
+                { question: 'Observation: Tree Bark. Rub a crayon over paper on bark.', answer: 'Texture' },
+                { question: 'Observation: Animal Tracks. Look for footprints in mud or sand.', answer: 'Identify animal' }
+            ]
+        }
     }
 };
 
@@ -316,59 +616,96 @@ function generateComparingNumbersProblem(level) {
     };
 }
 
-// Generate spelling problem (placeholder for future expansion)
+// Generate spelling problem
 function generateSpellingProblem(level) {
-    const words = ['cat', 'dog', 'sun', 'moon', 'star', 'tree', 'bird', 'fish'];
+    const levelKey = `level${Math.min(level, 10)}`;
+    const words = worksheetData.spelling[levelKey] || worksheetData.spelling.level1;
     const word = words[Math.floor(Math.random() * words.length)];
     
-    return {
-        question: `Spell: ${word}`,
-        answer: word,
-        type: 'spelling'
-    };
+    // Vary the task based on random chance or sub-level logic if desired
+    // For now, simple "Write the word" or "Fill in the blank"
+
+    const taskType = Math.random();
+
+    if (taskType < 0.5) {
+        // Copy the word
+        return {
+            question: `Write the word: ${word}`,
+            answer: word,
+            type: 'spelling'
+        };
+    } else {
+        // Missing letters
+        const hiddenIndex = Math.floor(Math.random() * word.length);
+        const hiddenChar = word[hiddenIndex];
+        const maskedWord = word.substring(0, hiddenIndex) + '_' + word.substring(hiddenIndex + 1);
+        return {
+            question: `Fill in the missing letter: ${maskedWord}`,
+            answer: hiddenChar,
+            type: 'spelling'
+        };
+    }
 }
 
-// Generate vocabulary problem (placeholder)
+// Generate vocabulary problem
 function generateVocabularyProblem(level) {
+    const levelKey = `level${Math.min(level, 10)}`;
+    const vocabList = worksheetData.vocabulary[levelKey] || worksheetData.vocabulary.level1;
+    const item = vocabList[Math.floor(Math.random() * vocabList.length)];
+
     return {
-        question: 'Vocabulary question',
-        answer: 'Answer',
+        question: `What word means: "${item.definition}"?`,
+        answer: item.word,
         type: 'vocabulary'
     };
 }
 
-// Generate grammar problem (placeholder)
+// Generate grammar problem
 function generateGrammarProblem(level) {
+    const levelKey = `level${Math.min(level, 10)}`;
+    const grammarList = worksheetData.grammar[levelKey] || worksheetData.grammar.level1;
+    const item = grammarList[Math.floor(Math.random() * grammarList.length)];
+
     return {
-        question: 'Grammar question',
-        answer: 'Answer',
+        question: item.question,
+        answer: item.answer,
         type: 'grammar'
     };
 }
 
-// Generate science fact problem (placeholder)
+// Generate science fact problem
 function generateScienceFactProblem(level) {
+    const levelKey = `level${Math.min(level, 10)}`;
+    const factsList = worksheetData.science.facts[levelKey] || worksheetData.science.facts.level1;
+    const item = factsList[Math.floor(Math.random() * factsList.length)];
+
     return {
-        question: 'Science fact question',
-        answer: 'Answer',
+        question: item.question,
+        answer: item.answer,
         type: 'facts'
     };
 }
 
-// Generate experiment problem (placeholder)
+// Generate experiment problem
 function generateExperimentProblem(level) {
+    const experiments = worksheetData.science.experiments.general;
+    const item = experiments[Math.floor(Math.random() * experiments.length)];
+
     return {
-        question: 'Experiment question',
-        answer: 'Answer',
+        question: item.question,
+        answer: item.answer,
         type: 'experiments'
     };
 }
 
-// Generate observation problem (placeholder)
+// Generate observation problem
 function generateObservationProblem(level) {
+    const observations = worksheetData.science.observations.general;
+    const item = observations[Math.floor(Math.random() * observations.length)];
+
     return {
-        question: 'Observation question',
-        answer: 'Answer',
+        question: item.question,
+        answer: item.answer,
         type: 'observations'
     };
 }

@@ -479,6 +479,7 @@ input[type="number"].form-select::-webkit-inner-spin-button {
     color: #1e293b;
     display: inline;
     line-height: 1.4;
+    white-space: pre-wrap; /* Preserve line breaks in questions */
 }
 
 .answer-space {
