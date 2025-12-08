@@ -31,11 +31,9 @@ const subjectConfig = {
         }
     },
     science: {
-        learningTypes: ['facts', 'experiments', 'observations'],
+        learningTypes: ['facts'],
         generators: {
-            facts: generateScienceFactProblem,
-            experiments: generateExperimentProblem,
-            observations: generateObservationProblem
+            facts: generateScienceFactProblem
         }
     }
 };
@@ -269,56 +267,6 @@ const worksheetData = {
                 { question: 'What is a change in DNA called?', answer: 'Mutation' },
                 { question: 'Who is the father of evolution?', answer: 'Charles Darwin' },
                 { question: 'What is survival of the fittest?', answer: 'Natural Selection' }
-            ]
-        },
-        experiments: {
-            // Generic templates that can be used across levels
-            general: [
-                { question: 'Experiment: Sink or Float?\nFind 5 objects. Predict if they will sink or float in water.', answer: 'Record your results.' },
-                { question: 'Experiment: Shadow Play\nGo outside at different times. How does your shadow change?', answer: 'Draw your shadow.' },
-                { question: 'Experiment: Plant Growth\nPlant a seed. Measure how tall it grows each week.', answer: 'Keep a growth chart.' },
-                { question: 'Experiment: Magnetic Hunt\nUse a magnet to find 5 things that are magnetic.', answer: 'List the items.' },
-                { question: 'Experiment: Dissolving\nWhich dissolves faster in water: sugar or salt?', answer: 'Time it and record.' },
-                { question: 'Experiment: Static Electricity\nRub a balloon on your hair. Can it pick up small paper pieces?', answer: 'Yes/No' },
-                { question: 'Experiment: Melting Ice\nPut an ice cube in a cup with salt and one without. Which melts faster?', answer: 'Observation' },
-                { question: 'Experiment: Bean in a Bag\nPut a wet paper towel and a bean in a ziplock bag. Tape to window.', answer: 'Watch it grow' },
-                { question: 'Experiment: Oil and Water\nMix oil and water in a jar. Shake it. What happens?', answer: 'They separate' },
-                { question: 'Experiment: Volcano\nMix baking soda and vinegar. What happens?', answer: 'Eruption!' },
-                { question: 'Experiment: Rainbow\nUse a glass of water and sunlight to make a rainbow on paper.', answer: 'Draw colors' },
-                { question: 'Experiment: Sound Vibrations\nTie a spoon to a string. Hold string to ears and hit spoon.', answer: 'Describe sound' },
-                { question: 'Experiment: Density Tower\nLayer honey, dish soap, water, and oil in a glass.', answer: 'Draw layers' },
-                { question: 'Experiment: Paper Airplanes\nFold two different planes. Which one flies further?', answer: 'Measure distance' },
-                { question: 'Experiment: Leaf Rubbing\nPut a leaf under paper and rub with a crayon. See the veins?', answer: 'Attach rubbing' },
-                { question: 'Experiment: Rock Inspection\nFind 3 different rocks. Are they smooth or rough?', answer: 'Describe texture' },
-                { question: 'Experiment: Evaporation\nPut a saucer of water in the sun. How long until it dries?', answer: 'Time taken' },
-                { question: 'Experiment: Heart Rate\nCount your pulse. Jump 10 times. Count again.', answer: 'Compare numbers' },
-                { question: 'Experiment: Taste Test\nClose your eyes. Taste apple vs. pear. Can you tell?', answer: 'Yes/No' },
-                { question: 'Experiment: Smelling Test\nCan you identify 3 foods just by smell?', answer: 'List foods' }
-            ]
-        },
-        observations: {
-             // Generic templates
-            general: [
-                { question: 'Observation: Go outside. Draw 3 different leaves you see.', answer: 'Drawings' },
-                { question: 'Observation: Look at the sky. What shape are the clouds?', answer: 'Description' },
-                { question: 'Observation: Find an insect. How many legs does it have?', answer: 'Count legs' },
-                { question: 'Observation: Listen for 1 minute. What sounds do you hear?', answer: 'List sounds' },
-                { question: 'Observation: Look at the moon tonight. Draw its shape.', answer: 'Drawing' },
-                { question: 'Observation: Watch an ant. Follow its path. Where does it go?', answer: 'Draw path' },
-                { question: 'Observation: Bird Watch. Count how many birds you see in 5 minutes.', answer: 'Number' },
-                { question: 'Observation: Shadows. Trace your shadow in the morning and afternoon.', answer: 'Compare' },
-                { question: 'Observation: Flower Petals. Find a flower. How many petals does it have?', answer: 'Count' },
-                { question: 'Observation: Raindrops. Watch rain hit a puddle. Draw the ripples.', answer: 'Drawing' },
-                { question: 'Observation: Soil Texture. Touch some dirt. Is it sandy, sticky, or dry?', answer: 'Describe' },
-                { question: 'Observation: Night Sky. Count how many stars you can see.', answer: 'Number' },
-                { question: 'Observation: Wind Direction. Wet your finger. Which way is the wind blowing?', answer: 'Direction' },
-                { question: 'Observation: Squirrel/Bird Feeder. What food do they like best?', answer: 'Observation' },
-                { question: 'Observation: Sunrise/Sunset. What colors do you see in the sky?', answer: 'List colors' },
-                { question: 'Observation: Puddle Drying. Draw the shape of a puddle as it dries.', answer: 'Drawings' },
-                { question: 'Observation: Spider Web. Find a web. Draw its pattern.', answer: 'Drawing' },
-                { question: 'Observation: Condensation. Breathe on a cold window. What happens?', answer: 'Describe' },
-                { question: 'Observation: Tree Bark. Rub a crayon over paper on bark.', answer: 'Texture' },
-                { question: 'Observation: Animal Tracks. Look for footprints in mud or sand.', answer: 'Identify animal' }
             ]
         }
     }
@@ -638,7 +586,7 @@ function generateSpellingProblem(level) {
         // Missing letters
         const hiddenIndex = Math.floor(Math.random() * word.length);
         const hiddenChar = word[hiddenIndex];
-        const maskedWord = word.substring(0, hiddenIndex) + '_' + word.substring(hiddenIndex + 1);
+        const maskedWord = word.substring(0, hiddenIndex) + '___' + word.substring(hiddenIndex + 1);
         return {
             question: `Fill in the missing letter: ${maskedWord}`,
             answer: hiddenChar,
@@ -647,15 +595,41 @@ function generateSpellingProblem(level) {
     }
 }
 
-// Generate vocabulary problem
+// Generate vocabulary problem (Multiple Choice)
 function generateVocabularyProblem(level) {
     const levelKey = `level${Math.min(level, 10)}`;
     const vocabList = worksheetData.vocabulary[levelKey] || worksheetData.vocabulary.level1;
-    const item = vocabList[Math.floor(Math.random() * vocabList.length)];
+
+    // Select target
+    const targetIndex = Math.floor(Math.random() * vocabList.length);
+    const targetItem = vocabList[targetIndex];
+
+    // Select 2 unique distractors
+    const options = [targetItem.word];
+    const maxAttempts = 20;
+    let attempts = 0;
+
+    while (options.length < 3 && attempts < maxAttempts) {
+        const randomItem = vocabList[Math.floor(Math.random() * vocabList.length)];
+        if (!options.includes(randomItem.word)) {
+            options.push(randomItem.word);
+        }
+        attempts++;
+    }
+
+    // Shuffle options
+    options.sort(() => Math.random() - 0.5);
+
+    // Format question with options
+    // Using simple HTML for layout
+    const optionsText = options.map((opt, i) => {
+        const letter = String.fromCharCode(97 + i); // a, b, c
+        return `<b>${letter})</b> ${opt}`;
+    }).join(' &nbsp;&nbsp; '); // Spacing
 
     return {
-        question: `What word means: "${item.definition}"?`,
-        answer: item.word,
+        question: `What word means: "${targetItem.definition}"?<br><span style="font-weight:normal; font-size: 0.9em; display:block; margin-top:0.2rem;">${optionsText}</span>`,
+        answer: targetItem.word,
         type: 'vocabulary'
     };
 }
@@ -683,30 +657,6 @@ function generateScienceFactProblem(level) {
         question: item.question,
         answer: item.answer,
         type: 'facts'
-    };
-}
-
-// Generate experiment problem
-function generateExperimentProblem(level) {
-    const experiments = worksheetData.science.experiments.general;
-    const item = experiments[Math.floor(Math.random() * experiments.length)];
-
-    return {
-        question: item.question,
-        answer: item.answer,
-        type: 'experiments'
-    };
-}
-
-// Generate observation problem
-function generateObservationProblem(level) {
-    const observations = worksheetData.science.observations.general;
-    const item = observations[Math.floor(Math.random() * observations.length)];
-
-    return {
-        question: item.question,
-        answer: item.answer,
-        type: 'observations'
     };
 }
 
@@ -1144,7 +1094,7 @@ function printPreview() {
             <div class="print-preview-header">
                 Print Preview - Ready to Print
             </div>
-            ${clonedContent.outerHTML}
+            ${container.outerHTML}
             <div class="print-preview-actions">
                 <button class="preview-btn preview-btn-print" onclick="window.print()">
                     <i class="fas fa-print"></i> Print Now
@@ -1665,4 +1615,3 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
