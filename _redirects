@@ -34,4 +34,4 @@
 /docs/* /docs/:splat 200
 
 # Root redirect to frontpage
-/ /tools/frontpage/ 301
+/ /tools/frontpage/ 200

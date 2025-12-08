@@ -22,14 +22,14 @@
     <meta property="twitter:description" content="Free online tools and utilities. QR code generator, unit converter, text tools, and more. No registration required.">
     <meta property="twitter:image" content="https://freethings.win/og-image.jpg">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/tools/frontpage/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
     
     <!-- Google Consent Mode v2 - Must load before AdSense -->
-    <link rel="stylesheet" href="shared/consent-banner.css">
-    <script src="shared/consent-banner.js"></script>
+    <link rel="stylesheet" href="/tools/frontpage/shared/consent-banner.css">
+    <script src="/tools/frontpage/shared/consent-banner.js"></script>
     <meta name="google-adsense-account" content="ca-pub-6242151456790313">
 </head>
 <body>
@@ -83,7 +83,7 @@
             
             <div class="tools-grid">
                 <!-- QR Code Generator -->
-                <div class="tool-card" onclick="window.location.href='../qrcode-site/'">
+                <a href="/tools/qrcode-site/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-qrcode"></i>
                     </div>
@@ -93,10 +93,10 @@
                         <span class="tag">Popular</span>
                         <span class="tag">Instant</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Unit Converter -->
-                <div class="tool-card" onclick="window.location.href='../unit-converter/'">
+                <a href="/tools/unit-converter/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-exchange-alt"></i>
                     </div>
@@ -106,10 +106,10 @@
                         <span class="tag">Popular</span>
                         <span class="tag">Comprehensive</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Text Case Converter -->
-                <div class="tool-card" onclick="window.location.href='../text-case-converter/'">
+                <a href="/tools/text-case-converter/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-font"></i>
                     </div>
@@ -119,10 +119,10 @@
                         <span class="tag">Text</span>
                         <span class="tag">Formatting</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Password Generator -->
-                <div class="tool-card" onclick="window.location.href='../password-generator/'">
+                <a href="/tools/password-generator/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-key"></i>
                     </div>
@@ -132,10 +132,10 @@
                         <span class="tag">Security</span>
                         <span class="tag">Random</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- UUID Generator -->
-                <div class="tool-card" onclick="window.location.href='../uuid-generator/'">
+                <a href="/tools/uuid-generator/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-fingerprint"></i>
                     </div>
@@ -145,10 +145,10 @@
                         <span class="tag">Development</span>
                         <span class="tag">Unique ID</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Base64 Converter -->
-                <div class="tool-card" onclick="window.location.href='../base64-converter/'">
+                <a href="/tools/base64-converter/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-code"></i>
                     </div>
@@ -158,10 +158,10 @@
                         <span class="tag">Development</span>
                         <span class="tag">Encoding</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Word Counter -->
-                <div class="tool-card" onclick="window.location.href='../word-counter/'">
+                <a href="/tools/word-counter/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
@@ -171,10 +171,10 @@
                         <span class="tag">Text</span>
                         <span class="tag">Analysis</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Image Resizer -->
-                <div class="tool-card" onclick="window.location.href='../image-resizer/'">
+                <a href="/tools/image-resizer/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-compress-alt"></i>
                     </div>
@@ -184,10 +184,10 @@
                         <span class="tag">Images</span>
                         <span class="tag">Optimization</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Image Converter -->
-                <div class="tool-card" onclick="window.location.href='../image-converter/'">
+                <a href="/tools/image-converter/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-exchange-alt"></i>
                     </div>
@@ -197,10 +197,10 @@
                         <span class="tag">Images</span>
                         <span class="tag">SVG</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Worksheet Generator -->
-                <div class="tool-card" onclick="window.location.href='../worksheet-generator/'">
+                <a href="/tools/worksheet-generator/" class="tool-card" style="text-decoration: none;">
                     <div class="tool-icon">
                         <i class="fas fa-clipboard-list"></i>
                     </div>
@@ -210,7 +210,7 @@
                         <span class="tag">Education</span>
                         <span class="tag">Print-Ready</span>
                     </div>
-                </div>
+                </a>
 
             </div>
         </div>
@@ -224,7 +224,7 @@
             
             <div class="features-grid">
                 <!-- QR Code Guide -->
-                <div class="feature-card" onclick="window.location.href='/docs/qr-code-generator-guide.html'">
+                <a href="/docs/qr-code-generator-guide.html" class="feature-card" style="text-decoration: none;">
                     <i class="fas fa-qrcode"></i>
                     <h3>QR Code Generator Guide</h3>
                     <p>Complete step-by-step instructions for creating QR codes for URLs, WiFi, email, and more.</p>
@@ -232,10 +232,10 @@
                         <span class="tag">Complete Guide</span>
                         <span class="tag">Examples</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Unit Converter Guide -->
-                <div class="feature-card" onclick="window.location.href='/docs/unit-converter-guide.html'">
+                <a href="/docs/unit-converter-guide.html" class="feature-card" style="text-decoration: none;">
                     <i class="fas fa-exchange-alt"></i>
                     <h3>Unit Converter Guide</h3>
                     <p>Master unit conversions with examples and best practices for all measurement types.</p>
@@ -243,10 +243,10 @@
                         <span class="tag">All Categories</span>
                         <span class="tag">Examples</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Text Tools Guide -->
-                <div class="feature-card" onclick="window.location.href='/docs/text-tools-guide.html'">
+                <a href="/docs/text-tools-guide.html" class="feature-card" style="text-decoration: none;">
                     <i class="fas fa-font"></i>
                     <h3>Text Tools Guide</h3>
                     <p>Learn text case conversion and word counting with detailed examples and use cases.</p>
@@ -254,10 +254,10 @@
                         <span class="tag">Case Types</span>
                         <span class="tag">Analysis</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Password Generator Guide -->
-                <div class="feature-card" onclick="window.location.href='/docs/password-generator-guide.html'">
+                <a href="/docs/password-generator-guide.html" class="feature-card" style="text-decoration: none;">
                     <i class="fas fa-key"></i>
                     <h3>Password Generator Guide</h3>
                     <p>Create secure passwords and understand password security best practices.</p>
@@ -265,10 +265,10 @@
                         <span class="tag">Security</span>
                         <span class="tag">Best Practices</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Developer Tools Guide -->
-                <div class="feature-card" onclick="window.location.href='/docs/developer-tools-guide.html'">
+                <a href="/docs/developer-tools-guide.html" class="feature-card" style="text-decoration: none;">
                     <i class="fas fa-code"></i>
                     <h3>Developer Tools Guide</h3>
                     <p>UUID generation and Base64 encoding for developers with code examples.</p>
@@ -276,10 +276,10 @@
                         <span class="tag">Development</span>
                         <span class="tag">Code Examples</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Help & Troubleshooting -->
-                <div class="feature-card" onclick="window.location.href='/docs/help-and-troubleshooting.html'">
+                <a href="/docs/help-and-troubleshooting.html" class="feature-card" style="text-decoration: none;">
                     <i class="fas fa-question-circle"></i>
                     <h3>Help & Troubleshooting</h3>
                     <p>Get help with common issues, browser compatibility, and find solutions to problems.</p>
@@ -287,7 +287,7 @@
                         <span class="tag">Support</span>
                         <span class="tag">FAQ</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <!-- Documentation Overview -->
@@ -453,6 +453,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/tools/frontpage/script.js"></script>
 </body>
 </html>
