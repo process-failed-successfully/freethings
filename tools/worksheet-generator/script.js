@@ -570,26 +570,57 @@ function generateSpellingProblem(level) {
     const words = worksheetData.spelling[levelKey] || worksheetData.spelling.level1;
     const word = words[Math.floor(Math.random() * words.length)];
     
-    // Vary the task based on random chance or sub-level logic if desired
-    // For now, simple "Write the word" or "Fill in the blank"
-
     const taskType = Math.random();
 
     if (taskType < 0.5) {
-        // Copy the word
+        // Unscramble the word
+        const chars = word.split('');
+        // Fisher-Yates Shuffle
+        for (let i = chars.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [chars[i], chars[j]] = [chars[j], chars[i]];
+        }
+
+        let scrambled = chars.join('');
+        // If scramble resulted in original word, swap first two distinct chars
+        if (scrambled === word && word.length > 1) {
+            // Find two different characters to swap
+            for (let i = 0; i < chars.length - 1; i++) {
+                if (chars[i] !== chars[i+1]) {
+                    [chars[i], chars[i+1]] = [chars[i+1], chars[i]];
+                    break;
+                }
+            }
+            scrambled = chars.join('');
+        }
+
         return {
-            question: `Write the word: ${word}`,
+            question: `Unscramble the word: ${scrambled}`,
             answer: word,
             type: 'spelling'
         };
     } else {
-        // Missing letters
-        const hiddenIndex = Math.floor(Math.random() * word.length);
-        const hiddenChar = word[hiddenIndex];
-        const maskedWord = word.substring(0, hiddenIndex) + '___' + word.substring(hiddenIndex + 1);
+        // Missing letters (Mask approx 40% of the word, minimum 1)
+        const maskCount = Math.max(1, Math.floor(word.length * 0.4));
+        const indices = new Set();
+
+        // Select random unique indices to mask
+        while (indices.size < maskCount) {
+            indices.add(Math.floor(Math.random() * word.length));
+        }
+
+        let maskedWord = '';
+        for (let i = 0; i < word.length; i++) {
+            if (indices.has(i)) {
+                maskedWord += '_ '; // Use underscore with space for visibility
+            } else {
+                maskedWord += word[i];
+            }
+        }
+
         return {
-            question: `Fill in the missing letter: ${maskedWord}`,
-            answer: hiddenChar,
+            question: `Fill in the missing letters: ${maskedWord}`,
+            answer: word,
             type: 'spelling'
         };
     }
