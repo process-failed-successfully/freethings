@@ -21,6 +21,14 @@ const subjectConfig = {
             'number-bonds': generateNumberBondsProblem,
             'comparing-numbers': generateComparingNumbersProblem
         }
+    },
+    english: {
+        learningTypes: ['reading', 'spelling', 'vocabulary'],
+        generators: {
+            reading: generateReadingProblem,
+            spelling: generateSpellingProblem,
+            vocabulary: generateVocabularyProblem
+        }
     }
 };
 
@@ -69,16 +77,27 @@ function updateLearningOptions() {
 
 // Calculate number of problems based on page size and page count
 function calculateProblemsCount() {
+    const subject = document.getElementById('subject-select').value;
+    const learningType = document.getElementById('learning-select').value;
     const pageSize = document.getElementById('page-size-select').value;
     const pageCount = parseInt(document.getElementById('page-count').value) || 1;
     const config = pageSizeConfig[pageSize];
     
-    const totalProblems = config.problemsPerPage * pageCount;
+    let totalProblems;
+    if (subject === 'english' && learningType === 'reading') {
+        totalProblems = pageCount; // One story per page
+    } else {
+        totalProblems = config.problemsPerPage * pageCount;
+    }
     
     // Update hint text
     const hint = document.getElementById('problems-hint');
     if (hint) {
-        hint.textContent = `Will generate ${totalProblems} problems (${config.problemsPerPage} per page × ${pageCount} page${pageCount > 1 ? 's' : ''})`;
+        if (subject === 'english' && learningType === 'reading') {
+            hint.textContent = `Will generate ${totalProblems} stories (1 per page × ${pageCount} page${pageCount > 1 ? 's' : ''})`;
+        } else {
+            hint.textContent = `Will generate ${totalProblems} problems (${config.problemsPerPage} per page × ${pageCount} page${pageCount > 1 ? 's' : ''})`;
+        }
     }
     
     // If worksheet is already generated, regenerate it with new count
@@ -290,6 +309,118 @@ function generateNumberBondsProblem(level) {
     };
 }
 
+// Reading stories library leveled 1-10
+const readingStories = {
+    1: [
+        {
+            title: "The Cat",
+            text: "The cat is red. The cat is big. I see the cat. The cat sat.",
+            questions: ["What color is the cat?", "Is the cat big or small?", "What did the cat do?"]
+        },
+        {
+            title: "The Sun",
+            text: "The sun is hot. The sun is up. It is a big sun. I like the sun.",
+            questions: ["Is the sun hot or cold?", "Is the sun up or down?", "Is it a big sun?"]
+        }
+    ],
+    2: [
+        {
+            title: "A Big Box",
+            text: "I have a big box. The box is blue. What is in the box? I see a ball. I see a hat. The box is fun.",
+            questions: ["What color is the box?", "What two things are in the box?", "Is the box small?"]
+        },
+        {
+            title: "My Dog",
+            text: "I have a pet dog. My dog is brown. He has a long tail. We play with a ball. He is a good dog.",
+            questions: ["What color is the dog?", "Does he have a long or short tail?", "What do they play with?"]
+        }
+    ],
+    3: [
+        {
+            title: "The Blue Bird",
+            text: "A little blue bird sat on a tree. It sang a happy song. The sun was hot and the sky was clear. The bird flew to a pond to get a drink. It saw a frog. The frog said croak! The bird flew away.",
+            questions: ["Where was the bird sitting?", "Why did the bird fly to the pond?", "What did the frog say?"]
+        },
+        {
+            title: "The Rainy Day",
+            text: "It was a very rainy day. I put on my yellow coat and my boots. I went outside to jump in the puddles. Splat! The water was cold. I saw a small worm on the grass. Then I went inside to have some hot soup.",
+            questions: ["What color was the coat?", "What did the child do outside?", "What did they eat at the end?"]
+        }
+    ],
+    4: [
+        {
+            title: "Baking a Cake",
+            text: "Today is Mom's birthday. Dad and I are baking a chocolate cake. First, we mixed the flour and sugar in a large bowl. Next, we added three eggs and some milk. I stirred the batter until it was smooth. We put the cake in the hot oven. It smelled delicious! When the cake was ready, we put pink frosting on top. Mom was very surprised and happy.",
+            questions: ["Why were they baking a cake?", "What did they do after adding eggs and milk?", "What color was the frosting?"]
+        },
+        {
+            title: "The New Bike",
+            text: "For my birthday, I got a shiny new bike. It is bright red with a silver bell. I was so excited to ride it. First, I put on my blue helmet for safety. Then, Dad helped me push it to the park. I practiced pedaling fast on the flat path. I rang my bell 'ding-ding' at the people walking by. Learning to ride a bike is hard work, but it is also a lot of fun!",
+            questions: ["What color is the new bike?", "What did the child wear for safety?", "Where did they go to practice?"]
+        }
+    ],
+    5: [
+        {
+            title: "The Lost Key",
+            text: "Tim was playing in the park when he found a shiny silver key near the swings. He wondered what it might open. He looked around and saw an old wooden chest under a big oak tree. Tim ran to the chest and tried the key. It turned with a loud click! Inside, there were no gold coins or jewels. Instead, Tim found a stack of old letters and a black and white photograph of his grandfather when he was a boy. Tim realized he had found a family treasure. He carefully locked the chest and took the key home to show his parents.",
+            questions: ["Where did Tim find the key?", "What was inside the wooden chest?", "Why did Tim think he found a treasure?"]
+        },
+        {
+            title: "The Busy Ants",
+            text: "In the corner of our garden, there is a large pile of sand. If you look closely, you can see hundreds of tiny ants hurrying back and forth. They are very hard workers. Some ants are carrying small crumbs of bread, while others are dragging pieces of leaves that are much bigger than themselves. They are taking all this food down into their underground nest to feed the queen ant and the babies. Ants work together as a team to keep their colony strong and healthy. It is amazing how much such small creatures can accomplish when they help each other.",
+            questions: ["What are the ants doing in the garden?", "Where are they taking the food?", "What is the main lesson we can learn from the ants?"]
+        }
+    ],
+    6: [
+        {
+            title: "Life in the Rainforest",
+            text: "The tropical rainforest is a busy and crowded place. High up in the canopy, colorful parrots scream and monkeys swing from branch to branch. The air is warm and very damp because it rains almost every day. On the forest floor, it is dark and quiet. Tiny insects crawl through the fallen leaves, and jaguars hide in the shadows. Rainforests are important because they produce a lot of the world's oxygen and are home to millions of different plants and animals. We must work hard to protect these amazing places from being destroyed.",
+            questions: ["Why is the air in the rainforest damp?", "Describe the difference between the canopy and the forest floor.", "Why are rainforests important to the whole world?"]
+        }
+    ],
+    7: [
+        {
+            title: "The Invention of the Telephone",
+            text: "Alexander Graham Bell is best known for inventing the telephone in 1876. He was always interested in how sound worked because both his mother and wife were deaf. Bell wanted to find a way to send voices over a wire using electricity. After many months of hard work with his assistant, Thomas Watson, he finally succeeded. The first words spoken over a telephone were, 'Mr. Watson, come here, I want to see you.' This invention changed the world forever by allowing people to communicate instantly over long distances. Today, we use smartphones that are much more advanced, but it all started with Bell's simple idea.",
+            questions: ["What motivated Bell to study sound?", "What were the first words ever spoken on a telephone?", "How did the telephone change society?"]
+        }
+    ],
+    8: [
+        {
+            title: "The Great Barrier Reef",
+            text: "Located off the coast of Queensland, Australia, the Great Barrier Reef is the world's largest coral reef system. It is so big that it can be seen from outer space! The reef is made up of billions of tiny organisms called coral polyps. These polyps build hard shells that form the structure of the reef over thousands of years. It is home to a staggering variety of marine life, including over 1,500 species of fish, whales, dolphins, and six species of sea turtles. However, the reef is currently facing serious threats from climate change. Rising ocean temperatures cause 'coral bleaching,' which can kill the coral. Conservationists are working tirelessly to save this natural wonder for future generations.",
+            questions: ["How is the physical structure of the reef formed?", "List three types of animals that live in the Great Barrier Reef.", "Explain the process and impact of coral bleaching."]
+        }
+    ],
+    9: [
+        {
+            title: "The Mystery of the Mary Celeste",
+            text: "In December 1872, a British ship named the Dei Gratia spotted another vessel drifting aimlessly in the Atlantic Ocean. It was the Mary Celeste. When the sailors from the Dei Gratia boarded the ship, they found a strange scene. The Mary Celeste was in good condition and had plenty of food and water, but not a single person was on board. The captain's logbook was still there, but the last entry had been made ten days earlier. The lifeboat was missing, but there were no signs of a struggle or a storm. To this day, no one knows what happened to the crew. Some people think they were attacked by a giant squid, while others believe they feared the ship was about to explode and fled in panic. The fate of the Mary Celeste remains one of history's greatest maritime mysteries.",
+            questions: ["What was unusual about the condition of the Mary Celeste when it was found?", "Why is the missing lifeboat a significant clue?", "Compare two different theories about what happened to the crew."]
+        }
+    ],
+    10: [
+        {
+            title: "The Future of Artificial Intelligence",
+            text: "Artificial Intelligence (AI) is rapidly transforming almost every aspect of modern life, from healthcare and transportation to entertainment and education. AI refers to computer systems that can perform tasks that usually require human intelligence, such as recognizing speech, making decisions, and translating languages. While AI offers incredible benefits, such as diagnosing diseases more accurately than humans or reducing traffic accidents through self-driving cars, it also presents significant ethical challenges. One major concern is the potential for AI to replace human jobs, leading to economic disruption. Another issue is the risk of bias in AI algorithms, which can lead to unfair treatment of certain groups of people. As we continue to develop more powerful AI systems, it is crucial that we establish clear regulations and ethical guidelines to ensure that this technology is used for the benefit of all humanity. The goal should be to create AI that complements human abilities rather than replacing them entirely.",
+            questions: ["Define Artificial Intelligence based on the text.", "Discuss one benefit and one challenge associated with the development of AI.", "What does the author suggest is necessary to ensure AI is used responsibly?"]
+        }
+    ]
+};
+
+// Generate reading problem
+function generateReadingProblem(level) {
+    const stories = readingStories[level] || readingStories[1];
+    const story = stories[Math.floor(Math.random() * stories.length)];
+
+    return {
+        title: story.title,
+        text: story.text,
+        questions: story.questions,
+        type: 'reading'
+    };
+}
+
 // Generate comparing numbers problem
 function generateComparingNumbersProblem(level) {
     const maxValue = level * 10;
@@ -316,23 +447,113 @@ function generateComparingNumbersProblem(level) {
     };
 }
 
-// Generate spelling problem (placeholder for future expansion)
+// Spelling words library leveled 1-10
+const spellingWords = {
+    1: ['cat', 'dog', 'sun', 'big', 'red', 'ten', 'hop', 'run'],
+    2: ['blue', 'fish', 'frog', 'jump', 'tree', 'bird', 'ship', 'star'],
+    3: ['happy', 'cloud', 'green', 'bright', 'sweet', 'small', 'bread', 'grass'],
+    4: ['spring', 'yellow', 'garden', 'school', 'friend', 'sister', 'winter', 'flower'],
+    5: ['because', 'thought', 'through', 'morning', 'beautiful', 'together', 'important', 'adventure'],
+    6: ['different', 'mountain', 'treasure', 'scientist', 'mysterious', 'government', 'language', 'education'],
+    7: ['telephone', 'distance', 'successful', 'experience', 'knowledge', 'celebrate', 'description', 'imagination'],
+    8: ['atmosphere', 'environment', 'technology', 'artificial', 'intelligence', 'biological', 'significant', 'community'],
+    9: ['sophisticated', 'perspective', 'viewpoint', 'academic', 'structure', 'nuanced', 'interpretation', 'analysis'],
+    10: ['disruption', 'regulations', 'complement', 'transforming', 'diagnosing', 'ethical', 'challenges', 'potential']
+};
+
+// Vocabulary library leveled 1-10
+const vocabularyData = {
+    1: [
+        { word: "Big", options: ["Large", "Small", "Fast"], answer: "Large" },
+        { word: "Fast", options: ["Slow", "Quick", "Big"], answer: "Quick" }
+    ],
+    2: [
+        { word: "Happy", options: ["Sad", "Glad", "Angry"], answer: "Glad" },
+        { word: "Small", options: ["Tiny", "Huge", "Bright"], answer: "Tiny" }
+    ],
+    3: [
+        { word: "Bright", options: ["Dark", "Shining", "Heavy"], answer: "Shining" },
+        { word: "Funny", options: ["Silly", "Serious", "Quiet"], answer: "Silly" }
+    ],
+    4: [
+        { word: "Quiet", options: ["Loud", "Silent", "Noisy"], answer: "Silent" },
+        { word: "Simple", options: ["Easy", "Hard", "Fast"], answer: "Easy" }
+    ],
+    5: [
+        { word: "Huge", options: ["Tiny", "Gigantic", "Old"], answer: "Gigantic" },
+        { word: "Swift", options: ["Slow", "Rapid", "Heavy"], answer: "Rapid" }
+    ],
+    6: [
+        { word: "Wealthy", options: ["Poor", "Rich", "Kind"], answer: "Rich" },
+        { word: "Ancient", options: ["New", "Old", "Young"], answer: "Old" }
+    ],
+    7: [
+        { word: "Cautious", options: ["Careful", "Brave", "Fast"], answer: "Careful" },
+        { word: "Observe", options: ["Watch", "Ignore", "Speak"], answer: "Watch" }
+    ],
+    8: [
+        { word: "Abolish", options: ["Start", "End", "Fix"], answer: "End" },
+        { word: "Sufficient", options: ["Enough", "Little", "Many"], answer: "Enough" }
+    ],
+    9: [
+        { word: "Elaborate", options: ["Simple", "Detailed", "Plain"], answer: "Detailed" },
+        { word: "Hostile", options: ["Friendly", "Unfriendly", "Kind"], answer: "Unfriendly" }
+    ],
+    10: [
+        { word: "Mitigate", options: ["Increase", "Reduce", "Change"], answer: "Reduce" },
+        { word: "Ambiguous", options: ["Clear", "Unclear", "Certain"], answer: "Unclear" }
+    ]
+};
+
+// Generate spelling problem
 function generateSpellingProblem(level) {
-    const words = ['cat', 'dog', 'sun', 'moon', 'star', 'tree', 'bird', 'fish'];
+    const words = spellingWords[level] || spellingWords[1];
     const word = words[Math.floor(Math.random() * words.length)];
     
-    return {
-        question: `Spell: ${word}`,
-        answer: word,
-        type: 'spelling'
-    };
+    // Choose between unscramble and missing letters
+    if (Math.random() < 0.5) {
+        // Unscramble
+        const scrambled = word.split('').sort(() => Math.random() - 0.5).join('');
+        return {
+            question: `Unscramble: <b>${scrambled}</b>`,
+            answer: word,
+            type: 'spelling'
+        };
+    } else {
+        // Missing letters (e.g., c_ t)
+        let masked = "";
+        for (let i = 0; i < word.length; i++) {
+            if (Math.random() < 0.3) {
+                masked += "_ ";
+            } else {
+                masked += word[i];
+            }
+        }
+        // Ensure at least one letter is masked
+        if (!masked.includes("_ ")) {
+            const idx = Math.floor(Math.random() * word.length);
+            masked = word.substring(0, idx) + "_ " + word.substring(idx + 1);
+        }
+        return {
+            question: `Fill in the missing letters: <b>${masked}</b>`,
+            answer: word,
+            type: 'spelling'
+        };
+    }
 }
 
-// Generate vocabulary problem (placeholder)
+// Generate vocabulary problem
 function generateVocabularyProblem(level) {
+    const items = vocabularyData[level] || vocabularyData[1];
+    const item = items[Math.floor(Math.random() * items.length)];
+
+    const optionsHtml = item.options.map((opt, i) =>
+        `<div class="vocab-option">(${(i + 1)}) ${opt}</div>`
+    ).join('');
+
     return {
-        question: 'Vocabulary question',
-        answer: 'Answer',
+        question: `What is a synonym for <b>${item.word}</b>?<br>${optionsHtml}`,
+        answer: item.answer,
         type: 'vocabulary'
     };
 }
@@ -505,7 +726,9 @@ function displayWorksheet(problems, subject, learningType, level, template, show
     const preview = document.getElementById('worksheet-preview');
     const templateClass = `template-${template}`;
     const pageConfig = pageSizeConfig[pageSize] || pageSizeConfig.A4;
-    const problemsPerPage = pageConfig.problemsPerPage;
+
+    // Use 1 problem per page for reading, otherwise use standard config
+    const problemsPerPage = learningType === 'reading' ? 1 : pageConfig.problemsPerPage;
     
     // Create worksheet HTML
     let worksheetHTML = '';
@@ -516,7 +739,7 @@ function displayWorksheet(problems, subject, learningType, level, template, show
         const isFirstPage = pageIndex === 0;
         
         worksheetHTML += `
-            <div class="worksheet-page">
+            <div class="worksheet-page ${learningType === 'reading' ? 'reading-page' : ''}">
                 <div class="worksheet ${templateClass}">
                     <div class="worksheet-header">
                         <h1 class="worksheet-title">${capitalizeFirst(subject)} Worksheet</h1>
@@ -526,36 +749,57 @@ function displayWorksheet(problems, subject, learningType, level, template, show
                         </div>
                     </div>
                     <div class="worksheet-body">
-                        <div class="problems-grid">
         `;
         
-        pageProblems.forEach((problem, index) => {
-            const globalIndex = pageIndex + index;
-            let countingAidsHTML = '';
-            
-            if (showCountingAids && problem.countingAids && shouldShowCountingAids(problem.countingAids)) {
-                countingAidsHTML = `<div class="counting-aids">${renderCountingAids(problem.countingAids)}</div>`;
-            }
-            
-            const problemNumberHTML = showProblemNumbers ? `<span class="problem-number">${globalIndex + 1}.</span>` : '';
-            
-            // Get random emoji for this problem item based on template
-            const emoji = getRandomTemplateEmoji(template, globalIndex);
-            const emojiDataAttr = emoji ? `data-emoji="${emoji}"` : '';
-            
-            worksheetHTML += `
-                <div class="problem-item" ${emojiDataAttr}>
-                    ${problemNumberHTML}
-                    <div class="problem-content">
-                        ${countingAidsHTML}
-                        <div class="problem-question">${problem.question} <span class="answer-space"></span></div>
+        if (learningType === 'reading') {
+            // Reading Book Layout: One story per page, full width
+            pageProblems.forEach((problem, index) => {
+                const globalIndex = pageIndex + index;
+                const emoji = getRandomTemplateEmoji(template, globalIndex);
+                const emojiDataAttr = emoji ? `data-emoji="${emoji}"` : '';
+
+                worksheetHTML += `
+                    <div class="reading-container" ${emojiDataAttr}>
+                        <h2 class="story-title">${problem.title}</h2>
+                        <div class="story-text">${problem.text}</div>
+                        <div class="story-questions">
+                            <h3>Comprehension Questions:</h3>
+                            <ol>
+                                ${problem.questions.map(q => `<li>${q} <div class="answer-line"></div></li>`).join('')}
+                            </ol>
+                        </div>
                     </div>
-                </div>
-            `;
-        });
+                `;
+            });
+        } else {
+            // Standard Grid Layout
+            worksheetHTML += `<div class="problems-grid">`;
+            pageProblems.forEach((problem, index) => {
+                const globalIndex = pageIndex + index;
+                let countingAidsHTML = '';
+
+                if (showCountingAids && problem.countingAids && shouldShowCountingAids(problem.countingAids)) {
+                    countingAidsHTML = `<div class="counting-aids">${renderCountingAids(problem.countingAids)}</div>`;
+                }
+
+                const problemNumberHTML = showProblemNumbers ? `<span class="problem-number">${globalIndex + 1}.</span>` : '';
+                const emoji = getRandomTemplateEmoji(template, globalIndex);
+                const emojiDataAttr = emoji ? `data-emoji="${emoji}"` : '';
+
+                worksheetHTML += `
+                    <div class="problem-item" ${emojiDataAttr}>
+                        ${problemNumberHTML}
+                        <div class="problem-content">
+                            ${countingAidsHTML}
+                            <div class="problem-question">${problem.question} <span class="answer-space"></span></div>
+                        </div>
+                    </div>
+                `;
+            });
+            worksheetHTML += `</div>`;
+        }
         
         worksheetHTML += `
-                        </div>
                     </div>
                     ${isFirstPage ? `
                     <div class="worksheet-footer">
@@ -1052,6 +1296,54 @@ function getPrintStyles(template, showProblemNumbers = false, pageSize = 'A4') {
             vertical-align: baseline;
         }
         
+        .reading-container {
+            padding: 0.5cm;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .story-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.4cm;
+            text-align: center;
+            font-family: 'Comic Neue', cursive;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.8cm;
+            line-height: 1.6;
+            text-align: justify;
+            white-space: pre-wrap;
+        }
+
+        .story-questions h3 {
+            font-size: 1rem;
+            margin-bottom: 0.3cm;
+        }
+
+        .story-questions ol {
+            padding-left: 0.6cm;
+        }
+
+        .story-questions li {
+            margin-bottom: 0.5cm;
+            font-weight: 600;
+        }
+
+        .answer-line {
+            border-bottom: 1px solid #333;
+            height: 0.6cm;
+            margin-top: 0.1cm;
+            width: 100%;
+        }
+
+        .vocab-option {
+            margin-top: 0.15cm;
+            font-size: 0.95rem;
+            padding-left: 0.3cm;
+        }
+
         .counting-aids {
             margin-bottom: 0.15cm;
             padding: 0.08cm 0.15cm;
