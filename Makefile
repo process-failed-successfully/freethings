@@ -104,7 +104,7 @@ test:
 	@echo "======================================================="
 	@echo ""
 	@echo "Checking if all required files exist..."
-	@for tool in frontpage qrcode-site unit-converter text-case-converter password-generator uuid-generator base64-converter word-counter image-converter image-resizer; do \
+	@for tool in frontpage qrcode-site unit-converter text-case-converter password-generator uuid-generator base64-converter word-counter image-converter image-resizer worksheet-generator reading-helper; do \
 		if [ -f "tools/$$tool/index.html" ]; then \
 			echo "✓ tools/$$tool/index.html exists"; \
 		else \
@@ -273,7 +273,7 @@ structure:
 .PHONY: test-tool
 test-tool:
 	@echo "Usage: make test-tool TOOL=<tool-name>"
-	@echo "Available tools: frontpage, qrcode-site, unit-converter, text-case-converter, password-generator, uuid-generator, base64-converter, word-counter, image-converter, image-resizer"
+	@echo "Available tools: frontpage, qrcode-site, unit-converter, text-case-converter, password-generator, uuid-generator, base64-converter, word-counter, image-converter, image-resizer, worksheet-generator, reading-helper"
 	@if [ -n "$(TOOL)" ]; then \
 		echo "Testing $(TOOL)..."; \
 		if [ -f "tools/$(TOOL)/index.html" ]; then \
@@ -283,3 +283,37 @@ test-tool:
 			echo "✗ tools/$(TOOL)/index.html not found"; \
 		fi; \
 	fi
+
+# Generate missing phonics audio files using Docker and local GPU
+.PHONY: generate-audio
+generate-audio:
+	@echo "Checking VRAM availability..."
+	@if command -v nvidia-smi >/dev/null 2>&1; then \
+		FREE_VRAM=$$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -n 1); \
+		if [ "$$FREE_VRAM" -lt 500 ]; then \
+			echo "Error: Not enough VRAM available. Need at least 500MB for audio generation, but only have $${FREE_VRAM}MB."; \
+			exit 1; \
+		fi; \
+	fi
+	@echo "Generating missing phonics audio files via Docker..."
+	cd tools/reading-helper && docker build -t reading-helper-audio -f scripts/Dockerfile .
+	docker run --rm --gpus all -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-audio
+	@echo "Fixing file permissions..."
+	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-audio chown -R $$(id -u):$$(id -g) /workspace/audio /workspace/books_manifest.json 2>/dev/null || true
+
+# Generate missing book images using Docker, SDXL, and IP-Adapter
+.PHONY: generate-images
+generate-images:
+	@echo "Checking VRAM availability..."
+	@if command -v nvidia-smi >/dev/null 2>&1; then \
+		FREE_VRAM=$$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -n 1); \
+		if [ "$$FREE_VRAM" -lt 6500 ]; then \
+			echo "Error: Not enough VRAM available. Need at least 6500MB for SDXL image generation, but only have $${FREE_VRAM}MB."; \
+			exit 1; \
+		fi; \
+	fi
+	@echo "Generating missing book images via Docker..."
+	cd tools/reading-helper && docker build -t reading-helper-images -f scripts/Dockerfile.image-gen .
+	docker run --rm --gpus all -e OPENROUTER_API_KEY -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-images
+	@echo "Fixing file permissions..."
+	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-images chown -R $$(id -u):$$(id -g) /workspace/images /workspace/books_manifest.json 2>/dev/null || true

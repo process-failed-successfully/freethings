@@ -7,6 +7,7 @@ import http.server
 import socketserver
 import os
 import sys
+import json
 from urllib.parse import unquote, urlparse
 
 class FreeThingsHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -17,6 +18,48 @@ class FreeThingsHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
         super().end_headers()
+    
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+    
+    def do_POST(self):
+        if self.path == '/api/tag-replace':
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length)
+            try:
+                data = json.loads(body.decode('utf-8'))
+                book_id = data.get('book_id')
+                page_index = data.get('page_index')
+                
+                manifest_path = 'tools/reading-helper/books_manifest.json'
+                with open(manifest_path, 'r', encoding='utf-8') as f:
+                    books = json.load(f)
+                
+                for book in books:
+                    if book.get('id') == book_id:
+                        pages = book.get('pages', [])
+                        if 0 <= page_index < len(pages):
+                            pages[page_index]['replace'] = True
+                            break
+                
+                with open(manifest_path, 'w', encoding='utf-8') as f:
+                    json.dump(books, f, indent=4, ensure_ascii=False)
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(b'{"status":"ok"}')
+            except Exception as e:
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({'error': str(e)}).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.end_headers()
     
     def do_GET(self):
         # Parse the requested path

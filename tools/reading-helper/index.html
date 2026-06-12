@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Leveled Reading Helper - Free Online Phonics Books</title>
+    <meta name="description" content="Free online leveled reading books for kids. Interactive click-to-phonics word pronunciation, onset-rime syllable breakdown, and text-to-speech audio assistance. Perfect for early readers.">
+    <meta name="keywords" content="leveled reading helper, click to phonics, children reading helper, learn to read, phonics books online, early reader tool">
+    <link rel="canonical" href="https://freethings.win/tools/reading-helper/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freethings.win/tools/reading-helper/">
+    <meta property="og:title" content="Interactive Leveled Reading Helper - Free Phonics Books">
+    <meta property="og:description" content="Free online leveled reading books for kids. Interactive click-to-phonics word pronunciation, onset-rime syllable breakdown, and TTS audio assistance.">
+    <meta property="og:image" content="https://freethings.win/tools/reading-helper/images/cat_mat_1.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://freethings.win/tools/reading-helper/">
+    <meta property="twitter:title" content="Interactive Leveled Reading Helper - Free Phonics Books">
+    <meta property="twitter:description" content="Free online leveled reading books for kids. Interactive click-to-phonics word pronunciation, onset-rime syllable breakdown, and TTS audio assistance.">
+    <meta property="twitter:image" content="https://freethings.win/tools/reading-helper/images/cat_mat_1.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+    
+    <!-- Google Consent Mode v2 -->
+    <link rel="stylesheet" href="shared/consent-banner.css">
+    <script src="shared/consent-banner.js"></script>
+    <meta name="google-adsense-account" content="ca-pub-6242151456790313">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <a href="../frontpage/" style="text-decoration: none; color: inherit;" id="home-link">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </a>
+                </div>
+                <nav class="nav-links">
+                    <a href="../frontpage/">Home</a>
+                    <a href="../worksheet-generator/">Worksheet Gen</a>
+                    <a href="#about">About</a>
+                    <a href="#how-it-works">How It Works</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Leveled Reading Helper 📖</h1>
+                <p>An interactive, educational reader for children. Click any word to hear it sounded out phonetically (like <strong>c-at</strong> or <strong>ch-air</strong>). Help your child build confidence and read independently!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Workspace -->
+    <main class="main-content container">
+        <div class="workspace-layout">
+            <!-- Left Sidebar - Settings & Library -->
+            <aside class="sidebar-panel">
+                <!-- Library Selection -->
+                <div class="panel-card" id="library-card">
+                    <h2 class="panel-title"><i class="fas fa-book-open"></i> Story Library</h2>
+                    
+                    <div class="level-tabs" id="level-tabs">
+                        <button class="level-tab active" data-level="all" id="tab-all">All</button>
+                        <button class="level-tab" data-level="A" id="tab-a">A</button>
+                        <button class="level-tab" data-level="B" id="tab-b">B</button>
+                        <button class="level-tab" data-level="C" id="tab-c">C</button>
+                        <button class="level-tab" data-level="D" id="tab-d">D</button>
+                    </div>
+
+                    <div class="books-list" id="books-list">
+                        <!-- Books dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Reading Settings -->
+                <div class="panel-card" id="settings-card">
+                    <h2 class="panel-title"><i class="fas fa-cog"></i> Reader Controls</h2>
+                    
+                    <div class="setting-item">
+                        <label for="font-family-select"><i class="fas fa-font"></i> Reading Font</label>
+                        <select id="font-family-select" class="control-select">
+                            <option value="Quicksand, sans-serif" selected>Quicksand (Round & Friendly)</option>
+                            <option value="'Comic Neue', cursive">Comic Neue (Child Friendly)</option>
+                            <option value="Inter, sans-serif">Inter (Clean & Modern)</option>
+                            <option value="'OpenDyslexic', sans-serif">Dyslexic Friendly (Weighted)</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="text-size-select"><i class="fas fa-text-height"></i> Text Size</label>
+                        <select id="text-size-select" class="control-select">
+                            <option value="normal">Normal</option>
+                            <option value="large" selected>Large</option>
+                            <option value="extra-large">Extra Large</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-item">
+                        <label><i class="fas fa-palette"></i> Color Theme</label>
+                        <div class="theme-picker" id="theme-picker">
+                            <button class="theme-btn theme-light active" data-theme="light" title="Classic White" id="theme-light-btn"></button>
+                            <button class="theme-btn theme-cream" data-theme="cream" title="Warm Cream" id="theme-cream-btn"></button>
+                            <button class="theme-btn theme-pastel-blue" data-theme="pastel-blue" title="Soft Blue" id="theme-blue-btn"></button>
+                            <button class="theme-btn theme-pastel-green" data-theme="pastel-green" title="Soft Green" id="theme-green-btn"></button>
+                            <button class="theme-btn theme-dark" data-theme="dark" title="Night Mode" id="theme-dark-btn"></button>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="tts-speed"><i class="fas fa-tachometer-alt"></i> Voice Speed</label>
+                        <div class="range-container">
+                            <input type="range" id="tts-speed" min="0.4" max="1.0" step="0.1" value="0.75" class="control-range">
+                            <span id="speed-display" class="range-val">0.75x</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Creator Link Card -->
+                <div class="panel-card premium-card" id="creator-promo">
+                    <h3><i class="fas fa-magic"></i> Custom Book Creator</h3>
+                    <p>Create a custom reading book with your own stories. Paste your text, choose a level, and get instant phonic support!</p>
+                    <button class="btn btn-primary" id="open-creator-btn">Create Custom Book</button>
+                </div>
+            </aside>
+
+            <!-- Center Reading Area -->
+            <section class="reading-area">
+                <!-- Book Canvas Card -->
+                <div class="panel-card canvas-card" id="book-canvas">
+                    <div class="canvas-header">
+                        <div class="book-info">
+                            <h2 id="current-book-title">Loading book...</h2>
+                            <span class="level-badge" id="current-book-level">Level A</span>
+                        </div>
+                        <div class="canvas-actions">
+                            <button class="btn-icon" id="btn-read-aloud" title="Read Page Aloud"><i class="fas fa-volume-up"></i> Read Page</button>
+                            <button class="btn-icon" id="btn-print" title="Print Book"><i class="fas fa-print"></i> Print</button>
+                        </div>
+                    </div>
+
+                    <!-- Book Page Content -->
+                    <div class="page-container" id="page-container">
+                        <div class="illustration-box" id="illustration-box">
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'></svg>" alt="Page Illustration" id="page-image" class="page-image">
+                            <div class="image-loader" id="image-loader">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+
+                        <div class="text-box" id="text-box">
+                            <div class="story-text" id="story-text">
+                                <!-- Interactive clickable words will go here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Book Navigation -->
+                    <div class="canvas-footer">
+                        <button class="btn btn-secondary" id="btn-prev" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                        <div class="progress-bar-container">
+                            <div class="progress-text" id="progress-text">Page 1 of 4</div>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="progress-fill" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" id="btn-next">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Phonics Help Detail Panel -->
+                <div class="panel-card phonics-card hide" id="phonics-card">
+                    <button class="close-btn" id="close-phonics-btn" aria-label="Close phonics detail">&times;</button>
+                    <div class="phonics-container">
+                        <div class="phonics-header">
+                            <span class="phonics-tag">PHONICS HELPER</span>
+                            <h3 id="target-word">cat</h3>
+                        </div>
+                        
+                        <div class="phonics-interactive">
+                            <div class="phonics-split-display" id="phonics-split-display">
+                                <!-- Colored phonetic parts of the word -->
+                                <span class="phonic-part onset">c</span>
+                                <span class="phonic-part rime">at</span>
+                            </div>
+                            <button class="phonics-speak-btn" id="speak-phonetic-btn" title="Hear phonics sounds">
+                                <i class="fas fa-play"></i> Hear Phonics
+                            </button>
+                        </div>
+
+                        <div class="phonics-explanation">
+                            <p id="phonics-definition">Click on the parts of the word to hear individual sounds, or click the play button to hear the blended word.</p>
+                        </div>
+
+                        <!-- Fun phonics tip -->
+                        <div class="phonics-tip" id="phonics-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <span id="phonics-tip-text">"c" makes the /k/ sound (like in cup). "at" makes the /æt/ sound (like in bat).</span>
+                            <button class="btn-icon btn-speak-hint" id="speak-hint-btn" title="Listen to phonics tip" style="margin-left: auto; padding: 0.25rem 0.5rem; font-size: 0.75rem; border-radius: 6px;"><i class="fas fa-volume-up"></i> Listen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Story Editor Modal / Drawer -->
+                <div class="panel-card hide" id="custom-creator-card">
+                    <div class="creator-header">
+                        <h2><i class="fas fa-magic"></i> Create a Custom Book</h2>
+                        <button class="btn btn-secondary" id="btn-back-to-library">Cancel</button>
+                    </div>
+                    
+                    <div class="creator-grid">
+                        <div class="creator-form">
+                            <div class="input-group">
+                                <label for="custom-title">Story Title</label>
+                                <input type="text" id="custom-title" class="form-input" placeholder="e.g., The Toy Train">
+                            </div>
+
+                            <div class="input-group-row">
+                                <div class="input-group">
+                                    <label for="custom-level">Reading Level</label>
+                                    <select id="custom-level" class="form-select">
+                                        <option value="A">Level A (Very Simple, 1 sentence per page)</option>
+                                        <option value="B">Level B (Simple, 1-2 sentences per page)</option>
+                                        <option value="C">Level C (Medium, 2-3 sentences per page)</option>
+                                        <option value="D" selected>Level D (Early Story, 3-4 sentences per page)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Page Creator -->
+                            <div id="pages-creator-list">
+                                <!-- Dynamic pages editor -->
+                            </div>
+
+                            <div class="creator-buttons">
+                                <button class="btn btn-secondary" id="btn-add-page-creator"><i class="fas fa-plus"></i> Add Page</button>
+                                <button class="btn btn-primary" id="btn-save-custom-story"><i class="fas fa-save"></i> Save Story</button>
+                            </div>
+                        </div>
+
+                        <!-- Info/Guide Panel -->
+                        <div class="creator-info">
+                            <h3>How to write Leveled Text</h3>
+                            <div class="info-block">
+                                <strong>Level A (Emergent):</strong>
+                                <p>Use 1 simple sentence per page. Stick to CVC words (cat, dog, sit) and basic sight words (the, a, see, is, on).</p>
+                            </div>
+                            <div class="info-block">
+                                <strong>Level B (Emergent):</strong>
+                                <p>Use 1-2 sentences per page. Introduce simple repetitive sentence structures (Sam likes to run. Sam likes to play.)</p>
+                            </div>
+                            <div class="info-block">
+                                <strong>Level C (Early):</strong>
+                                <p>Use 2-3 sentences per page. Use more varied sentence styles, punctuation, and blends (tree, bird, green, nest).</p>
+                            </div>
+                            <div class="info-block">
+                                <strong>Level D (Early):</strong>
+                                <p>Use 3-4 sentences per page. Introduce basic story lines, dialogues, compound words, and a wider vocabulary (sandcastle, watermelon).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- How it Works & Educational Info -->
+    <section id="how-it-works" class="educational-section container">
+        <div class="edu-grid">
+            <div class="edu-card">
+                <div class="edu-icon"><i class="fas fa-brain"></i></div>
+                <h3>Phonics-First Learning</h3>
+                <p>By breaking words into onsets (starting consonant sounds like <strong>c-</strong> or <strong>ch-</strong>) and rimes (vowel/ending combinations like <strong>-at</strong> or <strong>-air</strong>), early readers decode words naturally rather than relying on sight-memorization alone.</p>
+            </div>
+            <div class="edu-card">
+                <div class="edu-icon"><i class="fas fa-assistive-listening-systems"></i></div>
+                <h3>Bimodal Reading (TTS)</h3>
+                <p>Our read-aloud features highlight words in real-time as they are spoken. Research shows that seeing and hearing text simultaneously (bimodal presentation) improves vocabulary, tracking, and reading speed.</p>
+            </div>
+            <div class="edu-card">
+                <div class="edu-icon"><i class="fas fa-universal-access"></i></div>
+                <h3>Inclusive Accessibility</h3>
+                <p>Choose from warm sepia themes, high-contrast layouts, text sizing, and dyslexia-friendly typography to provide a comfortable, stress-free reading environment tailored to your learner's needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section container">
+        <div class="panel-card">
+            <h2>About Leveled Reading Helper</h2>
+            <p>The Leveled Reading Helper is a free educational tool designed to support preschool, kindergarten, and elementary school students who are learning to read. It aligns with science of reading principles by offering controlled vocabulary text, phonic-based auditory feedback, and visual tracking support.</p>
+            <p>All processing happens directly in the browser—your text and stories are never saved to our servers, keeping your student's learning session private and secure.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-tools"></i>
+                        <span>FreeThings.win</span>
+                    </div>
+                    <p>Free online tools and utilities for everyone.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="../qrcode-site/">QR Code Generator</a></li>
+                        <li><a href="../unit-converter/">Unit Converter</a></li>
+                        <li><a href="../text-case-converter/">Text Case Converter</a></li>
+                        <li><a href="../password-generator/">Password Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Developer Tools</h4>
+                    <ul>
+                        <li><a href="../uuid-generator/">UUID Generator</a></li>
+                        <li><a href="../base64-converter/">Base64 Converter</a></li>
+                        <li><a href="../word-counter/">Word Counter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Education Tools</h4>
+                    <ul>
+                        <li><a href="../worksheet-generator/">Worksheet Generator</a></li>
+                        <li><a href="../reading-helper/">Reading Helper</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../frontpage/#tools">All Tools</a></li>
+                        <li><a href="../frontpage/#docs">Guides</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li><a href="/privacy/">Privacy Policy</a></li>
+                        <li><a href="/terms/">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FreeThings.win. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a> | <a href="/contact">Contact</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- OpenDyslexic Web Font Styling (Self-contained in CSS) -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

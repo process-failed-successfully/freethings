@@ -1,0 +1,510 @@
+[
+    {
+        "id": "cat-mat",
+        "title": "The Cat on the Mat",
+        "base_image": "cat_mat_1.png",
+        "pages": [
+            {
+                "image": "images/cat_mat_1.png",
+                "prompt": "Cute fluffy orange cat standing happily in a meadow, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/cat_mat_2.png",
+                "prompt": "Cute fluffy orange cat looking curiously at a colorful striped woven rug mat, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/cat_mat_3.png",
+                "prompt": "Cute fluffy orange cat sitting contentedly in the middle of a colorful striped woven rug mat, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/cat_mat_4.png",
+                "prompt": "Cute fluffy orange cat curled up sleeping peacefully on a colorful striped woven rug mat, smiling contentedly, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            }
+        ]
+    },
+    {
+        "id": "yucky-shoe",
+        "title": "The Yucky Shoe",
+        "base_image": "yucky_shoe_1.png",
+        "pages": [
+            {
+                "image": "images/yucky_shoe_1.png",
+                "prompt": "A cute child walking happily in green grass, wearing a shiny red shoe, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_shoe_2.png",
+                "prompt": "A pair of shiny new bright red shoes, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_shoe_3.png",
+                "prompt": "A close up of a red shoe stepping into a brown mud puddle looking like poop, splatting, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_shoe_4.png",
+                "prompt": "A sad child looking down at a very dirty messy yucky red shoe covered in brown mud, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_shoe_5.png",
+                "prompt": "A clean red shoe being washed with soap bubbles and water, sparkling clean, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            }
+        ]
+    },
+    {
+        "id": "sam-dog",
+        "title": "Sam the Dog",
+        "base_image": "sam_dog_1.png",
+        "pages": [
+            {
+                "image": "images/sam_dog_1.png",
+                "prompt": "A happy cute golden retriever dog wagging its tail, smiling friendly, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/sam_dog_2.png",
+                "prompt": "A happy cute golden retriever dog running joyfully in a grassy meadow with small wildflowers, wind in its fur, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/sam_dog_3.png",
+                "prompt": "A happy cute golden retriever dog sitting proudly with a bright red tennis ball in its mouth, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/sam_dog_4.png",
+                "prompt": "A happy cute golden retriever dog looking messy and happy with muddy patches on its fur, standing in a small mud puddle, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            }
+        ]
+    },
+    {
+        "id": "red-bird",
+        "title": "The Red Bird",
+        "base_image": "red_bird_1.png",
+        "pages": [
+            {
+                "image": "images/red_bird_1.png",
+                "prompt": "A cute little red bird sitting happily on a leafy branch of a green tree, smiling, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/red_bird_2.png",
+                "prompt": "A cute little red bird holding a small twig in its beak, preparing to build a nest, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/red_bird_3.png",
+                "prompt": "A cute little red bird standing next to a small nest made of green moss and straw, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/red_bird_4.png",
+                "prompt": "A cute little red bird looking proudly at a nest containing three small blue eggs, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            }
+        ]
+    },
+    {
+        "id": "beach-day",
+        "title": "A Day at the Beach",
+        "base_image": "beach_day_1.png",
+        "pages": [
+            {
+                "image": "images/beach_day_1.png",
+                "prompt": "Two children, a boy and a girl, packing a large colorful beach bag, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/beach_day_2.png",
+                "prompt": "Two children building a tall sandcastle decorated with a small blue flag on top, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/beach_day_3.png",
+                "prompt": "Two children laughing as a cold ocean wave splashes against their bare feet, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            },
+            {
+                "image": "images/beach_day_4.png",
+                "prompt": "Two children sitting under a colorful beach umbrella eating slices of sweet red watermelon, white background, whimsical children's book watercolor illustration, bright pastel colors"
+            }
+        ]
+    },
+    {
+        "id": "tooting-frog",
+        "title": "The Tooting Frog",
+        "base_image": "tooting_frog_1.png",
+        "pages": [
+            {
+                "image": "images/tooting_frog_1.png",
+                "prompt": "A cute green frog sitting on a lily pad in a pond, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details"
+            },
+            {
+                "image": "images/tooting_frog_2.png",
+                "prompt": "A cute green frog jumping in the air above a lily pad, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details"
+            },
+            {
+                "image": "images/tooting_frog_3.png",
+                "prompt": "A cute green frog looking surprised with a tiny white cartoon puff cloud behind it, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details"
+            },
+            {
+                "image": "images/tooting_frog_4.png",
+                "prompt": "A cute green frog smiling happily on a lily pad, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details"
+            }
+        ]
+    },
+    {
+        "id": "mud-monster",
+        "title": "The Mud Monster",
+        "base_image": "mud_monster_1.png",
+        "pages": [
+            {
+                "image": "images/mud_monster_1.png",
+                "prompt": "A happy kid playing in a large mud puddle, covered in brown mud, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/mud_monster_2.png",
+                "prompt": "A kid holding up two hands covered in thick brown mud, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/mud_monster_3.png",
+                "prompt": "A kid with a big smile and brown mud smeared all over their face, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/mud_monster_4.png",
+                "prompt": "A kid completely covered in brown mud raising arms up like a silly monster, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/mud_monster_5.png",
+                "prompt": "A clean kid sitting in a white bathtub filled with white soapy bubbles, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            }
+        ]
+    },
+    {
+        "id": "green-slime",
+        "title": "Green Slime",
+        "base_image": "green_slime_1.png",
+        "pages": [
+            {
+                "image": "images/green_slime_1.png",
+                "prompt": "Two kids looking surprised at a pile of green glowing slime in a garden, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/green_slime_2.png",
+                "prompt": "Two kids pointing down at a sticky puddle of green slime, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/green_slime_3.png",
+                "prompt": "A close up of a shiny sticky green slime puddle, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/green_slime_4.png",
+                "prompt": "A kid poking the green slime with one finger, looking disgusted but curious, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/green_slime_5.png",
+                "prompt": "Two kids washing their hands with soap and water at a sink, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            }
+        ]
+    },
+    {
+        "id": "smelly-cheese",
+        "title": "The Smelly Cheese",
+        "base_image": "smelly_cheese_1.png",
+        "pages": [
+            {
+                "image": "images/smelly_cheese_1.png",
+                "prompt": "A cute little grey mouse sniffing a large wedge of yellow Swiss cheese with holes, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/smelly_cheese_2.png",
+                "prompt": "A cute little grey mouse holding a piece of yellow cheese with large round holes, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/smelly_cheese_3.png",
+                "prompt": "A cute little grey mouse holding its nose with one paw, standing next to stinky yellow cheese with green wavy smell lines, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/smelly_cheese_4.png",
+                "prompt": "An orange cat waking up from sleep with one eye open, smelling green wavy smell lines in the air, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/smelly_cheese_5.png",
+                "prompt": "A cute little grey mouse running away fast, leaving the cheese behind, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            }
+        ]
+    },
+    {
+        "id": "hippo-burp",
+        "title": "Oops! A Burp",
+        "base_image": "hippo_burp_1.png",
+        "pages": [
+            {
+                "image": "images/hippo_burp_1.png",
+                "prompt": "A cute chubby grey hippo eating green grass in a field, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/hippo_burp_2.png",
+                "prompt": "A cute chubby grey hippo chewing on a large mouthful of green grass, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/hippo_burp_3.png",
+                "prompt": "A cute chubby grey hippo with a very big round belly sitting in a field, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/hippo_burp_4.png",
+                "prompt": "A cute chubby grey hippo covering its mouth with one hand, looking surprised after burping, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            }
+        ]
+    },
+    {
+        "id": "slippery-poo",
+        "title": "Slippery Poo",
+        "base_image": "slippery_poo_1.png",
+        "pages": [
+            {
+                "image": "images/slippery_poo_1.png",
+                "prompt": "A happy dog running in a grassy yard, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/slippery_poo_2.png",
+                "prompt": "A happy dog running towards a small pile of brown poo hidden in the grass, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/slippery_poo_3.png",
+                "prompt": "A dog's paw stepping right into a muddy brown puddle, splatting mud everywhere, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/slippery_poo_4.png",
+                "prompt": "A dog sliding comically on the grass on its bottom, looking surprised, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            },
+            {
+                "image": "images/slippery_poo_5.png",
+                "prompt": "A sad looking dog sitting in a tub of soapy water getting washed, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            }
+        ]
+    },
+    {
+        "id": "yucky-bug",
+        "title": "The Yucky Bug",
+        "base_image": "yucky_bug_1.png",
+        "pages": [
+            {
+                "image": "images/yucky_bug_1.png",
+                "prompt": "A large round bug with red spots crawling on a sidewalk, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_bug_2.png",
+                "prompt": "A close up view of a round bug's back showing bright red spots, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_bug_3.png",
+                "prompt": "A large bug sitting still while green wavy smell lines float up from it, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_bug_4.png",
+                "prompt": "A bug crawling away into some green grass, whimsical children's book watercolor illustration, bright pastel colors, white background"
+            },
+            {
+                "image": "images/yucky_bug_5.png",
+                "prompt": "Two kids pinching their noses shut with their fingers, looking disgusted, whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters"
+            }
+        ]
+    },
+    {
+        "id": "snotty-troll",
+        "title": "The Snotty Troll",
+        "base_image": "snotty_troll_1.png",
+        "pages": [
+            {
+                "image": "images/snotty_troll_1.png",
+                "prompt": "A friendly cute troll with messy hair standing under a stone bridge, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "enhanced_prompt": "A friendly and playful troll standing under a stone bridge, whimsical illustrations by a talented artist, bright pastel colors, white background",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_troll_2.png",
+                "prompt": "A cute troll looking sick, holding a thermometer in his mouth and shivering, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "enhanced_prompt": "A green troll with a mischievous look, holding a thermometer in his mouth and shivering, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_troll_3.png",
+                "prompt": "A cute troll sneezing very loudly, eyes squeezed shut, head thrown forward, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "enhanced_prompt": "A green dragon sneezes very loudly (green dragon:1.5), eyes squeezed shut, head thrown forward, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_troll_4.png",
+                "prompt": "A cute troll looking embarrassed with a string of green snot hanging from his nose, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "enhanced_prompt": "A cute troll looking embarrassed with a string of green snot hanging from his nose, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_troll_5.png",
+                "prompt": "A cute troll blowing his nose into a giant white tissue paper, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "enhanced_prompt": "A playful troll with a mischievous grin blowing his nose into a giant white tissue paper, whimsical children's book watercolor illustration, bright pastel colors, white background",
+                "ip_adapter_scale": 0.6
+            }
+        ]
+    },
+    {
+        "id": "dragon-burp",
+        "title": "The Day the Dragon Burped",
+        "base_image": "dragon_burp_1.png",
+        "pages": [
+            {
+                "image": "images/dragon_burp_1.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A small green dragon looking sad while holding a stick with a white marshmallow."
+            },
+            {
+                "image": "images/dragon_burp_2.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A small green dragon puffing out his cheeks very big, with three knights watching.",
+                "enhanced_prompt": "[whimsical children's book watercolor illustration] (green snot:1.5)",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/dragon_burp_3.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A small green dragon burping out a huge cloud of green smoke, looking surprised."
+            },
+            {
+                "image": "images/dragon_burp_4.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three knights pinching their noses and making disgusted faces inside a cloud of green smoke.",
+                "enhanced_prompt": "[whimsical children's book watercolor illustration] (green snot:1.5)",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/dragon_burp_5.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A blushing green dragon looking embarrassed, letting out one tiny green smoke ring."
+            },
+            {
+                "image": "images/dragon_burp_6.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, The green dragon and the knights sitting together, laughing and eating cold white marshmallows.",
+                "enhanced_prompt": "[whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, The green dragon and the knights sitting together, laughing and eating cold white marshmallows. (green snot:1.5), ip_adapter_scale:0.6]",
+                "ip_adapter_scale": 0.6
+            }
+        ]
+    },
+    {
+        "id": "cheese-catastrophe",
+        "title": "The Great Cheese Catastrophe",
+        "base_image": "cheese_catastrophe_1.png",
+        "pages": [
+            {
+                "image": "images/cheese_catastrophe_1.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A cute grey rat looking happily at a giant wheel of yellow cheese with holes."
+            },
+            {
+                "image": "images/cheese_catastrophe_2.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A grey rat pushing a large wheel of cheese behind a wooden bookshelf."
+            },
+            {
+                "image": "images/cheese_catastrophe_3.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A wheel of cheese behind a bookshelf with wavy green smell lines floating up."
+            },
+            {
+                "image": "images/cheese_catastrophe_4.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three mice waking up and holding their noses, looking confused by the green smell lines."
+            },
+            {
+                "image": "images/cheese_catastrophe_5.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three mice finding Barnaby the rat, who is holding his nose next to the stinky cheese."
+            },
+            {
+                "image": "images/cheese_catastrophe_6.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Four mice happily eating pieces of smelly yellow cheese together."
+            }
+        ]
+    },
+    {
+        "id": "snotty-monster",
+        "title": "The Snotty Sea Monster",
+        "base_image": "snotty_monster_1.png",
+        "pages": [
+            {
+                "image": "images/snotty_monster_1.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A large purple octopus-like sea monster looking sad and sick in the blue ocean."
+            },
+            {
+                "image": "images/snotty_monster_2.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A purple sea monster poking his head out of the water near a wooden pirate ship.",
+                "enhanced_prompt": "A cheerful little girl with big eyes and curly hair holding a colorful crayon, sitting on a soft blue chair, surrounded by her stuffed animals and toys.",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_monster_3.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A purple sea monster leaning back, eyes squeezed shut, taking a huge breath to sneeze.",
+                "enhanced_prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A purple sea monster leaning back, eyes squeezed shut, taking a huge breath to sneeze.",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_monster_4.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A giant spray of green snot flying from the monster's nose onto the pirate ship.",
+                "enhanced_prompt": "A whimsical children's book watercolor illustration with bright pastel colors, white background, cute friendly characters, simple details, a giant spray of green snot flying from the monster's nose onto the pirate ship.",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_monster_5.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three pirates covered in sticky green slime, looking disgusted and wiping their faces.",
+                "enhanced_prompt": "A whimsical children's book watercolor illustration with bright pastel colors, white background, cute friendly characters, simple details, Three pirates covered in sticky green slime, looking disgusted and wiping their faces.",
+                "ip_adapter_scale": 0.6
+            },
+            {
+                "image": "images/snotty_monster_6.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A purple sea monster blowing his nose into a massive white tissue, while pirates watch.",
+                "enhanced_prompt": "A cheerful little girl holding a colorful watercolor illustration of a playful purple sea monster with a big white tissue in its mouth, surrounded by cute and friendly characters like a mischievous pirate and a curious fox, with simple yet whimsical details, a light blue sky behind her, and a touch of autumnal color, with a slight adjustment to make the main character appear more presentable, using an IP adapter scale of 0.6",
+                "ip_adapter_scale": 0.6
+            }
+        ]
+    },
+    {
+        "id": "captain-fartbeard",
+        "title": "Captain Fartbeard's Treasure",
+        "base_image": "captain_fartbeard_1.png",
+        "pages": [
+            {
+                "image": "images/captain_fartbeard_1.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A pirate captain with a big beard eating a large bowl of brown beans."
+            },
+            {
+                "image": "images/captain_fartbeard_2.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A pirate ship sitting still on flat blue water, with droopy white sails."
+            },
+            {
+                "image": "images/captain_fartbeard_3.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A pirate captain standing at the back of the ship, bending over with his back to the sails."
+            },
+            {
+                "image": "images/captain_fartbeard_4.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A pirate captain farting a huge cloud of wind that pushes into the ship's sails."
+            },
+            {
+                "image": "images/captain_fartbeard_5.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, The pirate ship zooming fast across the water, with pirates cheering and holding their noses."
+            },
+            {
+                "image": "images/captain_fartbeard_6.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Pirates finding a treasure chest of gold, then running away as the captain holds his stomach."
+            }
+        ]
+    },
+    {
+        "id": "tooted-tent",
+        "title": "Who Tooted in the Tent?",
+        "base_image": "tooted_tent_1.png",
+        "pages": [
+            {
+                "image": "images/tooted_tent_1.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three kids sleeping in sleeping bags inside a small green camping tent."
+            },
+            {
+                "image": "images/tooted_tent_2.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A boy waking up inside a tent, pinching his nose with green smell lines around him."
+            },
+            {
+                "image": "images/tooted_tent_3.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three kids sitting up in a tent, pointing fingers at each other with angry faces."
+            },
+            {
+                "image": "images/tooted_tent_4.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Kids arguing inside the tent, while the green smell lines get thicker and darker."
+            },
+            {
+                "image": "images/tooted_tent_5.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A girl unzipping the tent flap to reveal a sleeping black and white skunk outside."
+            },
+            {
+                "image": "images/tooted_tent_6.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Three kids laughing quietly inside the zipped-up green tent, holding their noses."
+            }
+        ]
+    }
+]

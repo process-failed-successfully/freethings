@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reading Helper Lite</title>
+    <link rel="stylesheet" href="lite.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <!-- Home Screen: Book Selection -->
+    <div id="home-view" class="view active">
+        <header class="lite-header">
+            <h1>FreeThings.win Reading for Kids</h1>
+            <div class="level-filters" id="level-filters">
+                <button class="filter-btn active" data-level="A">Level A</button>
+                <button class="filter-btn" data-level="B">Level B</button>
+                <button class="filter-btn" data-level="C">Level C</button>
+                <button class="filter-btn" data-level="D">Level D</button>
+            </div>
+        </header>
+        <div class="book-grid" id="book-grid">
+            <!-- Books injected by JS -->
+        </div>
+    </div>
+
+    <!-- Reading Screen -->
+    <div id="read-view" class="view">
+        <div class="top-bar">
+            <button class="icon-btn" id="btn-back"><i class="fas fa-home"></i></button>
+            <h2 id="book-title">Title</h2>
+            <button class="icon-btn" id="btn-read-aloud"><i class="fas fa-volume-up"></i></button>
+        </div>
+
+        <div class="book-content" id="book-content">
+            <img src="" id="page-img" alt="Illustration">
+            <div class="text-container" id="page-text">
+                <!-- Clickable words injected here -->
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <button class="nav-btn" id="btn-prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="page-indicator" id="page-indicator">1 / 5</div>
+            <button class="nav-btn" id="btn-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="lite.js"></script>
+</body>
+</html>

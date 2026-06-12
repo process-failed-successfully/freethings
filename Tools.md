@@ -23,6 +23,7 @@
 - ✅ **UUID Generator** – quick unique IDs (Complete)
 - ✅ **Base64 Encoder/Decoder** – for dev tasks (Complete)
 - ✅ **Worksheet Generator** – create educational worksheets for children (Complete)
+- ✅ **Reading Helper** – leveled children's books with phonics assistance (Complete)
 
 # Final steps
 
