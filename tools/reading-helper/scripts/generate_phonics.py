@@ -31,7 +31,7 @@ def get_phonetic_sound(part):
     return res
 
 def main():
-    script_path = '/workspace/script.js'
+    script_path = '/workspace/data.js'
     audio_dir = '/workspace/audio'
     os.makedirs(audio_dir, exist_ok=True)
 
@@ -59,11 +59,11 @@ def main():
         if match_id:
             book_id = match_id.group(1)
             page_idx = 0
-        match_text = re.search(r'text:\s*"([^"]+)"', line)
+        match_text = re.search(r'text:\s*([\'"`])(.*?)\1', line)
         if match_text and book_id:
             page_texts.append({
                 'filename': f"page_{book_id}_{page_idx}.wav",
-                'text': match_text.group(1)
+                'text': match_text.group(2)
             })
             page_idx += 1
 
