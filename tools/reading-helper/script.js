@@ -452,32 +452,21 @@ function readPageAloud() {
     
     // Setup pseudo-highlighting
     const wordsCount = currentSpokenWords.length;
-    let currentWordIndex = 0;
 
-    pageAudio.onplay = () => {
-        // Fallback to 3.0s if duration isn't perfectly loaded yet
-        let duration = pageAudio.duration;
-        if (isNaN(duration) || duration === 0) duration = 3.0; 
+    pageAudio.ontimeupdate = () => {
+        if (!pageAudio || isNaN(pageAudio.duration) || pageAudio.duration === 0 || wordsCount === 0) return;
         
-        // Ensure there is at least some minimal duration
-        const safeDuration = Math.max(duration, 0.5);
-        const intervalMs = (safeDuration * 1000) / wordsCount;
+        const progress = pageAudio.currentTime / pageAudio.duration;
+        let wordIndex = Math.floor(progress * wordsCount);
+        if (wordIndex >= wordsCount) wordIndex = wordsCount - 1;
         
-        // Immediately highlight the first word
-        if (wordsCount > 0) {
-            currentSpokenWords[0].element.classList.add("speaking");
-            currentWordIndex = 1;
-        }
-
-        highlightInterval = setInterval(() => {
-            if (currentWordIndex < wordsCount) {
-                currentSpokenWords.forEach(ws => ws.element.classList.remove("speaking"));
-                currentSpokenWords[currentWordIndex].element.classList.add("speaking");
-                currentWordIndex++;
+        currentSpokenWords.forEach((ws, i) => {
+            if (i === wordIndex) {
+                ws.element.classList.add("speaking");
             } else {
-                clearInterval(highlightInterval);
+                ws.element.classList.remove("speaking");
             }
-        }, intervalMs / speedInput);
+        });
     };
 
     pageAudio.onended = () => {
