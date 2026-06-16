@@ -64,6 +64,13 @@ body {
     color: #2563eb;
 }
 
+.nav-links a:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+    border-radius: 4px;
+    color: #2563eb;
+}
+
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -156,10 +163,16 @@ body {
     overflow: hidden;
 }
 
-.tool-card:hover {
+.tool-card:hover,
+.tool-card:focus-visible {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     border-color: #2563eb;
+    outline: none;
+}
+
+.tool-card:focus-visible {
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3), 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .tool-card.coming-soon {
@@ -252,9 +265,15 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.feature-card:hover {
+.feature-card:hover,
+.feature-card:focus-visible {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.feature-card:focus-visible {
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3), 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .feature-card i {
@@ -361,8 +380,15 @@ body {
     transition: color 0.3s ease;
 }
 
-.footer-section ul li a:hover {
+.footer-section ul li a:hover,
+.footer-section ul li a:focus-visible {
     color: #f1f5f9;
+}
+
+.footer-section ul li a:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 4px;
+    border-radius: 2px;
 }
 
 .footer-section p {
@@ -383,8 +409,15 @@ body {
     transition: color 0.3s ease;
 }
 
-.footer-bottom a:hover {
+.footer-bottom a:hover,
+.footer-bottom a:focus-visible {
     color: #f1f5f9;
+}
+
+.footer-bottom a:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 4px;
+    border-radius: 2px;
 }
 
 /* Responsive Design */
