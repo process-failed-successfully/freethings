@@ -186,7 +186,8 @@ function showResult(result) {
     const resultOutput = document.getElementById('result-output');
     const copyBtn = document.getElementById('copy-btn');
     
-    resultOutput.innerHTML = result;
+    // ✅ Use textContent to prevent XSS from user-controlled input
+    resultOutput.textContent = result;
     resultOutput.classList.add('has-content');
     
     // Enable copy button

@@ -224,7 +224,13 @@ function displayResult(result, status) {
     const copyBtn = document.getElementById('copy-btn');
     const downloadBtn = document.getElementById('download-btn');
     
-    resultOutput.innerHTML = `<div class="result-text">${result}</div>`;
+    // ✅ Use textContent to prevent XSS from user-controlled input
+    const resultDiv = document.createElement('div');
+    resultDiv.className = 'result-text';
+    resultDiv.textContent = result;
+
+    resultOutput.innerHTML = '';
+    resultOutput.appendChild(resultDiv);
     resultOutput.classList.add('has-result');
     
     // Enable copy button
