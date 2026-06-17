@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const textArea = document.getElementById('text-input');
     const wordCount = document.getElementById('word-count');
     const charCount = document.getElementById('char-count');
-    const charCountNoSpaces = document.getElementById('char-count-no-spaces');
+    const charCountNoSpaces = document.getElementById('char-no-spaces');
     const sentenceCount = document.getElementById('sentence-count');
     const paragraphCount = document.getElementById('paragraph-count');
     const readingTime = document.getElementById('reading-time');
@@ -38,4 +38,24 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial count
     updateCounts();
+
+    // Global utility functions for the Word Counter UI
+    window.clearText = function() {
+        textArea.value = '';
+        updateCounts();
+        textArea.focus();
+    };
+
+    window.pasteText = async function() {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+                textArea.value += text;
+                updateCounts();
+                textArea.focus();
+            }
+        } catch (err) {
+            console.error('Clipboard access denied:', err);
+        }
+    };
 });
