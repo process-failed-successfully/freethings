@@ -224,7 +224,12 @@ function displayResult(result, status) {
     const copyBtn = document.getElementById('copy-btn');
     const downloadBtn = document.getElementById('download-btn');
     
-    resultOutput.innerHTML = `<div class="result-text">${result}</div>`;
+    // Safely set text content to prevent DOM-based XSS
+    const resultDiv = document.createElement('div');
+    resultDiv.className = 'result-text';
+    resultDiv.textContent = result;
+    resultOutput.innerHTML = '';
+    resultOutput.appendChild(resultDiv);
     resultOutput.classList.add('has-result');
     
     // Enable copy button
@@ -285,12 +290,14 @@ function displayError(message) {
     const copyBtn = document.getElementById('copy-btn');
     const downloadBtn = document.getElementById('download-btn');
     
+    // Use innerHTML for structure but textContent for user-provided message
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    resultOutput.querySelector('p').textContent = message;
     resultOutput.classList.remove('has-result');
     
     copyBtn.disabled = true;
