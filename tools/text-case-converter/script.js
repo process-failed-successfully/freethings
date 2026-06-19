@@ -186,7 +186,8 @@ function showResult(result) {
     const resultOutput = document.getElementById('result-output');
     const copyBtn = document.getElementById('copy-btn');
     
-    resultOutput.innerHTML = result;
+    // Use textContent instead of innerHTML to prevent DOM-based XSS
+    resultOutput.textContent = result;
     resultOutput.classList.add('has-content');
     
     // Enable copy button
@@ -207,12 +208,14 @@ function showError(message) {
     const resultOutput = document.getElementById('result-output');
     const copyBtn = document.getElementById('copy-btn');
     
+    // Use innerHTML for structure but textContent for the dynamic message to prevent XSS
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p class="error-message"></p>
         </div>
     `;
+    resultOutput.querySelector('.error-message').textContent = message;
     resultOutput.classList.remove('has-content');
     
     copyBtn.disabled = true;
