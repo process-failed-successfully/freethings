@@ -14,7 +14,21 @@ const characterSets = {
 document.addEventListener('DOMContentLoaded', function() {
     updateLengthDisplay();
     generatePassword(); // Generate initial password
+    setupPresetAccessibility();
 });
+
+// Setup keyboard accessibility for presets
+function setupPresetAccessibility() {
+    const presets = document.querySelectorAll('.preset-item');
+    presets.forEach(preset => {
+        preset.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+}
 
 // Update length display
 function updateLengthDisplay() {

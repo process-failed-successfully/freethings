@@ -59,8 +59,10 @@ body {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a:focus-visible {
     color: #2563eb;
+    outline: none;
 }
 
 /* Hero Section */
@@ -139,6 +141,11 @@ body {
     -webkit-appearance: none;
 }
 
+.length-control input[type="range"]:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+}
+
 .length-control input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 20px;
@@ -195,7 +202,16 @@ body {
 }
 
 .checkbox-label input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.checkbox-label:focus-within {
+    background-color: #e2e8f0;
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
 }
 
 .checkmark {
@@ -248,9 +264,11 @@ body {
     color: white;
 }
 
-.generate-btn:hover {
+.generate-btn:hover,
+.generate-btn:focus-visible {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    outline: none;
 }
 
 .generate-multiple-btn {
@@ -258,10 +276,12 @@ body {
     color: white;
 }
 
-.generate-multiple-btn:hover {
+.generate-multiple-btn:hover,
+.generate-multiple-btn:focus-visible {
     background: #059669;
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    outline: none;
 }
 
 /* Result Section */
@@ -308,8 +328,10 @@ body {
     color: white;
 }
 
-.copy-btn:hover {
+.copy-btn:hover,
+.copy-btn:focus-visible {
     background: #059669;
+    outline: none;
 }
 
 .refresh-btn {
@@ -317,8 +339,10 @@ body {
     color: white;
 }
 
-.refresh-btn:hover {
+.refresh-btn:hover,
+.refresh-btn:focus-visible {
     background: #4b5563;
+    outline: none;
 }
 
 .password-output {
@@ -495,8 +519,10 @@ body {
     flex-shrink: 0;
 }
 
-.multiple-password-copy:hover {
+.multiple-password-copy:hover,
+.multiple-password-copy:focus-visible {
     background: #1d4ed8;
+    outline: none;
 }
 
 /* Presets Section */
@@ -529,10 +555,12 @@ body {
     border: 2px solid transparent;
 }
 
-.preset-item:hover {
+.preset-item:hover,
+.preset-item:focus-visible {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     border-color: #2563eb;
+    outline: none;
 }
 
 .preset-item h4 {
