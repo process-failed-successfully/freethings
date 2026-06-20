@@ -1,0 +1,3 @@
+## 2025-05-14 - Optimize Image Resizer performance and memory
+**Learning:** Using `FileReader.readAsDataURL` for image previews in a batch processing tool causes significant memory pressure and UI lag because it creates massive Base64 strings. `URL.createObjectURL` is much more efficient as it provides a direct reference to the binary data. Parallelizing image processing with `Promise.all` significantly improves throughput for multi-file batches.
+**Action:** Always prefer `URL.createObjectURL` for binary data previews and ensure proper cleanup with `URL.revokeObjectURL`. Use `Promise.all` to parallelize independent asynchronous operations like image resizing to utilize browser concurrency.
