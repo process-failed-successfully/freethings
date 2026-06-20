@@ -224,7 +224,9 @@ function displayResult(result, status) {
     const copyBtn = document.getElementById('copy-btn');
     const downloadBtn = document.getElementById('download-btn');
     
-    resultOutput.innerHTML = `<div class="result-text">${result}</div>`;
+    // Use textContent instead of innerHTML to prevent XSS
+    resultOutput.innerHTML = '<div class="result-text"></div>';
+    resultOutput.querySelector('.result-text').textContent = result;
     resultOutput.classList.add('has-result');
     
     // Enable copy button
