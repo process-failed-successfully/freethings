@@ -195,7 +195,15 @@ body {
 }
 
 .checkbox-label input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .checkmark {
@@ -220,6 +228,11 @@ body {
     color: white;
     font-size: 12px;
     font-weight: bold;
+}
+
+.checkbox-label input[type="checkbox"]:focus-visible + .checkmark {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .generate-actions {
@@ -529,10 +542,11 @@ body {
     border: 2px solid transparent;
 }
 
-.preset-item:hover {
+.preset-item:hover, .preset-item:focus-visible {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     border-color: #2563eb;
+    outline: none;
 }
 
 .preset-item h4 {
