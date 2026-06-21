@@ -71,6 +71,8 @@ function processFiles(files) {
 
     imageFiles.forEach(file => {
         if (!uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+            // Create a persistent object URL for the preview
+            file.previewUrl = URL.createObjectURL(file);
             uploadedFiles.push(file);
         }
     });
@@ -86,33 +88,34 @@ function displayFileList() {
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            fileItem.innerHTML = `
-                <img src="${e.target.result}" alt="${file.name}" class="file-preview">
-                <div class="file-info">
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-size">${formatFileSize(file.size)}</div>
-                </div>
-                <div class="file-actions">
-                    <button class="btn btn-secondary" onclick="previewImage(${index})">
-                        <i class="fas fa-eye"></i>
-                        Preview
-                    </button>
-                    <button class="btn btn-danger" onclick="removeFile(${index})">
-                        <i class="fas fa-trash"></i>
-                        Remove
-                    </button>
-                </div>
-            `;
-        };
-        reader.readAsDataURL(file);
+        // Use persistent previewUrl for instant rendering
+        fileItem.innerHTML = `
+            <img src="${file.previewUrl}" alt="${file.name}" class="file-preview">
+            <div class="file-info">
+                <div class="file-name">${file.name}</div>
+                <div class="file-size">${formatFileSize(file.size)}</div>
+            </div>
+            <div class="file-actions">
+                <button class="btn btn-secondary" onclick="previewImage(${index})">
+                    <i class="fas fa-eye"></i>
+                    Preview
+                </button>
+                <button class="btn btn-danger" onclick="removeFile(${index})">
+                    <i class="fas fa-trash"></i>
+                    Remove
+                </button>
+            </div>
+        `;
         
         fileList.appendChild(fileItem);
     });
 }
 
 function removeFile(index) {
+    const file = uploadedFiles[index];
+    if (file && file.previewUrl) {
+        URL.revokeObjectURL(file.previewUrl);
+    }
     uploadedFiles.splice(index, 1);
     displayFileList();
     updateResizeButton();
@@ -120,49 +123,61 @@ function removeFile(index) {
 
 function previewImage(index) {
     const file = uploadedFiles[index];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        // Create modal for image preview
-        const modal = document.createElement('div');
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            cursor: pointer;
-        `;
-        
-        modal.innerHTML = `
-            <div style="max-width: 90%; max-height: 90%; position: relative;">
-                <img src="${e.target.result}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                <button onclick="this.parentElement.parentElement.remove()" style="
-                    position: absolute;
-                    top: -40px;
-                    right: 0;
-                    background: white;
-                    border: none;
-                    border-radius: 50%;
-                    width: 30px;
-                    height: 30px;
-                    cursor: pointer;
-                    font-size: 18px;
-                ">×</button>
-            </div>
-        `;
-        
-        modal.onclick = () => modal.remove();
-        document.body.appendChild(modal);
-    };
-    reader.readAsDataURL(file);
+    if (!file || !file.previewUrl) return;
+
+    // Create modal for image preview
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        cursor: pointer;
+    `;
+
+    modal.innerHTML = `
+        <div style="max-width: 90%; max-height: 90%; position: relative;">
+            <img src="${file.previewUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <button onclick="this.parentElement.parentElement.remove()" style="
+                position: absolute;
+                top: -40px;
+                right: 0;
+                background: white;
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                font-size: 18px;
+            ">×</button>
+        </div>
+    `;
+
+    modal.onclick = () => modal.remove();
+    document.body.appendChild(modal);
 }
 
 function clearAll() {
+    // Revoke all preview object URLs
+    uploadedFiles.forEach(file => {
+        if (file.previewUrl) {
+            URL.revokeObjectURL(file.previewUrl);
+        }
+    });
+
+    // Revoke all result object URLs
+    resizedImages.forEach(result => {
+        if (result.resizedUrl) {
+            URL.revokeObjectURL(result.resizedUrl);
+        }
+    });
+
     uploadedFiles = [];
     resizedImages = [];
     displayFileList();
@@ -278,14 +293,17 @@ async function resizeImages() {
     resizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     resizeBtn.disabled = true;
     
+    // Cleanup previous result Object URLs
+    resizedImages.forEach(result => {
+        if (result.resizedUrl) {
+            URL.revokeObjectURL(result.resizedUrl);
+        }
+    });
     resizedImages = [];
     
     try {
-        for (let i = 0; i < uploadedFiles.length; i++) {
-            const file = uploadedFiles[i];
-            const resizedImage = await resizeImage(file);
-            resizedImages.push(resizedImage);
-        }
+        // Parallelize image processing for better performance
+        resizedImages = await Promise.all(uploadedFiles.map(file => resizeImage(file)));
         
         displayResults();
         showResults();
@@ -306,6 +324,8 @@ async function resizeImage(file) {
         const ctx = canvas.getContext('2d');
         
         img.onload = function() {
+            // Revoke the object URL as soon as the image is loaded to free up memory
+            URL.revokeObjectURL(img.src);
             try {
                 const originalWidth = img.width;
                 const originalHeight = img.height;
@@ -425,7 +445,10 @@ async function resizeImage(file) {
             }
         };
         
-        img.onerror = () => reject(new Error('Failed to load image'));
+        img.onerror = () => {
+            URL.revokeObjectURL(img.src);
+            reject(new Error('Failed to load image'));
+        };
         img.src = URL.createObjectURL(file);
     });
 }
@@ -437,32 +460,33 @@ function displayResults() {
         const resultItem = document.createElement('div');
         resultItem.className = 'result-item';
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            resultItem.innerHTML = `
-                <img src="${e.target.result}" alt="Resized" class="result-preview">
-                <div class="result-info">
-                    <h4>${result.resized.name}</h4>
-                    <div class="result-stats">
-                        <div>Original: ${result.originalDimensions}</div>
-                        <div>New: ${result.newDimensions}</div>
-                        <div>Original: ${formatFileSize(result.originalSize)}</div>
-                        <div>New: ${formatFileSize(result.newSize)}</div>
-                    </div>
-                    <div class="result-actions">
-                        <button class="btn btn-primary" onclick="downloadImage(${index})">
-                            <i class="fas fa-download"></i>
-                            Download
-                        </button>
-                        <button class="btn btn-secondary" onclick="previewResizedImage(${index})">
-                            <i class="fas fa-eye"></i>
-                            Preview
-                        </button>
-                    </div>
+        // Create and store Object URL for the result
+        if (!result.resizedUrl) {
+            result.resizedUrl = URL.createObjectURL(result.resized);
+        }
+
+        resultItem.innerHTML = `
+            <img src="${result.resizedUrl}" alt="Resized" class="result-preview">
+            <div class="result-info">
+                <h4>${result.resized.name}</h4>
+                <div class="result-stats">
+                    <div>Original: ${result.originalDimensions}</div>
+                    <div>New: ${result.newDimensions}</div>
+                    <div>Original: ${formatFileSize(result.originalSize)}</div>
+                    <div>New: ${formatFileSize(result.newSize)}</div>
                 </div>
-            `;
-        };
-        reader.readAsDataURL(result.resized);
+                <div class="result-actions">
+                    <button class="btn btn-primary" onclick="downloadImage(${index})">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                    <button class="btn btn-secondary" onclick="previewResizedImage(${index})">
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </button>
+                </div>
+            </div>
+        `;
         
         resultsGrid.appendChild(resultItem);
     });
@@ -481,14 +505,14 @@ function hideResults() {
 
 function downloadImage(index) {
     const result = resizedImages[index];
-    const url = URL.createObjectURL(result.resized);
+    if (!result || !result.resizedUrl) return;
+
     const a = document.createElement('a');
-    a.href = url;
+    a.href = result.resizedUrl;
     a.download = result.resized.name;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
 }
 
 function downloadAll() {
@@ -501,46 +525,44 @@ function downloadAll() {
 
 function previewResizedImage(index) {
     const result = resizedImages[index];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        // Create modal for image preview
-        const modal = document.createElement('div');
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            cursor: pointer;
-        `;
-        
-        modal.innerHTML = `
-            <div style="max-width: 90%; max-height: 90%; position: relative;">
-                <img src="${e.target.result}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                <button onclick="this.parentElement.parentElement.remove()" style="
-                    position: absolute;
-                    top: -40px;
-                    right: 0;
-                    background: white;
-                    border: none;
-                    border-radius: 50%;
-                    width: 30px;
-                    height: 30px;
-                    cursor: pointer;
-                    font-size: 18px;
-                ">×</button>
-            </div>
-        `;
-        
-        modal.onclick = () => modal.remove();
-        document.body.appendChild(modal);
-    };
-    reader.readAsDataURL(result.resized);
+    if (!result || !result.resizedUrl) return;
+
+    // Create modal for image preview
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        cursor: pointer;
+    `;
+
+    modal.innerHTML = `
+        <div style="max-width: 90%; max-height: 90%; position: relative;">
+            <img src="${result.resizedUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <button onclick="this.parentElement.parentElement.remove()" style="
+                position: absolute;
+                top: -40px;
+                right: 0;
+                background: white;
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                font-size: 18px;
+            ">×</button>
+        </div>
+    `;
+
+    modal.onclick = () => modal.remove();
+    document.body.appendChild(modal);
 }
 
 function updateResizeButton() {

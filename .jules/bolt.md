@@ -1,0 +1,3 @@
+## 2025-05-15 - [Synchronous Previews & Parallel Processing]
+**Learning:** `FileReader.readAsDataURL` is an anti-pattern for large image previews as it's asynchronous, CPU-intensive (Base64 encoding), and increases memory usage by ~33%. `URL.createObjectURL` provides synchronous, high-performance access to file data. Additionally, sequential Canvas operations in loops create unnecessary latency that can be eliminated with `Promise.all`.
+**Action:** Always prefer `URL.createObjectURL` for file previews and parallelize independent Canvas/Blob operations. Implement a strict "Create-Store-Revoke" lifecycle for Object URLs to prevent memory leaks during batch operations.
