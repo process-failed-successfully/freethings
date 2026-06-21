@@ -1,0 +1,3 @@
+## 2025-05-14 - Accessible Custom Form Controls & Interactive Cards
+**Learning:** In this design system, many interactive elements (like presets and checkboxes) are built using custom `div` or `span` wrappers. Standard `display: none` on native inputs breaks accessibility. Custom cards need explicit ARIA roles and keyboard listeners to achieve parity with native buttons.
+**Action:** Always use a visually hidden technique (absolute positioning, 0 opacity) for native inputs instead of `display: none`. For custom cards, apply `role="button"`, `tabindex="0"`, and add 'keydown' listeners for 'Enter' and 'Space' with `e.preventDefault()`. Apply focus-visible styles that match hover states for visual consistency.

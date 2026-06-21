@@ -195,7 +195,21 @@ body {
 }
 
 .checkbox-label input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.checkbox-label:focus-within {
+    background-color: #e2e8f0;
+    outline: none;
+}
+
+.checkbox-label:focus-within .checkmark {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .checkmark {
@@ -529,10 +543,11 @@ body {
     border: 2px solid transparent;
 }
 
-.preset-item:hover {
+.preset-item:hover, .preset-item:focus-visible {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     border-color: #2563eb;
+    outline: none;
 }
 
 .preset-item h4 {
