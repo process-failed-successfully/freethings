@@ -195,7 +195,17 @@ body {
 }
 
 .checkbox-label input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.checkbox-label:focus-within {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    background-color: #e2e8f0;
 }
 
 .checkmark {
