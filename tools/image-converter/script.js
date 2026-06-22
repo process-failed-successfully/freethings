@@ -91,6 +91,8 @@ function processFiles(files) {
 
     imageFiles.forEach(file => {
         if (!uploadedFiles.find(f => f.name === file.name && f.size === file.size)) {
+            // Create a persistent preview URL for the uploaded file
+            file.previewUrl = URL.createObjectURL(file);
             uploadedFiles.push(file);
         }
     });
@@ -110,54 +112,46 @@ function displayFileList() {
         
         if (file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg')) {
             // Handle SVG files specially
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                fileItem.innerHTML = `
-                    <div class="file-preview svg-preview">
-                        <i class="fas fa-vector-square"></i>
-                    </div>
-                    <div class="file-info">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${formatFileSize(file.size)}</div>
-                        <div class="file-format">${fileFormat}</div>
-                    </div>
-                    <div class="file-actions">
-                        <button class="btn btn-secondary" onclick="previewImage(${index})">
-                            <i class="fas fa-eye"></i>
-                            Preview
-                        </button>
-                        <button class="btn btn-danger" onclick="removeFile(${index})">
-                            <i class="fas fa-trash"></i>
-                            Remove
-                        </button>
-                    </div>
-                `;
-            };
-            reader.readAsText(file);
+            fileItem.innerHTML = `
+                <div class="file-preview svg-preview">
+                    <i class="fas fa-vector-square"></i>
+                </div>
+                <div class="file-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${formatFileSize(file.size)}</div>
+                    <div class="file-format">${fileFormat}</div>
+                </div>
+                <div class="file-actions">
+                    <button class="btn btn-secondary" onclick="previewImage(${index})">
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </button>
+                    <button class="btn btn-danger" onclick="removeFile(${index})">
+                        <i class="fas fa-trash"></i>
+                        Remove
+                    </button>
+                </div>
+            `;
         } else {
-            // Handle regular image files
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                fileItem.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}" class="file-preview">
-                    <div class="file-info">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${formatFileSize(file.size)}</div>
-                        <div class="file-format">${fileFormat}</div>
-                    </div>
-                    <div class="file-actions">
-                        <button class="btn btn-secondary" onclick="previewImage(${index})">
-                            <i class="fas fa-eye"></i>
-                            Preview
-                        </button>
-                        <button class="btn btn-danger" onclick="removeFile(${index})">
-                            <i class="fas fa-trash"></i>
-                            Remove
-                        </button>
-                    </div>
-                `;
-            };
-            reader.readAsDataURL(file);
+            // Use the persistent preview URL for instant display
+            fileItem.innerHTML = `
+                <img src="${file.previewUrl}" alt="${file.name}" class="file-preview">
+                <div class="file-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${formatFileSize(file.size)}</div>
+                    <div class="file-format">${fileFormat}</div>
+                </div>
+                <div class="file-actions">
+                    <button class="btn btn-secondary" onclick="previewImage(${index})">
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </button>
+                    <button class="btn btn-danger" onclick="removeFile(${index})">
+                        <i class="fas fa-trash"></i>
+                        Remove
+                    </button>
+                </div>
+            `;
         }
         
         fileList.appendChild(fileItem);
@@ -172,6 +166,10 @@ function getFileFormat(file) {
 }
 
 function removeFile(index) {
+    const file = uploadedFiles[index];
+    if (file.previewUrl) {
+        URL.revokeObjectURL(file.previewUrl);
+    }
     uploadedFiles.splice(index, 1);
     displayFileList();
     updateConvertButton();
@@ -179,22 +177,8 @@ function removeFile(index) {
 
 function previewImage(index) {
     const file = uploadedFiles[index];
-    
-    if (file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg')) {
-        // Handle SVG preview
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            showImageModal(e.target.result, file.name);
-        };
-        reader.readAsDataURL(file);
-    } else {
-        // Handle regular image preview
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            showImageModal(e.target.result, file.name);
-        };
-        reader.readAsDataURL(file);
-    }
+    // For both SVG and regular images, we can use the persistent previewUrl
+    showImageModal(file.previewUrl, file.name);
 }
 
 function showImageModal(imageSrc, fileName) {
@@ -236,6 +220,18 @@ function showImageModal(imageSrc, fileName) {
 }
 
 function clearAll() {
+    // Revoke all Object URLs to prevent memory leaks
+    uploadedFiles.forEach(file => {
+        if (file.previewUrl) {
+            URL.revokeObjectURL(file.previewUrl);
+        }
+    });
+    convertedImages.forEach(result => {
+        if (result.previewUrl) {
+            URL.revokeObjectURL(result.previewUrl);
+        }
+    });
+
     uploadedFiles = [];
     convertedImages = [];
     displayFileList();
@@ -394,14 +390,17 @@ async function convertImages() {
     convertBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Converting...';
     convertBtn.disabled = true;
     
+    // Revoke previous results' Object URLs to free memory
+    convertedImages.forEach(result => {
+        if (result.previewUrl) {
+            URL.revokeObjectURL(result.previewUrl);
+        }
+    });
     convertedImages = [];
     
     try {
-        for (let i = 0; i < uploadedFiles.length; i++) {
-            const file = uploadedFiles[i];
-            const convertedImage = await convertImage(file);
-            convertedImages.push(convertedImage);
-        }
+        // Parallelize image conversion using Promise.all
+        convertedImages = await Promise.all(uploadedFiles.map(file => convertImage(file)));
         
         displayResults();
         showResults();
@@ -494,6 +493,7 @@ async function convertSVG(file, outputFormat, quality, sizeMode) {
                         resolve({
                             original: file,
                             converted: convertedFile,
+                            previewUrl: URL.createObjectURL(blob),
                             originalSize: file.size,
                             newSize: blob.size,
                             originalFormat: 'SVG',
@@ -560,6 +560,7 @@ async function convertRegularImage(file, outputFormat, quality, sizeMode) {
                     resolve({
                         original: file,
                         converted: convertedFile,
+                        previewUrl: URL.createObjectURL(blob),
                         originalSize: file.size,
                         newSize: blob.size,
                         originalFormat: getFileFormat(file),
@@ -574,7 +575,7 @@ async function convertRegularImage(file, outputFormat, quality, sizeMode) {
         };
         
         img.onerror = () => reject(new Error('Failed to load image'));
-        img.src = URL.createObjectURL(file);
+        img.src = file.previewUrl;
     });
 }
 
@@ -663,32 +664,29 @@ function displayResults() {
         const resultItem = document.createElement('div');
         resultItem.className = 'result-item';
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            resultItem.innerHTML = `
-                <img src="${e.target.result}" alt="Converted" class="result-preview">
-                <div class="result-info">
-                    <h4>${result.converted.name}</h4>
-                    <div class="result-stats">
-                        <div>${result.originalFormat} → ${result.newFormat}</div>
-                        <div>Original: ${formatFileSize(result.originalSize)}</div>
-                        <div>New: ${formatFileSize(result.newSize)}</div>
-                        <div>Saved: ${result.compressionRatio}%</div>
-                    </div>
-                    <div class="result-actions">
-                        <button class="btn btn-primary" onclick="downloadImage(${index})">
-                            <i class="fas fa-download"></i>
-                            Download
-                        </button>
-                        <button class="btn btn-secondary" onclick="previewConvertedImage(${index})">
-                            <i class="fas fa-eye"></i>
-                            Preview
-                        </button>
-                    </div>
+        // Use the persistent preview URL for instant display
+        resultItem.innerHTML = `
+            <img src="${result.previewUrl}" alt="Converted" class="result-preview">
+            <div class="result-info">
+                <h4>${result.converted.name}</h4>
+                <div class="result-stats">
+                    <div>${result.originalFormat} → ${result.newFormat}</div>
+                    <div>Original: ${formatFileSize(result.originalSize)}</div>
+                    <div>New: ${formatFileSize(result.newSize)}</div>
+                    <div>Saved: ${result.compressionRatio}%</div>
                 </div>
-            `;
-        };
-        reader.readAsDataURL(result.converted);
+                <div class="result-actions">
+                    <button class="btn btn-primary" onclick="downloadImage(${index})">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                    <button class="btn btn-secondary" onclick="previewConvertedImage(${index})">
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </button>
+                </div>
+            </div>
+        `;
         
         resultsGrid.appendChild(resultItem);
     });
@@ -707,14 +705,12 @@ function hideResults() {
 
 function downloadImage(index) {
     const result = convertedImages[index];
-    const url = URL.createObjectURL(result.converted);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = result.previewUrl;
     a.download = result.converted.name;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
 }
 
 function downloadAll() {
@@ -727,11 +723,7 @@ function downloadAll() {
 
 function previewConvertedImage(index) {
     const result = convertedImages[index];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        showImageModal(e.target.result, result.converted.name);
-    };
-    reader.readAsDataURL(result.converted);
+    showImageModal(result.previewUrl, result.converted.name);
 }
 
 function updateConvertButton() {
