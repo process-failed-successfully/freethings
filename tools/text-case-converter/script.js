@@ -186,7 +186,7 @@ function showResult(result) {
     const resultOutput = document.getElementById('result-output');
     const copyBtn = document.getElementById('copy-btn');
     
-    resultOutput.innerHTML = result;
+    resultOutput.textContent = result;
     resultOutput.classList.add('has-content');
     
     // Enable copy button
@@ -210,9 +210,10 @@ function showError(message) {
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    resultOutput.querySelector('p').textContent = message;
     resultOutput.classList.remove('has-content');
     
     copyBtn.disabled = true;
@@ -227,9 +228,10 @@ function clearResult() {
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-font"></i>
-            <p>Your converted text will appear here</p>
+            <p></p>
         </div>
     `;
+    resultOutput.querySelector('p').textContent = 'Your converted text will appear here';
     resultOutput.classList.remove('has-content');
     
     copyBtn.disabled = true;
