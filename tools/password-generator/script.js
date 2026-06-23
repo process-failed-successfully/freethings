@@ -14,7 +14,21 @@ const characterSets = {
 document.addEventListener('DOMContentLoaded', function() {
     updateLengthDisplay();
     generatePassword(); // Generate initial password
+    setupKeyboardListeners();
 });
+
+// Setup keyboard listeners for accessible elements
+function setupKeyboardListeners() {
+    const presetItems = document.querySelectorAll('.preset-item');
+    presetItems.forEach(item => {
+        item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+}
 
 // Update length display
 function updateLengthDisplay() {
