@@ -251,15 +251,17 @@ function displayFileResult(url, fileName) {
     const copyBtn = document.getElementById('copy-btn');
     const downloadBtn = document.getElementById('download-btn');
     
+    // Use structural innerHTML for static elements but textContent for dynamic file name
     resultOutput.innerHTML = `
         <div class="result-file">
             <i class="fas fa-file"></i>
             <div class="file-result-info">
-                <div class="file-name">${fileName}</div>
+                <div class="file-name"></div>
                 <div class="file-status">Ready for download</div>
             </div>
         </div>
     `;
+    resultOutput.querySelector('.file-name').textContent = fileName;
     resultOutput.classList.add('has-result');
     
     // Disable copy button for file results
@@ -287,12 +289,14 @@ function displayError(message) {
     const copyBtn = document.getElementById('copy-btn');
     const downloadBtn = document.getElementById('download-btn');
     
+    // Use structural innerHTML for static elements but textContent for dynamic message
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    resultOutput.querySelector('p').textContent = message;
     resultOutput.classList.remove('has-result');
     
     copyBtn.disabled = true;
