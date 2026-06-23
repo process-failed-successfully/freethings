@@ -186,7 +186,8 @@ function showResult(result) {
     const resultOutput = document.getElementById('result-output');
     const copyBtn = document.getElementById('copy-btn');
     
-    resultOutput.innerHTML = result;
+    // Use textContent instead of innerHTML to prevent XSS
+    resultOutput.textContent = result;
     resultOutput.classList.add('has-content');
     
     // Enable copy button
@@ -207,12 +208,14 @@ function showError(message) {
     const resultOutput = document.getElementById('result-output');
     const copyBtn = document.getElementById('copy-btn');
     
+    // Use structural innerHTML for static elements but textContent for dynamic message
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    resultOutput.querySelector('p').textContent = message;
     resultOutput.classList.remove('has-content');
     
     copyBtn.disabled = true;
