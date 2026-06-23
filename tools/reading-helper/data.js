@@ -374,5 +374,52 @@ const PRELOADED_BOOKS = [
             { text: `Mia unzipped the tent door to let some fresh air inside. A black and white skunk was sleeping right on the porch! The mystery was solved.`, image: "images/tooted_tent_5.png" },
             { text: `The kids laughed quietly at their silly mistake. They carefully zipped the tent back up so they would not wake the smelly skunk.`, image: "images/tooted_tent_6.png" }
         ]
+    },,
+    {
+        id: "bear-beans",
+        title: "The Bear and the Beans",
+        level: "C",
+        wordsCount: 43,
+        thumbnail: "images/bear_beans_1.png",
+        pages: [
+            { text: "Bob the bear loves to eat baked beans.", image: "images/bear_beans_1.png" },
+            { text: "He eats a big bowl of beans for his lunch.", image: "images/bear_beans_2.png" },
+            { text: "Bob feels a funny rumble deep in his tummy.", image: "images/bear_beans_3.png" },
+            { text: "\"Oh no!\" says Bob. \"TOOT!\" goes his bottom.", image: "images/bear_beans_4.png" },
+            { text: "The loud toot blows Bob high up into a tall tree.", image: "images/bear_beans_5.png" },
+            { text: "The birds laugh at the silly, smelly, farting bear.", image: "images/bear_beans_6.png" }
+        ]
     },
+    {
+        id: "princess-poo",
+        title: "The Princess and the Poo",
+        level: "C",
+        wordsCount: 42,
+        thumbnail: "images/princess_poo_1.png",
+        pages: [
+            { text: "Princess Pam has a grand royal ball today.", image: "images/princess_poo_1.png" },
+            { text: "She wears a beautiful pink dress and shiny new shoes.", image: "images/princess_poo_2.png" },
+            { text: "Pam walks through the magic unicorn garden.", image: "images/princess_poo_3.png" },
+            { text: "Squish! Splat! Pam steps right in colorful unicorn poo.", image: "images/princess_poo_4.png" },
+            { text: "\"Yuck!\" says Pam. Her shiny shoe is very smelly.", image: "images/princess_poo_5.png" },
+            { text: "Pam washes her stinky shoe in the pond before the ball.", image: "images/princess_poo_6.png" }
+        ]
+    },
+    {
+        id: "monkey-mud",
+        title: "The Mud Pie Monkey",
+        level: "C",
+        wordsCount: 52,
+        thumbnail: "images/monkey_mud_1.png",
+        pages: [
+            { text: "Max the monkey loves to play in the wet dirt.", image: "images/monkey_mud_1.png" },
+            { text: "He mixes dirt and water to make a big mud pie.", image: "images/monkey_mud_2.png" },
+            { text: "Max sees his friend Leo the lion fast asleep.", image: "images/monkey_mud_3.png" },
+            { text: "Splat! Max throws the mud pie right on Leo's nose.", image: "images/monkey_mud_4.png" },
+            { text: "Leo wakes up and sneezes very loud. \"Achoo!\"", image: "images/monkey_mud_5.png" },
+            { text: "Green snot flies everywhere and covers silly Max.", image: "images/monkey_mud_6.png" },
+            { text: "Now both friends need a long scrub in the river.", image: "images/monkey_mud_7.png" }
+        ]
+    }
+
 ];
