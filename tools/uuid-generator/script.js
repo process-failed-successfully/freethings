@@ -919,7 +919,8 @@ function displayUUID(uuid, typeDisplay, format) {
     const copyBtn = document.getElementById('copy-btn');
     const clearBtn = document.getElementById('clear-btn');
 
-    uuidOutput.innerHTML = `<div class="uuid-display">${uuid}</div>`;
+    uuidOutput.innerHTML = '<div class="uuid-display"></div>';
+    uuidOutput.querySelector('.uuid-display').textContent = uuid;
 
     // Update info
     document.getElementById('uuid-type-display').textContent = typeDisplay;
@@ -1050,16 +1051,28 @@ async function generateMultipleUUIDs() {
         // Create UUID item
         const uuidItem = document.createElement('div');
         uuidItem.className = 'multiple-uuid-item';
-        uuidItem.innerHTML = `
-            <div class="uuid-info">
-                <div class="uuid-text">${uuid}</div>
-                <div class="uuid-type">${typeDisplay}</div>
-            </div>
-            <button class="uuid-copy-btn" onclick="copySpecificUUID('${uuid}')">
-                <i class="fas fa-copy"></i>
-                Copy
-            </button>
-        `;
+
+        const uuidInfo = document.createElement('div');
+        uuidInfo.className = 'uuid-info';
+
+        const uuidText = document.createElement('div');
+        uuidText.className = 'uuid-text';
+        uuidText.textContent = uuid;
+
+        const uuidTypeElem = document.createElement('div');
+        uuidTypeElem.className = 'uuid-type';
+        uuidTypeElem.textContent = typeDisplay;
+
+        uuidInfo.appendChild(uuidText);
+        uuidInfo.appendChild(uuidTypeElem);
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'uuid-copy-btn';
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+        copyBtn.onclick = () => copySpecificUUID(uuid);
+
+        uuidItem.appendChild(uuidInfo);
+        uuidItem.appendChild(copyBtn);
         multipleList.appendChild(uuidItem);
     }
 
@@ -1130,9 +1143,10 @@ function clearResults() {
     uuidOutput.innerHTML = `
         <div class="uuid-placeholder">
             <i class="fas fa-fingerprint"></i>
-            <p>Your UUID will appear here</p>
+            <p></p>
         </div>
     `;
+    uuidOutput.querySelector('p').textContent = 'Your UUID will appear here';
 
     // Reset info
     document.getElementById('uuid-type-display').textContent = '-';
@@ -1196,21 +1210,40 @@ function updateHistoryDisplay() {
         return;
     }
     
-    historyList.innerHTML = history.map(item => {
+    historyList.innerHTML = '';
+    history.forEach(item => {
         const date = new Date(item.timestamp);
-        return `
-            <div class="history-item">
-                <div class="history-uuid">${item.uuid}</div>
-                <div class="history-info">
-                    <span class="history-type">${item.type}</span>
-                    <span class="history-time">${date.toLocaleString()}</span>
-                </div>
-                <button class="history-copy-btn" onclick="copySpecificUUID('${item.uuid}')">
-                    <i class="fas fa-copy"></i>
-                </button>
-            </div>
-        `;
-    }).join('');
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+
+        const historyUuid = document.createElement('div');
+        historyUuid.className = 'history-uuid';
+        historyUuid.textContent = item.uuid;
+
+        const historyInfo = document.createElement('div');
+        historyInfo.className = 'history-info';
+
+        const historyType = document.createElement('span');
+        historyType.className = 'history-type';
+        historyType.textContent = item.type;
+
+        const historyTime = document.createElement('span');
+        historyTime.className = 'history-time';
+        historyTime.textContent = date.toLocaleString();
+
+        historyInfo.appendChild(historyType);
+        historyInfo.appendChild(historyTime);
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'history-copy-btn';
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+        copyBtn.onclick = () => copySpecificUUID(item.uuid);
+
+        historyItem.appendChild(historyUuid);
+        historyItem.appendChild(historyInfo);
+        historyItem.appendChild(copyBtn);
+        historyList.appendChild(historyItem);
+    });
 }
 
 // Set UUID type from footer links
