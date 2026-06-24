@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         paragraphCount.textContent = paragraphs.length;
         readingTime.textContent = Math.ceil(words.length / 200) + ' min';
 
+        const copyBtn = document.getElementById('copy-stats-btn');
+        if (copyBtn) {
+            copyBtn.disabled = text.length === 0;
+        }
+
         if (text.length > 0) {
             statCards.forEach(card => {
                 card.classList.remove('updated');
@@ -37,13 +42,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.clearText = () => { textArea.value = ''; updateCounts(); textArea.focus(); };
     window.pasteText = () => { navigator.clipboard.readText().then(t => { textArea.value += t; updateCounts(); }); };
-    window.toggleFAQ = (el) => el.parentElement.classList.toggle('active');
-    window.loadExample = (type) => {
-        const ex = { short: 'Social media post example.', medium: 'This is a medium length paragraph for testing.', long: 'This is a longer text designed to test multi-sentence and multi-paragraph statistics in the word counter tool.', technical: 'const count = (text) => text.length;' };
-        textArea.value = ex[type] || ''; updateCounts();
+
+    window.copyStats = () => {
+        const stats = [
+            `Characters: ${charCount.textContent}`,
+            `Characters (no spaces): ${charCountNoSpaces.textContent}`,
+            `Words: ${wordCount.textContent}`,
+            `Sentences: ${sentenceCount.textContent}`,
+            `Paragraphs: ${paragraphCount.textContent}`,
+            `Reading Time: ${readingTime.textContent}`
+        ].join('\n');
+
+        const btn = document.getElementById('copy-stats-btn');
+        const originalHtml = btn.innerHTML;
+
+        navigator.clipboard.writeText(stats).then(() => {
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.classList.remove('copied');
+            }, 2000);
+        });
     };
 
-    document.querySelectorAll('.example-item').forEach(item => {
-        item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); } });
+    window.toggleFAQ = (el) => {
+        const item = el.parentElement;
+        const isActive = item.classList.toggle('active');
+        el.setAttribute('aria-expanded', isActive);
+    };
+
+    window.loadExample = (type) => {
+        const ex = {
+            short: 'Social media post example. #wordcounter',
+            medium: 'This is a medium length paragraph for testing. It has multiple sentences to verify the sentence counting logic works as expected.',
+            long: 'This is a longer text designed to test multi-sentence and multi-paragraph statistics.\n\nIt features multiple paragraphs to ensure that the paragraph counter correctly identifies the structure of the text.\n\nFinal paragraph for completeness.',
+            technical: 'const countWords = (text) => {\n  return text.trim().split(/\\s+/).length;\n};'
+        };
+        textArea.value = ex[type] || '';
+        updateCounts();
+    };
+
+    // Keyboard accessibility for interactive elements
+    const interactiveElements = document.querySelectorAll('.example-item, .faq-question');
+    interactiveElements.forEach(item => {
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
     });
 });
