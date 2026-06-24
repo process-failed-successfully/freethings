@@ -152,7 +152,7 @@
                             <div class="regex-pattern" id="regex-pattern">
                                 <code id="regex-text">-</code>
                             </div>
-                            <button id="copy-regex-btn" class="copy-regex-btn" onclick="copyRegex()" title="Copy regex pattern">
+                            <button id="copy-regex-btn" class="copy-regex-btn" onclick="copyRegex()" title="Copy regex pattern" aria-label="Copy regex pattern">
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
@@ -314,7 +314,7 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-list">
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" onclick="toggleFAQ(this)" role="button" tabindex="0" aria-expanded="false">
                         <h3>What is a UUID?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -323,7 +323,7 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" onclick="toggleFAQ(this)" role="button" tabindex="0" aria-expanded="false">
                         <h3>What's the difference between UUID v1 and v4?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -332,7 +332,7 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" onclick="toggleFAQ(this)" role="button" tabindex="0" aria-expanded="false">
                         <h3>Are the generated UUIDs truly unique?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -341,7 +341,7 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" onclick="toggleFAQ(this)" role="button" tabindex="0" aria-expanded="false">
                         <h3>Can I use these UUIDs in production?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>

@@ -6,7 +6,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     await generateExampleUUIDs();
     loadHistory();
     await generateUUID(); // Generate initial UUID
+    setupFAQListeners();
 });
+
+// Setup FAQ keyboard listeners
+function setupFAQListeners() {
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+}
 
 // Character sets for different ID types
 const nanoidAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
@@ -1237,6 +1250,8 @@ function updateHistoryDisplay() {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'history-copy-btn';
         copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+        copyBtn.setAttribute('aria-label', 'Copy UUID');
+        copyBtn.title = 'Copy UUID';
         copyBtn.onclick = () => copySpecificUUID(item.uuid);
 
         historyItem.appendChild(historyUuid);
@@ -1310,14 +1325,16 @@ function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const isActive = faqItem.classList.contains('active');
 
-    // Close all FAQ items
+    // Close all FAQ items and update aria-expanded
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
     });
 
-    // Open clicked item if it wasn't active
+    // Open clicked item if it wasn't active and update aria-expanded
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
     }
 }
 
