@@ -88,11 +88,11 @@ function displayFileList() {
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
         
-        // Use the persistent preview URL for instant display
+        // Use structural innerHTML for static elements but textContent for dynamic data
         fileItem.innerHTML = `
-            <img src="${file.previewUrl}" alt="${file.name}" class="file-preview">
+            <img src="${file.previewUrl}" class="file-preview">
             <div class="file-info">
-                <div class="file-name">${file.name}</div>
+                <div class="file-name"></div>
                 <div class="file-size">${formatFileSize(file.size)}</div>
             </div>
             <div class="file-actions">
@@ -107,6 +107,11 @@ function displayFileList() {
             </div>
         `;
         
+        // Safely set user-provided data
+        const img = fileItem.querySelector('img');
+        img.alt = file.name;
+        fileItem.querySelector('.file-name').textContent = file.name;
+
         fileList.appendChild(fileItem);
     });
 }
@@ -140,7 +145,7 @@ function previewImage(index) {
         cursor: pointer;
     `;
 
-    // Use the persistent preview URL for instant display
+    // Use structural innerHTML for static elements
     modal.innerHTML = `
         <div style="max-width: 90%; max-height: 90%; position: relative;">
             <img src="${file.previewUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -158,6 +163,10 @@ function previewImage(index) {
             ">×</button>
         </div>
     `;
+
+    // Safely set user-provided data
+    const img = modal.querySelector('img');
+    img.alt = file.name;
 
     modal.onclick = () => modal.remove();
     document.body.appendChild(modal);
@@ -454,11 +463,11 @@ function displayResults() {
         const resultItem = document.createElement('div');
         resultItem.className = 'result-item';
         
-        // Use the persistent preview URL for instant display
+        // Use structural innerHTML for static elements but textContent for dynamic data
         resultItem.innerHTML = `
             <img src="${result.previewUrl}" alt="Resized" class="result-preview">
             <div class="result-info">
-                <h4>${result.resized.name}</h4>
+                <h4></h4>
                 <div class="result-stats">
                     <div>Original: ${result.originalDimensions}</div>
                     <div>New: ${result.newDimensions}</div>
@@ -478,6 +487,9 @@ function displayResults() {
             </div>
         `;
         
+        // Safely set user-provided data
+        resultItem.querySelector('h4').textContent = result.resized.name;
+
         resultsGrid.appendChild(resultItem);
     });
 }
@@ -530,7 +542,7 @@ function previewResizedImage(index) {
         cursor: pointer;
     `;
 
-    // Use the persistent preview URL for instant display
+    // Use structural innerHTML for static elements
     modal.innerHTML = `
         <div style="max-width: 90%; max-height: 90%; position: relative;">
             <img src="${result.previewUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -548,6 +560,10 @@ function previewResizedImage(index) {
             ">×</button>
         </div>
     `;
+
+    // Safely set user-provided data
+    const img = modal.querySelector('img');
+    img.alt = result.resized.name;
 
     modal.onclick = () => modal.remove();
     document.body.appendChild(modal);
