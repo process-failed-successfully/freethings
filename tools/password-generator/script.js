@@ -14,7 +14,21 @@ const characterSets = {
 document.addEventListener('DOMContentLoaded', function() {
     updateLengthDisplay();
     generatePassword(); // Generate initial password
+    setupKeyboardListeners();
 });
+
+// Setup keyboard listeners for accessible elements
+function setupKeyboardListeners() {
+    const presetItems = document.querySelectorAll('.preset-item');
+    presetItems.forEach(item => {
+        item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+}
 
 // Update length display
 function updateLengthDisplay() {
@@ -179,12 +193,14 @@ function showError(message) {
     const copyBtn = document.getElementById('copy-btn');
     const refreshBtn = document.getElementById('refresh-btn');
 
+    // Use structural innerHTML for static elements but textContent for dynamic message
     passwordOutput.innerHTML = `
         <div class="password-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    passwordOutput.querySelector('p').textContent = message;
     passwordOutput.classList.remove('has-password');
 
     copyBtn.disabled = true;
@@ -327,13 +343,20 @@ function generateMultiplePasswords() {
         // Create password item
         const passwordItem = document.createElement('div');
         passwordItem.className = 'multiple-password-item';
+
+        // Use structural innerHTML for static elements but textContent for dynamic data
         passwordItem.innerHTML = `
-            <div class="multiple-password-text">${password}</div>
-            <button class="multiple-password-copy" onclick="copySpecificPassword('${password}')">
+            <div class="multiple-password-text"></div>
+            <button class="multiple-password-copy">
                 <i class="fas fa-copy"></i>
                 Copy
             </button>
         `;
+
+        // Safely set user-provided data and programmatic event listeners
+        passwordItem.querySelector('.multiple-password-text').textContent = password;
+        passwordItem.querySelector('.multiple-password-copy').onclick = () => copySpecificPassword(password);
+
         multipleList.appendChild(passwordItem);
     }
 

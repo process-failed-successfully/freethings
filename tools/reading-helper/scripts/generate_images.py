@@ -8,9 +8,8 @@ from PIL import Image
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
-def main():
-    manifest_path = '/workspace/books_manifest.json'
-    images_dir = '/workspace/images'
+def main(manifest_path='/workspace/books_manifest.json', workspace_root='/workspace'):
+    images_dir = os.path.join(workspace_root, 'images')
     os.makedirs(images_dir, exist_ok=True)
 
     if not os.path.exists(manifest_path):
@@ -29,7 +28,7 @@ def main():
             target_image = page.get('image')
             if not target_image:
                 continue
-            output_path = os.path.join('/workspace', target_image)
+            output_path = os.path.join(workspace_root, target_image)
             if not os.path.exists(output_path) or page.get('replace') == True:
                 missing_pages.append((book, idx, page))
 
@@ -112,7 +111,7 @@ def main():
             if not target_image:
                 continue
 
-            output_path = os.path.join('/workspace', target_image)
+            output_path = os.path.join(workspace_root, target_image)
             if os.path.exists(output_path) and page.get('replace') != True:
                 continue
 

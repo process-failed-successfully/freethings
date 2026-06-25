@@ -307,13 +307,15 @@ function generateQRCode() {
         generateBtn.classList.remove('loading');
         generateBtn.disabled = false;
         
+        // Use structural innerHTML for static elements but textContent for dynamic message
         qrOutput.innerHTML = `
             <div class="qr-placeholder">
                 <i class="fas fa-exclamation-triangle"></i>
                 <p>Error generating QR code. Please try again.</p>
-                <small>Error: ${error.message || 'Unknown error'}</small>
+                <small>Error: <span class="error-msg"></span></small>
             </div>
         `;
+        qrOutput.querySelector('.error-msg').textContent = error.message || 'Unknown error';
         downloadSection.style.display = 'none';
     }
     

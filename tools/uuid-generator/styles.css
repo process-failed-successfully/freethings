@@ -204,7 +204,24 @@ body {
 }
 
 .checkbox-label input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.checkbox-label:focus-within {
+    background-color: #e2e8f0;
+}
+
+.checkbox-label input[type="checkbox"]:focus-visible + .checkmark {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .checkmark {

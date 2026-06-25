@@ -304,13 +304,17 @@ function showResult(result, unit, description) {
         formattedResult = result.toFixed(6).replace(/\.?0+$/, '');
     }
     
+    // Use structural innerHTML for static elements but textContent for dynamic data
     resultOutput.innerHTML = `
         <div class="result-display">
-            <div class="result-value">${formattedResult}</div>
-            <div class="result-unit">${unitName}</div>
-            <div class="result-details">${description}</div>
+            <div class="result-value"></div>
+            <div class="result-unit"></div>
+            <div class="result-details"></div>
         </div>
     `;
+    resultOutput.querySelector('.result-value').textContent = formattedResult;
+    resultOutput.querySelector('.result-unit').textContent = unitName;
+    resultOutput.querySelector('.result-details').textContent = description;
     
     copySection.style.display = 'flex';
     
@@ -323,12 +327,14 @@ function showError(message) {
     const resultOutput = document.getElementById('result-output');
     const copySection = document.getElementById('copy-section');
     
+    // Use structural innerHTML for static elements but textContent for dynamic message
     resultOutput.innerHTML = `
         <div class="result-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    resultOutput.querySelector('p').textContent = message;
     
     copySection.style.display = 'none';
 }
