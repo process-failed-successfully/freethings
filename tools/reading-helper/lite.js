@@ -27,6 +27,25 @@ function init() {
     document.getElementById('btn-prev').addEventListener('click', prevPage);
     document.getElementById('btn-next').addEventListener('click', nextPage);
     document.getElementById('btn-read-aloud').addEventListener('click', toggleReadAloud);
+
+    // Touch swipe gestures for page navigation
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const readView = document.getElementById('read-view');
+    
+    readView.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    readView.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const threshold = 50;
+        if (touchEndX < touchStartX - threshold) {
+            nextPage();
+        } else if (touchEndX > touchStartX + threshold) {
+            prevPage();
+        }
+    }, { passive: true });
 }
 
 function renderLibrary(levelFilter = 'A') {
