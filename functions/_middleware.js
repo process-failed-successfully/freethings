@@ -4,7 +4,7 @@ export async function onRequest(context) {
   // Subdomain routing for read.freethings.win
   if (url.hostname === "read.freethings.win") {
     if (url.pathname === "/") {
-      url.pathname = "/tools/reading-helper/lite.html";
+      url.pathname = "/tools/reading-helper/lite";
     } else {
       url.pathname = `/tools/reading-helper${url.pathname}`;
     }
