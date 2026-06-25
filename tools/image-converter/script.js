@@ -117,9 +117,9 @@ function displayFileList() {
                     <i class="fas fa-vector-square"></i>
                 </div>
                 <div class="file-info">
-                    <div class="file-name">${file.name}</div>
+                    <div class="file-name"></div>
                     <div class="file-size">${formatFileSize(file.size)}</div>
-                    <div class="file-format">${fileFormat}</div>
+                    <div class="file-format"></div>
                 </div>
                 <div class="file-actions">
                     <button class="btn btn-secondary" onclick="previewImage(${index})">
@@ -133,13 +133,13 @@ function displayFileList() {
                 </div>
             `;
         } else {
-            // Use the persistent preview URL for instant display
+            // Use structural innerHTML for static elements but textContent for dynamic data
             fileItem.innerHTML = `
-                <img src="${file.previewUrl}" alt="${file.name}" class="file-preview">
+                <img src="${file.previewUrl}" class="file-preview">
                 <div class="file-info">
-                    <div class="file-name">${file.name}</div>
+                    <div class="file-name"></div>
                     <div class="file-size">${formatFileSize(file.size)}</div>
-                    <div class="file-format">${fileFormat}</div>
+                <div class="file-format"></div>
                 </div>
                 <div class="file-actions">
                     <button class="btn btn-secondary" onclick="previewImage(${index})">
@@ -152,7 +152,13 @@ function displayFileList() {
                     </button>
                 </div>
             `;
+            // Safely set image alt
+            fileItem.querySelector('img').alt = file.name;
         }
+
+        // Safely set dynamic data
+        fileItem.querySelector('.file-name').textContent = file.name;
+        fileItem.querySelector('.file-format').textContent = fileFormat;
         
         fileList.appendChild(fileItem);
     });
@@ -197,6 +203,7 @@ function showImageModal(imageSrc, fileName) {
         cursor: pointer;
     `;
     
+    // Use structural innerHTML for static elements
     modal.innerHTML = `
         <div style="max-width: 90%; max-height: 90%; position: relative;">
             <img src="${imageSrc}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -214,6 +221,10 @@ function showImageModal(imageSrc, fileName) {
             ">×</button>
         </div>
     `;
+
+    // Safely set user-provided data
+    const img = modal.querySelector('img');
+    img.alt = fileName;
     
     modal.onclick = () => modal.remove();
     document.body.appendChild(modal);
@@ -664,13 +675,13 @@ function displayResults() {
         const resultItem = document.createElement('div');
         resultItem.className = 'result-item';
         
-        // Use the persistent preview URL for instant display
+        // Use structural innerHTML for static elements but textContent for dynamic data
         resultItem.innerHTML = `
             <img src="${result.previewUrl}" alt="Converted" class="result-preview">
             <div class="result-info">
-                <h4>${result.converted.name}</h4>
+                <h4></h4>
                 <div class="result-stats">
-                    <div>${result.originalFormat} → ${result.newFormat}</div>
+                    <div class="format-info"></div>
                     <div>Original: ${formatFileSize(result.originalSize)}</div>
                     <div>New: ${formatFileSize(result.newSize)}</div>
                     <div>Saved: ${result.compressionRatio}%</div>
@@ -688,6 +699,10 @@ function displayResults() {
             </div>
         `;
         
+        // Safely set user-provided data
+        resultItem.querySelector('h4').textContent = result.converted.name;
+        resultItem.querySelector('.format-info').textContent = `${result.originalFormat} → ${result.newFormat}`;
+
         resultsGrid.appendChild(resultItem);
     });
 }
