@@ -1,3 +1,7 @@
+# Subdomain routing for reading assist lite interface
+https://read.freethings.win/ /tools/reading-helper/lite.html 200
+https://read.freethings.win/* /tools/reading-helper/:splat 200
+
 # Cloudflare Pages redirects for FreeThings monorepo
 
 # Redirect old tool paths to new monorepo structure
