@@ -55,18 +55,35 @@ function renderLibrary(levelFilter = 'A') {
     const filteredBooks = PRELOADED_BOOKS.filter(b => b.level === levelFilter);
     
     if (filteredBooks.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; font-size: 1.5rem; color: #7f8c8d;">No books available for this level yet.</div>';
+        const emptyMsg = document.createElement('div');
+        emptyMsg.style.gridColumn = '1/-1';
+        emptyMsg.style.textAlign = 'center';
+        emptyMsg.style.padding = '40px';
+        emptyMsg.style.fontSize = '1.5rem';
+        emptyMsg.style.color = '#7f8c8d';
+        emptyMsg.textContent = 'No books available for this level yet.';
+        grid.appendChild(emptyMsg);
         return;
     }
 
     filteredBooks.forEach(book => {
         const card = document.createElement('div');
         card.className = 'book-card';
-        card.innerHTML = `
-            <img src="${book.thumbnail}" alt="${book.title}">
-            <h3>${book.title}</h3>
-            <span class="book-level">Level ${book.level}</span>
-        `;
+
+        const img = document.createElement('img');
+        img.src = book.thumbnail;
+        img.alt = book.title;
+        card.appendChild(img);
+
+        const h3 = document.createElement('h3');
+        h3.textContent = book.title;
+        card.appendChild(h3);
+
+        const levelSpan = document.createElement('span');
+        levelSpan.className = 'book-level';
+        levelSpan.textContent = `Level ${book.level}`;
+        card.appendChild(levelSpan);
+
         card.addEventListener('click', () => openBook(book));
         grid.appendChild(card);
     });

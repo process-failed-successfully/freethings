@@ -19,3 +19,8 @@
 **Vulnerability:** DOM-based Cross-Site Scripting (XSS) via maliciously crafted filenames in `image-resizer` and `image-converter`, and via generated output in `password-generator`.
 **Learning:** Even internal tool data (like filenames or generated passwords) should be treated as untrusted. Mixing `innerHTML` with user-controlled variables in template literals is a systemic risk in this repository. In `image-converter`, extension parsing (`fileFormat`) was also a secondary XSS vector.
 **Prevention:** Use the "Structural HTML + textContent" pattern for all dynamic UI updates. Replace `onclick` attributes in generated HTML strings with programmatic `.onclick` or `addEventListener` to avoid attribute injection.
+
+## 2026-06-22 - DOM-XSS in Reading Helper & Data Integrity
+**Vulnerability:** DOM-based Cross-Site Scripting (XSS) in `reading-helper` (both standard and lite versions). User-provided book titles and custom story text were injected via `innerHTML`.
+**Learning:** The systemic use of template literals for UI components in this repo frequently leads to XSS. Additionally, a syntax error (double comma) in `data.js` caused a runtime crash when trying to access `books[0].id` because a null element was inserted into the array.
+**Prevention:** Migrate to `document.createElement` and `textContent` for all dynamic list rendering. Replace inline `onerror` and `onclick` with programmatic listeners. Always validate data array integrity after manual edits.

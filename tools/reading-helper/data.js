@@ -390,7 +390,7 @@ const PRELOADED_BOOKS = [
             { text: `Mia unzipped the tent door to let some fresh air inside. A black and white skunk was sleeping right on the porch! The mystery was solved.`, image: "images/tooted_tent_5.png" },
             { text: `The kids laughed quietly at their silly mistake. They carefully zipped the tent back up so they would not wake the smelly skunk.`, image: "images/tooted_tent_6.png" }
         ]
-    },,
+    },
     {
         id: "bear-beans",
         title: "The Bear and the Beans",

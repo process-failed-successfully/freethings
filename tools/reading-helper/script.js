@@ -6,7 +6,7 @@
 
 // State variables
 let books = [...PRELOADED_BOOKS];
-let activeBook = books[0];
+let activeBook = books.length > 0 ? books[0] : null;
 let activePageIndex = 0;
 let selectedWordElement = null;
 let currentUtterance = null;
@@ -118,28 +118,55 @@ function renderBooksList(filterLevel = "all") {
     const filtered = books.filter(b => filterLevel === "all" || b.level === filterLevel);
 
     if (filtered.length === 0) {
-        listEl.innerHTML = `<p class="book-words" style="padding: 1rem; text-align: center;">No books found in Level ${filterLevel}.</p>`;
+        const noBooksMsg = document.createElement("p");
+        noBooksMsg.className = "book-words";
+        noBooksMsg.style.padding = "1rem";
+        noBooksMsg.style.textAlign = "center";
+        noBooksMsg.textContent = `No books found in Level ${filterLevel}.`;
+        listEl.appendChild(noBooksMsg);
         return;
     }
 
     filtered.forEach(book => {
         const item = document.createElement("button");
-        item.className = `book-item ${book.id === activeBook.id ? "active" : ""}`;
+        item.className = `book-item ${activeBook && book.id === activeBook.id ? "active" : ""}`;
         item.id = `book-item-${book.id}`;
         
         // Use standard SVG placeholder if image path does not exist
         const thumbSrc = book.thumbnail || `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23ccc'><rect width='100' height='100'/></svg>`;
 
-        item.innerHTML = `
-            <img class="book-thumbnail" src="${thumbSrc}" alt="${book.title} Cover" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\' fill=\\'%232563eb\\'><rect width=\\'100\\' height=\\'100\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'white\\' font-size=\\'30\\'>📖</text></svg>'">
-            <div class="book-meta">
-                <span class="book-title">${book.title}</span>
-                <div class="book-details">
-                    <span class="level-tag level-${book.level.toLowerCase()}">Level ${book.level}</span>
-                    <span class="book-words">${book.wordsCount} words</span>
-                </div>
-            </div>
-        `;
+        const img = document.createElement("img");
+        img.className = "book-thumbnail";
+        img.src = thumbSrc;
+        img.alt = `${book.title} Cover`;
+        img.onerror = () => {
+            img.src = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%232563eb'><rect width='100' height='100'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30'>📖</text></svg>";
+        };
+        item.appendChild(img);
+
+        const meta = document.createElement("div");
+        meta.className = "book-meta";
+
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "book-title";
+        titleSpan.textContent = book.title;
+        meta.appendChild(titleSpan);
+
+        const details = document.createElement("div");
+        details.className = "book-details";
+
+        const levelTag = document.createElement("span");
+        levelTag.className = `level-tag level-${book.level.toLowerCase()}`;
+        levelTag.textContent = `Level ${book.level}`;
+        details.appendChild(levelTag);
+
+        const wordsSpan = document.createElement("span");
+        wordsSpan.className = "book-words";
+        wordsSpan.textContent = `${book.wordsCount} words`;
+        details.appendChild(wordsSpan);
+
+        meta.appendChild(details);
+        item.appendChild(meta);
 
         item.addEventListener("click", () => {
             selectBook(book.id);
@@ -520,20 +547,34 @@ function renderPagesCreator() {
         const pageCard = document.createElement("div");
         pageCard.className = "page-editor-card";
         
-        pageCard.innerHTML = `
-            <div class="page-editor-header">
-                <span class="page-num-title">Page ${idx + 1}</span>
-                ${creatorPages.length > 1 ? `
-                    <button type="button" class="btn-remove-page" onclick="removeCreatorPage(${idx})">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
-                ` : ''}
-            </div>
-            <textarea class="form-textarea page-text-input" placeholder="Type page text here... e.g. See the train go." data-index="${idx}">${page.text}</textarea>
-        `;
+        const header = document.createElement("div");
+        header.className = "page-editor-header";
+
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "page-num-title";
+        titleSpan.textContent = `Page ${idx + 1}`;
+        header.appendChild(titleSpan);
+
+        if (creatorPages.length > 1) {
+            const removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "btn-remove-page";
+            removeBtn.innerHTML = '<i class="fas fa-trash"></i> Remove';
+            removeBtn.addEventListener("click", () => {
+                removeCreatorPage(idx);
+            });
+            header.appendChild(removeBtn);
+        }
+        pageCard.appendChild(header);
+
+        const textarea = document.createElement("textarea");
+        textarea.className = "form-textarea page-text-input";
+        textarea.placeholder = "Type page text here... e.g. See the train go.";
+        textarea.setAttribute("data-index", idx);
+        textarea.value = page.text;
+        pageCard.appendChild(textarea);
 
         // Live update model
-        const textarea = pageCard.querySelector("textarea");
         textarea.addEventListener("input", (e) => {
             creatorPages[idx].text = e.target.value;
         });
