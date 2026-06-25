@@ -30,6 +30,22 @@ const PHONICS_DICTIONARY = {
     "burp": { parts: ["b", "urp"], tip: "'ur' makes the bossy 'r' /er/ sound." },
 
     "smelly": { parts: ["smell", "y"], tip: "'y' at the end makes the long /ee/ sound." },
+    "pig": { parts: ["p", "ig"], tip: "'p' makes the /p/ sound. 'ig' makes the /ig/ sound." },
+    "big": { parts: ["b", "ig"], tip: "'b' makes the /b/ sound. 'ig' makes the /ig/ sound." },
+    "wig": { parts: ["w", "ig"], tip: "'w' makes the /w/ sound. 'ig' makes the /ig/ sound." },
+    "fat": { parts: ["f", "at"], tip: "'f' makes the /f/ sound. 'at' makes the /at/ sound." },
+    "rat": { parts: ["r", "at"], tip: "'r' makes the /r/ sound. 'at' makes the /at/ sound." },
+    "hat": { parts: ["h", "at"], tip: "'h' makes the /h/ sound. 'at' makes the /at/ sound." },
+    "mat": { parts: ["m", "at"], tip: "'m' makes the /m/ sound. 'at' makes the /at/ sound." },
+    "bunny": { parts: ["bun", "ny"], tip: "Two parts: 'bun' and 'ny'. The 'y' makes the long /ee/ sound." },
+    "hops": { parts: ["h", "ops"], tip: "'h' makes the /h/ sound. 'ops' makes the /ops/ sound." },
+    "funny": { parts: ["fun", "ny"], tip: "Two parts: 'fun' and 'ny'. The 'y' makes the long /ee/ sound." },
+    "orange": { parts: ["or", "ange"], tip: "'or' makes the /or/ sound. 'ange' sounds like /anj/." },
+    "carrot": { parts: ["car", "rot"], tip: "Two parts: 'car' and 'rot'. 'c' makes the hard /k/ sound." },
+    "full": { parts: ["f", "ull"], tip: "'f' makes the /f/ sound. 'ull' makes the /ool/ sound." },
+    "very": { parts: ["ver", "y"], tip: "'v' makes the /v/ sound. 'y' makes the long /ee/ sound." },
+    "white": { parts: ["wh", "ite"], tip: "'wh' makes the /w/ sound. 'ite' has a magic 'e' that makes 'i' say its name." },
+    "grass": { parts: ["gr", "ass"], tip: "'gr' is a blend. 'ass' makes the /as/ sound." },
 
     "monster": { parts: ["mon", "ster"], tip: "Two parts. 'mon' and 'ster'. The 'er' says /er/." },
 
@@ -391,6 +407,45 @@ const PRELOADED_BOOKS = [
         ]
     },
     {
+        id: "big-pig",
+        title: "The Big Pig",
+        level: "A",
+        wordsCount: 16,
+        thumbnail: "images/big_pig_1.png",
+        pages: [
+            { text: `See the pig.`, image: "images/big_pig_1.png" },
+            { text: `The pig is big.`, image: "images/big_pig_2.png" },
+            { text: `See the funny wig.`, image: "images/big_pig_3.png" },
+            { text: `The pig is happy.`, image: "images/big_pig_4.png" }
+        ]
+    },
+    {
+        id: "fat-rat",
+        title: "The Fat Rat",
+        level: "B",
+        wordsCount: 16,
+        thumbnail: "images/fat_rat_1.png",
+        pages: [
+            { text: `This is a rat.`, image: "images/fat_rat_1.png" },
+            { text: `The rat is fat.`, image: "images/fat_rat_2.png" },
+            { text: `The rat has a hat.`, image: "images/fat_rat_3.png" },
+            { text: `The rat sits on a mat.`, image: "images/fat_rat_4.png" }
+        ]
+    },
+    {
+        id: "funny-bunny",
+        title: "The Funny Bunny",
+        level: "C",
+        wordsCount: 26,
+        thumbnail: "images/funny_bunny_1.png",
+        pages: [
+            { text: `A white bunny hops in the grass.`, image: "images/funny_bunny_1.png" },
+            { text: `The bunny finds an orange carrot.`, image: "images/funny_bunny_2.png" },
+            { text: `The bunny eats the very big carrot.`, image: "images/funny_bunny_3.png" },
+            { text: `The bunny is very full and happy.`, image: "images/funny_bunny_4.png" }
+        ]
+    },
+    {
         id: "princess-poo",
         title: "The Princess and the Poo",
         level: "C",
@@ -421,5 +476,4 @@ const PRELOADED_BOOKS = [
             { text: "Now both friends need a long scrub in the river.", image: "images/monkey_mud_7.png" }
         ]
     }
-
 ];
