@@ -7,3 +7,7 @@
 ## 2024-05-20 - Communicating Visibility State for Toggles
 **Learning:** For interactive elements that toggle visibility of other content (like FAQ accordions), simply being keyboard-triggerable is insufficient. Screen reader users need the `aria-expanded` attribute on the trigger element to know if the associated content is currently visible or hidden.
 **Action:** Always implement and dynamically update `aria-expanded="true/false"` when creating toggleable UI components.
+
+## 2026-06-24 - Micro-UX and Meaningful Interaction Feedback
+**Learning:** For utility tools with "Copy" actions, providing immediate visual feedback (e.g., changing button text to "Copied!") and managing the button's enabled/disabled state based on input presence significantly reduces user confusion and prevents empty clipboard operations.
+**Action:** Always provide clear visual confirmation for clipboard actions and disable action buttons that would result in a no-op due to missing input.
