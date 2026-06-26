@@ -11,3 +11,7 @@
 ## 2026-06-24 - Micro-UX and Meaningful Interaction Feedback
 **Learning:** For utility tools with "Copy" actions, providing immediate visual feedback (e.g., changing button text to "Copied!") and managing the button's enabled/disabled state based on input presence significantly reduces user confusion and prevents empty clipboard operations.
 **Action:** Always provide clear visual confirmation for clipboard actions and disable action buttons that would result in a no-op due to missing input.
+
+## 2026-06-26 - Preventing Layout Shifts on Custom Focus Indicators
+**Learning:** Adding a border for `:focus-visible` styles on custom interactive elements (like cards) can cause jarring layout shifts if not compensated for. Using `calc()` to reduce padding by the border width maintains the element's dimensions.
+**Action:** When adding focus borders to custom elements, always adjust padding using `calc(original_padding - border_width)` to ensure a smooth, shift-free transition.
