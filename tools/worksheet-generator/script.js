@@ -756,20 +756,39 @@ function displayWorksheet(problems, subject, learningType, level, template, show
             pageProblems.forEach((problem, index) => {
                 const globalIndex = pageIndex + index;
                 const emoji = getRandomTemplateEmoji(template, globalIndex);
-                const emojiDataAttr = emoji ? `data-emoji="${emoji}"` : '';
 
-                worksheetHTML += `
-                    <div class="reading-container" ${emojiDataAttr}>
-                        <h2 class="story-title">${problem.title}</h2>
-                        <div class="story-text">${problem.text}</div>
-                        <div class="story-questions">
-                            <h3>Comprehension Questions:</h3>
-                            <ol>
-                                ${problem.questions.map(q => `<li>${q} <div class="answer-line"></div></li>`).join('')}
-                            </ol>
-                        </div>
-                    </div>
-                `;
+                // Create container safely using DOM API to prevent XSS
+                const container = document.createElement('div');
+                container.className = 'reading-container';
+                if (emoji) container.setAttribute('data-emoji', emoji);
+
+                const title = document.createElement('h2');
+                title.className = 'story-title';
+                title.textContent = problem.title;
+
+                const text = document.createElement('div');
+                text.className = 'story-text';
+                text.textContent = problem.text;
+
+                const questions = document.createElement('div');
+                questions.className = 'story-questions';
+                questions.innerHTML = '<h3>Comprehension Questions:</h3><ol></ol>';
+
+                const ol = questions.querySelector('ol');
+                problem.questions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = q;
+                    const line = document.createElement('div');
+                    line.className = 'answer-line';
+                    li.appendChild(line);
+                    ol.appendChild(li);
+                });
+
+                container.appendChild(title);
+                container.appendChild(text);
+                container.appendChild(questions);
+
+                worksheetHTML += container.outerHTML;
             });
         } else {
             // Standard Grid Layout
@@ -1051,7 +1070,7 @@ function printPreview() {
             <div class="print-preview-header">
                 Print Preview - Ready to Print
             </div>
-            ${clonedContent.outerHTML}
+            ${container.outerHTML}
             <div class="print-preview-actions">
                 <button class="preview-btn preview-btn-print" onclick="window.print()">
                     <i class="fas fa-print"></i> Print Now
