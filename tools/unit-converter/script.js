@@ -126,12 +126,27 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
 });
 
+// Debounce function to limit the rate of execution
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Setup event listeners
 function setupEventListeners() {
+    const debouncedConvert = debounce(convertUnits, 200);
+
     // Auto-convert when inputs change
     document.getElementById('value-input').addEventListener('input', function() {
         if (this.value && this.value.trim() !== '') {
-            convertUnits();
+            debouncedConvert();
         }
     });
 
@@ -215,33 +230,23 @@ function convertUnits() {
         return;
     }
     
-    const convertBtn = document.getElementById('convert-btn');
-    convertBtn.classList.add('loading');
-    convertBtn.disabled = true;
-    
-    // Simulate processing time for better UX
-    setTimeout(() => {
-        try {
-            let result;
-            
-            if (category === 'temperature') {
-                result = convertTemperature(value, fromUnit, toUnit);
-            } else {
-                result = convertStandard(value, fromUnit, toUnit, category);
-            }
-            
-            showResult(result, toUnit, `${value} ${conversionData[category].units[fromUnit].name} =`);
-            
-            // Track conversion
-            trackConversion(category, fromUnit, toUnit);
-            
-        } catch (error) {
-            showError('Conversion error: ' + error.message);
-        } finally {
-            convertBtn.classList.remove('loading');
-            convertBtn.disabled = false;
+    try {
+        let result;
+
+        if (category === 'temperature') {
+            result = convertTemperature(value, fromUnit, toUnit);
+        } else {
+            result = convertStandard(value, fromUnit, toUnit, category);
         }
-    }, 300);
+
+        showResult(result, toUnit, `${value} ${conversionData[category].units[fromUnit].name} =`);
+
+        // Track conversion
+        trackConversion(category, fromUnit, toUnit);
+
+    } catch (error) {
+        showError('Conversion error: ' + error.message);
+    }
 }
 
 // Standard unit conversion
