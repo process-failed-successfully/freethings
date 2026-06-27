@@ -118,7 +118,11 @@ function renderBooksList(filterLevel = "all") {
     const filtered = books.filter(b => filterLevel === "all" || b.level === filterLevel);
 
     if (filtered.length === 0) {
-        listEl.innerHTML = `<p class="book-words" style="padding: 1rem; text-align: center;">No books found in Level ${filterLevel}.</p>`;
+        const emptyMsg = document.createElement("p");
+        emptyMsg.className = "book-words";
+        emptyMsg.style.cssText = "padding: 1rem; text-align: center;";
+        emptyMsg.textContent = `No books found in Level ${filterLevel}.`;
+        listEl.appendChild(emptyMsg);
         return;
     }
 
@@ -131,15 +135,29 @@ function renderBooksList(filterLevel = "all") {
         const thumbSrc = book.thumbnail || `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23ccc'><rect width='100' height='100'/></svg>`;
 
         item.innerHTML = `
-            <img class="book-thumbnail" src="${thumbSrc}" alt="${book.title} Cover" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\' fill=\\'%232563eb\\'><rect width=\\'100\\' height=\\'100\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'white\\' font-size=\\'30\\'>📖</text></svg>'">
+            <img class="book-thumbnail">
             <div class="book-meta">
-                <span class="book-title">${book.title}</span>
+                <span class="book-title"></span>
                 <div class="book-details">
-                    <span class="level-tag level-${book.level.toLowerCase()}">Level ${book.level}</span>
-                    <span class="book-words">${book.wordsCount} words</span>
+                    <span class="level-tag"></span>
+                    <span class="book-words"></span>
                 </div>
             </div>
         `;
+
+        const img = item.querySelector(".book-thumbnail");
+        img.src = thumbSrc;
+        img.alt = `${book.title} Cover`;
+        img.onerror = function() {
+            this.src = 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%232563eb\'><rect width=\'100\' height=\'100\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'white\' font-size=\'30\'>📖</text></svg>';
+            this.onerror = null;
+        };
+
+        item.querySelector(".book-title").textContent = book.title;
+        const levelTag = item.querySelector(".level-tag");
+        levelTag.classList.add(`level-${book.level.toLowerCase()}`);
+        levelTag.textContent = `Level ${book.level}`;
+        item.querySelector(".book-words").textContent = `${book.wordsCount} words`;
 
         item.addEventListener("click", () => {
             selectBook(book.id);
@@ -523,17 +541,23 @@ function renderPagesCreator() {
         pageCard.innerHTML = `
             <div class="page-editor-header">
                 <span class="page-num-title">Page ${idx + 1}</span>
-                ${creatorPages.length > 1 ? `
-                    <button type="button" class="btn-remove-page" onclick="removeCreatorPage(${idx})">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
-                ` : ''}
+                <div class="header-actions"></div>
             </div>
-            <textarea class="form-textarea page-text-input" placeholder="Type page text here... e.g. See the train go." data-index="${idx}">${page.text}</textarea>
+            <textarea class="form-textarea page-text-input" placeholder="Type page text here... e.g. See the train go." data-index="${idx}"></textarea>
         `;
+
+        if (creatorPages.length > 1) {
+            const removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "btn-remove-page";
+            removeBtn.innerHTML = '<i class="fas fa-trash"></i> Remove';
+            removeBtn.onclick = () => removeCreatorPage(idx);
+            pageCard.querySelector(".header-actions").appendChild(removeBtn);
+        }
 
         // Live update model
         const textarea = pageCard.querySelector("textarea");
+        textarea.textContent = page.text;
         textarea.addEventListener("input", (e) => {
             creatorPages[idx].text = e.target.value;
         });
