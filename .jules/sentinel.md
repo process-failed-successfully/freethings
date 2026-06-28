@@ -19,3 +19,8 @@
 **Vulnerability:** DOM-based Cross-Site Scripting (XSS) via maliciously crafted filenames in `image-resizer` and `image-converter`, and via generated output in `password-generator`.
 **Learning:** Even internal tool data (like filenames or generated passwords) should be treated as untrusted. Mixing `innerHTML` with user-controlled variables in template literals is a systemic risk in this repository. In `image-converter`, extension parsing (`fileFormat`) was also a secondary XSS vector.
 **Prevention:** Use the "Structural HTML + textContent" pattern for all dynamic UI updates. Replace `onclick` attributes in generated HTML strings with programmatic `.onclick` or `addEventListener` to avoid attribute injection.
+
+## 2025-05-15 - Persistent XSS and Stability in Reading Helper
+**Vulnerability:** DOM-based XSS via user-controlled story titles and page text in `reading-helper`, persistable via `localStorage`. Trailing syntax errors in `data.js` also caused runtime crashes.
+**Learning:** Tools that persist data (like `localStorage` for custom stories) create a "stored" XSS vector if not rendered safely. Additionally, monolithic rendering loops are fragile; a single malformed entry (e.g., from a syntax error in shared data) can crash the entire UI.
+**Prevention:** Always use `textContent` for persisted user data. Implement defensive null-checks in all rendering loops and data loading functions to prevent "Cannot read properties of undefined" crashes.
