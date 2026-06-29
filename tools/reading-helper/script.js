@@ -271,6 +271,9 @@ function renderInteractiveText(text) {
     textContainer.innerHTML = "";
     currentSpokenWords = [];
 
+    // Use a DocumentFragment to batch DOM updates for better performance
+    const fragment = document.createDocumentFragment();
+
     // Split text by spaces but preserve punctuation
     // We split by word boundary with regex to extract words and punctuation/spaces separately
     const tokens = text.split(/(\s+)/);
@@ -281,7 +284,7 @@ function renderInteractiveText(text) {
             const spaceEl = document.createElement("span");
             spaceEl.className = "word-space";
             spaceEl.innerHTML = token.replace(/ /g, "&nbsp;");
-            textContainer.appendChild(spaceEl);
+            fragment.appendChild(spaceEl);
         } else {
             // It's a word with potential punctuation
             // Separate punctuation from word characters
@@ -306,23 +309,25 @@ function renderInteractiveText(text) {
                     selectWord(wordCore, wordSpan);
                 });
 
-                textContainer.appendChild(wordSpan);
+                fragment.appendChild(wordSpan);
 
                 if (punctuation) {
                     const punctEl = document.createElement("span");
                     punctEl.className = "word-space";
                     punctEl.textContent = punctuation;
-                    textContainer.appendChild(punctEl);
+                    fragment.appendChild(punctEl);
                 }
             } else {
                 // Fallback for non-alphabetic tokens
                 const fallbackSpan = document.createElement("span");
                 fallbackSpan.className = "word-space";
                 fallbackSpan.textContent = token;
-                textContainer.appendChild(fallbackSpan);
+                fragment.appendChild(fallbackSpan);
             }
         }
     });
+
+    textContainer.appendChild(fragment);
 }
 
 // 7. Select a word and open Phonics Panel
