@@ -18,20 +18,24 @@
         try {
             if (window.__adsenseLoaded) return;
 
+            var fragment = document.createDocumentFragment();
+
             // Ensure account meta exists for Auto ads
             var meta = document.querySelector('meta[name="google-adsense-account"]');
             if (!meta) {
                 meta = document.createElement('meta');
                 meta.setAttribute('name', 'google-adsense-account');
                 meta.setAttribute('content', 'ca-pub-6242151456790313');
-                document.head.appendChild(meta);
+                fragment.appendChild(meta);
             }
 
             var script = document.createElement('script');
             script.async = true;
             script.crossOrigin = 'anonymous';
             script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6242151456790313';
-            document.head.appendChild(script);
+            fragment.appendChild(script);
+
+            document.head.appendChild(fragment);
 
             window.__adsenseLoaded = true;
         } catch (e) {
