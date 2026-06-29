@@ -1,8 +1,8 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
-  // Subdomain routing for read.freethings.win
-  if (url.hostname === "read.freethings.win") {
+  // Subdomain routing for read.freethings.win / read.freethings.com
+  if (url.hostname === "read.freethings.win" || url.hostname === "read.freethings.com") {
     if (url.pathname === "/") {
       url.pathname = "/tools/reading-helper/lite";
     } else {
@@ -13,8 +13,8 @@ export async function onRequest(context) {
   }
 
   // Redirect www to apex domain
-  if (url.hostname === "www.freethings.win") {
-    url.hostname = "freethings.win";
+  if (url.hostname === "www.freethings.win" || url.hostname === "www.freethings.com") {
+    url.hostname = url.hostname.replace("www.", "");
     return Response.redirect(url.toString(), 301);
   }
 
