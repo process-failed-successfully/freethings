@@ -14,6 +14,7 @@ const downloadAllBtn = document.getElementById('download-all-btn');
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
+    setupAccessibility();
     updateResizeMode();
 });
 
@@ -598,10 +599,49 @@ function toggleFAQ(element) {
     // Close all FAQ items
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        const question = item.querySelector('.faq-question');
+        if (question) {
+            question.setAttribute('aria-expanded', 'false');
+        }
     });
     
     // Open clicked item if it wasn't active
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
+    }
+}
+
+// Setup accessibility features
+function setupAccessibility() {
+    // Keyboard accessibility for preset items
+    document.querySelectorAll('.preset-item').forEach(item => {
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
+
+    // Keyboard accessibility for FAQ questions
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                question.click();
+            }
+        });
+    });
+
+    // Keyboard accessibility for file upload area
+    const uploadArea = document.getElementById('file-upload-area');
+    if (uploadArea) {
+        uploadArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                uploadArea.click();
+            }
+        });
     }
 }
