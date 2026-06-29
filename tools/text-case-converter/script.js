@@ -24,6 +24,17 @@ function setupEventListeners() {
             }
         }
     });
+
+    // Keyboard accessibility for custom interactive elements
+    const interactiveElements = document.querySelectorAll('.example-item, .faq-question');
+    interactiveElements.forEach(item => {
+        item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
 }
 
 // Update text statistics
@@ -248,20 +259,34 @@ function copyResult() {
         return;
     }
     
+    const copyBtn = document.getElementById('copy-btn');
+    const originalText = copyBtn.innerHTML;
+
+    const doSuccess = () => {
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        copyBtn.classList.add('copied');
+        showNotification('Text copied to clipboard!');
+        trackCopy();
+
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.classList.remove('copied');
+        }, 2000);
+    };
+
     if (navigator.clipboard) {
         navigator.clipboard.writeText(window.lastConversionResult).then(() => {
-            showNotification('Text copied to clipboard!');
-            trackCopy();
+            doSuccess();
         }).catch(() => {
-            fallbackCopy(window.lastConversionResult);
+            fallbackCopy(window.lastConversionResult, doSuccess);
         });
     } else {
-        fallbackCopy(window.lastConversionResult);
+        fallbackCopy(window.lastConversionResult, doSuccess);
     }
 }
 
 // Fallback copy method
-function fallbackCopy(text) {
+function fallbackCopy(text, callback) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     textArea.style.position = 'fixed';
@@ -273,8 +298,11 @@ function fallbackCopy(text) {
     
     try {
         document.execCommand('copy');
-        showNotification('Text copied to clipboard!');
-        trackCopy();
+        if (callback) callback();
+        else {
+            showNotification('Text copied to clipboard!');
+            trackCopy();
+        }
     } catch (err) {
         showNotification('Failed to copy text');
     }
@@ -333,14 +361,19 @@ function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const isActive = faqItem.classList.contains('active');
     
-    // Close all FAQ items
+    // Close all FAQ items and reset aria-expanded
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        const question = item.querySelector('.faq-question');
+        if (question) question.setAttribute('aria-expanded', 'false');
     });
     
     // Open clicked item if it wasn't active
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
+    } else {
+        element.setAttribute('aria-expanded', 'false');
     }
 }
 

@@ -125,9 +125,11 @@ body {
     background: #f7fafc;
 }
 
-.file-upload-area:hover {
+.file-upload-area:hover, .file-upload-area:focus-visible {
     border-color: #667eea;
     background: #edf2f7;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 .file-upload-area.dragover {
@@ -462,10 +464,12 @@ body {
     border: 2px solid transparent;
 }
 
-.preset-item:hover {
+.preset-item:hover, .preset-item:focus-visible {
     background: #edf2f7;
     border-color: #667eea;
     transform: translateY(-2px);
+    outline: none;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
 }
 
 .preset-item h4 {
@@ -612,8 +616,10 @@ body {
     transition: background 0.3s ease;
 }
 
-.faq-question:hover {
+.faq-question:hover, .faq-question:focus-visible {
     background: #f7fafc;
+    outline: none;
+    box-shadow: inset 0 0 0 2px #667eea;
 }
 
 .faq-question h3 {
