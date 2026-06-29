@@ -60,6 +60,7 @@ function renderLibrary(levelFilter = 'A') {
         return;
     }
 
+    const fragment = document.createDocumentFragment();
     filteredBooks.forEach(book => {
         const card = document.createElement('div');
         card.className = 'book-card';
@@ -75,8 +76,9 @@ function renderLibrary(levelFilter = 'A') {
         card.querySelector('.book-level').textContent = `Level ${book.level}`;
 
         card.addEventListener('click', () => openBook(book));
-        grid.appendChild(card);
+        fragment.appendChild(card);
     });
+    grid.appendChild(fragment);
 }
 
 function openBook(book) {
@@ -123,6 +125,7 @@ function renderPage() {
     currentSpokenWords = [];
     
     const words = page.text.split(' ');
+    const fragment = document.createDocumentFragment();
     words.forEach(word => {
         const span = document.createElement('span');
         span.className = 'word';
@@ -130,11 +133,12 @@ function renderPage() {
         
         span.addEventListener('click', () => playWordAudio(word, span));
         
-        textContainer.appendChild(span);
-        textContainer.appendChild(document.createTextNode(' '));
+        fragment.appendChild(span);
+        fragment.appendChild(document.createTextNode(' '));
         
         currentSpokenWords.push({ word: word, element: span });
     });
+    textContainer.appendChild(fragment);
     
     // Add red cross for local development tagging
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {

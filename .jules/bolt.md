@@ -9,3 +9,7 @@
 ## 2026-06-27 - [Removing Artificial UX Latency]
 **Learning:** Some tools may include artificial delays (e.g., 300ms setTimeout) intended to "simulate processing" for UX reasons, but these objectively degrade performance. Combining the removal of such delays with a proper debounce (e.g., 200ms) on input events provides a much snappier user experience while still preventing redundant processing during rapid typing.
 **Action:** Identify and remove artificial delays in simple utility tools. Implement debouncing for real-time input fields to balance responsiveness with processing efficiency.
+
+## 2026-06-29 - [Batch DOM Manipulation with DocumentFragment]
+**Learning:** Appending DOM elements inside a loop causes the browser to recalculate styles and layout for every iteration, leading to "layout thrashing" and poor performance, especially for long lists or large text blocks. Building strings with `innerHTML` is often faster but risky for XSS if user-controlled data is involved.
+**Action:** Use `document.createDocumentFragment()` to batch multiple DOM additions (elements and text nodes) off-screen. Append all items to the fragment within the loop, then perform a single append to the live DOM at the end. This preserves DOM security while achieving near-native performance.
