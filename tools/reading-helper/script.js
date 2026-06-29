@@ -124,6 +124,7 @@ function renderBooksList(filterLevel = "all") {
         return;
     }
 
+    const fragment = document.createDocumentFragment();
     filtered.forEach(book => {
         if (!book) return;
         const item = document.createElement("button");
@@ -161,8 +162,9 @@ function renderBooksList(filterLevel = "all") {
             selectBook(book.id);
         });
 
-        listEl.appendChild(item);
+        fragment.appendChild(item);
     });
+    listEl.appendChild(fragment);
 }
 
 // 5. Select and Display Book
@@ -274,6 +276,7 @@ function renderInteractiveText(text) {
     // Split text by spaces but preserve punctuation
     // We split by word boundary with regex to extract words and punctuation/spaces separately
     const tokens = text.split(/(\s+)/);
+    const fragment = document.createDocumentFragment();
 
     tokens.forEach(token => {
         if (token.trim() === "") {
@@ -281,7 +284,7 @@ function renderInteractiveText(text) {
             const spaceEl = document.createElement("span");
             spaceEl.className = "word-space";
             spaceEl.innerHTML = token.replace(/ /g, "&nbsp;");
-            textContainer.appendChild(spaceEl);
+            fragment.appendChild(spaceEl);
         } else {
             // It's a word with potential punctuation
             // Separate punctuation from word characters
@@ -306,23 +309,24 @@ function renderInteractiveText(text) {
                     selectWord(wordCore, wordSpan);
                 });
 
-                textContainer.appendChild(wordSpan);
+                fragment.appendChild(wordSpan);
 
                 if (punctuation) {
                     const punctEl = document.createElement("span");
                     punctEl.className = "word-space";
                     punctEl.textContent = punctuation;
-                    textContainer.appendChild(punctEl);
+                    fragment.appendChild(punctEl);
                 }
             } else {
                 // Fallback for non-alphabetic tokens
                 const fallbackSpan = document.createElement("span");
                 fallbackSpan.className = "word-space";
                 fallbackSpan.textContent = token;
-                textContainer.appendChild(fallbackSpan);
+                fragment.appendChild(fallbackSpan);
             }
         }
     });
+    textContainer.appendChild(fragment);
 }
 
 // 7. Select a word and open Phonics Panel
@@ -532,6 +536,7 @@ function renderPagesCreator() {
     const listEl = document.getElementById("pages-creator-list");
     listEl.innerHTML = "";
 
+    const fragment = document.createDocumentFragment();
     creatorPages.forEach((page, idx) => {
         const pageCard = document.createElement("div");
         pageCard.className = "page-editor-card";
@@ -561,8 +566,9 @@ function renderPagesCreator() {
             creatorPages[idx].text = e.target.value;
         });
 
-        listEl.appendChild(pageCard);
+        fragment.appendChild(pageCard);
     });
+    listEl.appendChild(fragment);
 }
 
 window.removeCreatorPage = function(index) {
