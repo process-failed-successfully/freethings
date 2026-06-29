@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
+                // Optimization: stop observing after element is revealed
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -104,13 +106,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add parallax effect to hero section (subtle)
+    // Optimization: Cache hero element and throttle scroll event with requestAnimationFrame
+    const hero = document.querySelector('.hero');
+    let scrollTicking = false;
+
     window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        if (!scrollTicking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+                scrollTicking = false;
+            });
+            scrollTicking = true;
         }
-    });
+    }, { passive: true });
 
     // Add tool search functionality (if needed in future)
     function addToolSearch() {
@@ -160,27 +171,38 @@ document.addEventListener('DOMContentLoaded', function() {
     showLoadingState();
 
     // Add tool statistics animation
-    function animateStats() {
-        const stats = document.querySelectorAll('.stat-number, .about-stat-number');
+    // Optimization: Scope animation to container, use requestAnimationFrame for 60fps,
+    // and ensure statistics only animate once.
+    function animateStats(container) {
+        const stats = container.querySelectorAll('.stat-number, .about-stat-number');
         
         stats.forEach(stat => {
+            // Only animate once
+            if (stat.dataset.animated === 'true') return;
+            stat.dataset.animated = 'true';
+
             const finalValue = stat.textContent;
             const isNumber = !isNaN(parseInt(finalValue));
             
             if (isNumber) {
                 const targetValue = parseInt(finalValue);
-                let currentValue = 0;
-                const increment = targetValue / 50;
-                
-                const timer = setInterval(() => {
-                    currentValue += increment;
-                    if (currentValue >= targetValue) {
-                        stat.textContent = finalValue;
-                        clearInterval(timer);
-                    } else {
-                        stat.textContent = Math.floor(currentValue);
+                const duration = 1500; // 1.5 seconds
+                const startTime = performance.now();
+
+                function update(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    // Simple linear progress
+                    const currentValue = Math.floor(progress * targetValue);
+                    stat.textContent = progress === 1 ? finalValue : currentValue;
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(update);
                     }
-                }, 30);
+                }
+
+                window.requestAnimationFrame(update);
             }
         });
     }
@@ -189,7 +211,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const statsObserver = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                animateStats();
+                // Scope animation to the visible stats container
+                animateStats(entry.target);
                 statsObserver.unobserve(entry.target);
             }
         });
