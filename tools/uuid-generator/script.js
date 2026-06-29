@@ -1082,7 +1082,7 @@ async function generateMultipleUUIDs() {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'uuid-copy-btn';
         copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-        copyBtn.onclick = () => copySpecificUUID(uuid);
+        copyBtn.onclick = function() { copySpecificUUID(uuid, this); };
 
         uuidItem.appendChild(uuidInfo);
         uuidItem.appendChild(copyBtn);
@@ -1094,36 +1094,50 @@ async function generateMultipleUUIDs() {
 }
 
 // Copy UUID to clipboard
-function copyUUID() {
+function copyUUID(button) {
     if (!window.lastGeneratedUUID) {
         showNotification('No UUID to copy');
         return;
     }
 
-    copyToClipboard(window.lastGeneratedUUID);
+    copyToClipboard(window.lastGeneratedUUID, button);
 }
 
 // Copy specific UUID from multiple list
-function copySpecificUUID(uuid) {
-    copyToClipboard(uuid);
+function copySpecificUUID(uuid, button) {
+    copyToClipboard(uuid, button);
+}
+
+// Provide visual feedback for copy action
+function provideVisualFeedback(button) {
+    if (!button) return;
+    const originalHTML = button.innerHTML;
+    const hasText = button.innerText.trim().length > 0;
+    button.innerHTML = `<i class="fas fa-check"></i>${hasText ? ' Copied!' : ''}`;
+    button.disabled = true;
+    setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.disabled = false;
+    }, 2000);
 }
 
 // Copy to clipboard helper
-function copyToClipboard(text) {
+function copyToClipboard(text, button) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
             showNotification('UUID copied to clipboard!');
+            provideVisualFeedback(button);
             trackUUIDCopy();
         }).catch(() => {
-            fallbackCopy(text);
+            fallbackCopy(text, button);
         });
     } else {
-        fallbackCopy(text);
+        fallbackCopy(text, button);
     }
 }
 
 // Fallback copy method
-function fallbackCopy(text) {
+function fallbackCopy(text, button) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     textArea.style.position = 'fixed';
@@ -1136,6 +1150,7 @@ function fallbackCopy(text) {
     try {
         document.execCommand('copy');
         showNotification('UUID copied to clipboard!');
+        provideVisualFeedback(button);
         trackUUIDCopy();
     } catch (err) {
         showNotification('Failed to copy UUID');
@@ -1252,7 +1267,7 @@ function updateHistoryDisplay() {
         copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
         copyBtn.setAttribute('aria-label', 'Copy UUID');
         copyBtn.title = 'Copy UUID';
-        copyBtn.onclick = () => copySpecificUUID(item.uuid);
+        copyBtn.onclick = function() { copySpecificUUID(item.uuid, this); };
 
         historyItem.appendChild(historyUuid);
         historyItem.appendChild(historyInfo);
@@ -1421,12 +1436,12 @@ window.testUUIDGenerator = function() {
 };
 
 // Copy regex pattern to clipboard - Fixed deployment issue
-function copyRegex() {
+function copyRegex(button) {
     if (!window.lastRegexPattern) {
         showNotification('No regex pattern to copy');
         return;
     }
 
-    copyToClipboard(window.lastRegexPattern);
+    copyToClipboard(window.lastRegexPattern, button);
 }
 
