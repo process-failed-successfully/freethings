@@ -281,9 +281,11 @@ body {
     cursor: pointer;
 }
 
-.quick-item:hover {
+.quick-item:hover, .quick-item:focus-visible {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
 }
 
 .quick-item h3 {
@@ -436,8 +438,10 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.faq-question:hover {
+.faq-question:hover, .faq-question:focus-visible {
     background-color: #e2e8f0;
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
 }
 
 .faq-question h3 {

@@ -169,6 +169,17 @@ function setupEventListeners() {
             convertUnits();
         }
     });
+
+    // Keyboard accessibility for interactive elements
+    const interactiveElements = document.querySelectorAll('.quick-item, .faq-question');
+    interactiveElements.forEach(item => {
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
 }
 
 // Update units based on selected category
@@ -366,9 +377,18 @@ function copyResult() {
         return;
     }
     
+    const copyBtn = document.getElementById('copy-btn');
+    const originalText = copyBtn.innerHTML;
+
     if (navigator.clipboard) {
         navigator.clipboard.writeText(window.lastConversionResult).then(() => {
             showNotification('Result copied to clipboard!');
+
+            // Visual feedback on button
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 2000);
         }).catch(() => {
             fallbackCopy(window.lastConversionResult);
         });
@@ -460,14 +480,16 @@ function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const isActive = faqItem.classList.contains('active');
     
-    // Close all FAQ items
+    // Close all FAQ items and update aria-expanded
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
     });
     
-    // Open clicked item if it wasn't active
+    // Open clicked item if it wasn't active and update aria-expanded
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
     }
 }
 
