@@ -721,7 +721,10 @@ function generateCountingAids(problem, learningType) {
     return null;
 }
 
-// Display worksheet
+/**
+ * Display the generated worksheet in the preview area.
+ * ⚡ Performance: Optimized using DocumentFragment for batched DOM updates.
+ */
 function displayWorksheet(problems, subject, learningType, level, template, showCountingAids = false, showProblemNumbers = false, pageSize = 'A4') {
     const preview = document.getElementById('worksheet-preview');
     const templateClass = `template-${template}`;
@@ -730,51 +733,73 @@ function displayWorksheet(problems, subject, learningType, level, template, show
     // Use 1 problem per page for reading, otherwise use standard config
     const problemsPerPage = learningType === 'reading' ? 1 : pageConfig.problemsPerPage;
     
-    // Create worksheet HTML
-    let worksheetHTML = '';
+    const fragment = document.createDocumentFragment();
     
     // Split problems into pages
     for (let pageIndex = 0; pageIndex < problems.length; pageIndex += problemsPerPage) {
         const pageProblems = problems.slice(pageIndex, pageIndex + problemsPerPage);
         const isFirstPage = pageIndex === 0;
         
-        worksheetHTML += `
-            <div class="worksheet-page ${learningType === 'reading' ? 'reading-page' : ''}">
-                <div class="worksheet ${templateClass}">
-                    <div class="worksheet-header">
-                        <h1 class="worksheet-title">${capitalizeFirst(subject)} Worksheet</h1>
-                        <div class="worksheet-meta">
-                            <span class="worksheet-type">${capitalizeFirst(learningType)}</span>
-                            <span class="worksheet-level">Level ${level}</span>
-                        </div>
-                    </div>
-                    <div class="worksheet-body">
-        `;
+        const pageDiv = document.createElement('div');
+        pageDiv.className = `worksheet-page ${learningType === 'reading' ? 'reading-page' : ''}`;
+
+        const worksheetDiv = document.createElement('div');
+        worksheetDiv.className = `worksheet ${templateClass}`;
+
+        // Header
+        const header = document.createElement('div');
+        header.className = 'worksheet-header';
+
+        const title = document.createElement('h1');
+        title.className = 'worksheet-title';
+        title.textContent = `${capitalizeFirst(subject)} Worksheet`;
+
+        const meta = document.createElement('div');
+        meta.className = 'worksheet-meta';
+
+        const typeSpan = document.createElement('span');
+        typeSpan.className = 'worksheet-type';
+        typeSpan.textContent = capitalizeFirst(learningType);
+
+        const levelSpan = document.createElement('span');
+        levelSpan.className = 'worksheet-level';
+        levelSpan.textContent = `Level ${level}`;
+
+        meta.appendChild(typeSpan);
+        meta.appendChild(levelSpan);
+        header.appendChild(title);
+        header.appendChild(meta);
+        worksheetDiv.appendChild(header);
+
+        // Body
+        const body = document.createElement('div');
+        body.className = 'worksheet-body';
         
         if (learningType === 'reading') {
-            // Reading Book Layout: One story per page, full width
             pageProblems.forEach((problem, index) => {
                 const globalIndex = pageIndex + index;
                 const emoji = getRandomTemplateEmoji(template, globalIndex);
 
-                // Create container safely using DOM API to prevent XSS
                 const container = document.createElement('div');
                 container.className = 'reading-container';
                 if (emoji) container.setAttribute('data-emoji', emoji);
 
-                const title = document.createElement('h2');
-                title.className = 'story-title';
-                title.textContent = problem.title;
+                const storyTitle = document.createElement('h2');
+                storyTitle.className = 'story-title';
+                storyTitle.textContent = problem.title;
 
-                const text = document.createElement('div');
-                text.className = 'story-text';
-                text.textContent = problem.text;
+                const storyText = document.createElement('div');
+                storyText.className = 'story-text';
+                storyText.textContent = problem.text;
 
                 const questions = document.createElement('div');
                 questions.className = 'story-questions';
-                questions.innerHTML = '<h3>Comprehension Questions:</h3><ol></ol>';
 
-                const ol = questions.querySelector('ol');
+                const qHeading = document.createElement('h3');
+                qHeading.textContent = 'Comprehension Questions:';
+                questions.appendChild(qHeading);
+
+                const ol = document.createElement('ol');
                 problem.questions.forEach(q => {
                     const li = document.createElement('li');
                     li.textContent = q;
@@ -783,56 +808,83 @@ function displayWorksheet(problems, subject, learningType, level, template, show
                     li.appendChild(line);
                     ol.appendChild(li);
                 });
+                questions.appendChild(ol);
 
-                container.appendChild(title);
-                container.appendChild(text);
+                container.appendChild(storyTitle);
+                container.appendChild(storyText);
                 container.appendChild(questions);
-
-                worksheetHTML += container.outerHTML;
+                body.appendChild(container);
             });
         } else {
-            // Standard Grid Layout
-            worksheetHTML += `<div class="problems-grid">`;
+            const grid = document.createElement('div');
+            grid.className = 'problems-grid';
+
             pageProblems.forEach((problem, index) => {
                 const globalIndex = pageIndex + index;
-                let countingAidsHTML = '';
+                const emoji = getRandomTemplateEmoji(template, globalIndex);
 
-                if (showCountingAids && problem.countingAids && shouldShowCountingAids(problem.countingAids)) {
-                    countingAidsHTML = `<div class="counting-aids">${renderCountingAids(problem.countingAids)}</div>`;
+                const item = document.createElement('div');
+                item.className = 'problem-item';
+                if (emoji) item.setAttribute('data-emoji', emoji);
+
+                if (showProblemNumbers) {
+                    const numSpan = document.createElement('span');
+                    numSpan.className = 'problem-number';
+                    numSpan.textContent = `${globalIndex + 1}.`;
+                    item.appendChild(numSpan);
                 }
 
-                const problemNumberHTML = showProblemNumbers ? `<span class="problem-number">${globalIndex + 1}.</span>` : '';
-                const emoji = getRandomTemplateEmoji(template, globalIndex);
-                const emojiDataAttr = emoji ? `data-emoji="${emoji}"` : '';
+                const content = document.createElement('div');
+                content.className = 'problem-content';
 
-                worksheetHTML += `
-                    <div class="problem-item" ${emojiDataAttr}>
-                        ${problemNumberHTML}
-                        <div class="problem-content">
-                            ${countingAidsHTML}
-                            <div class="problem-question">${problem.question} <span class="answer-space"></span></div>
-                        </div>
-                    </div>
-                `;
+                if (showCountingAids && problem.countingAids && shouldShowCountingAids(problem.countingAids)) {
+                    const aids = renderCountingAids(problem.countingAids);
+                    if (aids) content.appendChild(aids);
+                }
+
+                const question = document.createElement('div');
+                question.className = 'problem-question';
+                // Using innerHTML here for spelling/vocabulary which might have <b> or options
+                question.innerHTML = problem.question;
+
+                const answerSpace = document.createElement('span');
+                answerSpace.className = 'answer-space';
+                question.appendChild(answerSpace);
+
+                content.appendChild(question);
+                item.appendChild(content);
+                grid.appendChild(item);
             });
-            worksheetHTML += `</div>`;
+            body.appendChild(grid);
         }
+        worksheetDiv.appendChild(body);
         
-        worksheetHTML += `
-                    </div>
-                    ${isFirstPage ? `
-                    <div class="worksheet-footer">
-                        <div class="worksheet-info">
-                            <a href="https://freethings.win/tools/worksheet-generator/" target="_blank" rel="noopener noreferrer">FreeThings.win Worksheet Generator</a>
-                        </div>
-                    </div>
-                    ` : ''}
-                </div>
-            </div>
-        `;
+        // Footer (first page only)
+        if (isFirstPage) {
+            const footer = document.createElement('div');
+            footer.className = 'worksheet-footer';
+
+            const info = document.createElement('div');
+            info.className = 'worksheet-info';
+
+            const link = document.createElement('a');
+            link.href = 'https://freethings.win/tools/worksheet-generator/';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'FreeThings.win Worksheet Generator';
+
+            info.appendChild(link);
+            footer.appendChild(info);
+            worksheetDiv.appendChild(footer);
+        }
+
+        pageDiv.appendChild(worksheetDiv);
+        fragment.appendChild(pageDiv);
     }
     
-    preview.innerHTML = worksheetHTML;
+    // Clear and append
+    preview.innerHTML = '';
+    preview.appendChild(fragment);
     preview.classList.add('has-worksheet');
     
     // Store worksheet data for download
@@ -845,14 +897,18 @@ function displayWorksheet(problems, subject, learningType, level, template, show
         showCountingAids,
         showProblemNumbers,
         pageSize,
-        html: worksheetHTML
+        html: preview.innerHTML
     };
 }
 
-// Render counting aids HTML (only question part, no result)
-// Uses fixed container size with scalable objects
+/**
+ * Render counting aids (visual indicators) for a problem.
+ * ⚡ Performance: Optimized using programmatic DOM construction instead of string concatenation.
+ * @param {Object} aids - Counting aids data.
+ * @returns {HTMLElement|null} The rendered counting aids container.
+ */
 function renderCountingAids(aids) {
-    if (!aids) return '';
+    if (!aids) return null;
     
     // Calculate total object count for sizing
     let totalObjects = 0;
@@ -871,79 +927,124 @@ function renderCountingAids(aids) {
     }
     
     // Calculate font size based on object count (more objects = smaller size)
-    // Base size for 2 objects, scales down as count increases
     const baseSize = 0.75;
     const minSize = 0.4;
     const maxSize = 1.0;
     const fontSize = Math.max(minSize, Math.min(maxSize, baseSize * (2 / Math.max(totalObjects, 1))));
     
-    let html = `<div class="counting-aids" style="font-size: ${fontSize}rem;">`;
+    const container = document.createElement('div');
+    container.className = 'counting-aids';
+    container.style.fontSize = `${fontSize}rem`;
     
     if (aids.type === 'addition') {
-        // Show first group, plus sign, second group (no result)
-        html += '<div class="counting-group">';
+        const group1 = document.createElement('div');
+        group1.className = 'counting-group';
         for (let i = 0; i < aids.groups[0].count; i++) {
-            html += `<span class="counting-object">${aids.object}</span>`;
+            const obj = document.createElement('span');
+            obj.className = 'counting-object';
+            obj.textContent = aids.object;
+            group1.appendChild(obj);
         }
-        html += `</div><span class="counting-operator">+</span><div class="counting-group">`;
+        container.appendChild(group1);
+
+        const op = document.createElement('span');
+        op.className = 'counting-operator';
+        op.textContent = '+';
+        container.appendChild(op);
+
+        const group2 = document.createElement('div');
+        group2.className = 'counting-group';
         for (let i = 0; i < aids.groups[1].count; i++) {
-            html += `<span class="counting-object">${aids.object}</span>`;
+            const obj = document.createElement('span');
+            obj.className = 'counting-object';
+            obj.textContent = aids.object;
+            group2.appendChild(obj);
         }
-        html += '</div>';
+        container.appendChild(group2);
     } else if (aids.type === 'subtraction') {
-        // Show total objects with some crossed out (no result)
-        html += '<div class="counting-group">';
+        const group = document.createElement('div');
+        group.className = 'counting-group';
         for (let i = 0; i < aids.total; i++) {
-            const crossed = i < aids.subtract;
-            html += `<span class="counting-object ${crossed ? 'crossed-out' : ''}">${aids.object}</span>`;
+            const obj = document.createElement('span');
+            obj.className = 'counting-object';
+            if (i < aids.subtract) obj.classList.add('crossed-out');
+            obj.textContent = aids.object;
+            group.appendChild(obj);
         }
-        html += '</div>';
+        container.appendChild(group);
     } else if (aids.type === 'multiplication') {
-        // Show groups of objects (no result)
         for (let g = 0; g < aids.groups; g++) {
-            html += '<div class="counting-group">';
+            const group = document.createElement('div');
+            group.className = 'counting-group';
             for (let i = 0; i < aids.perGroup; i++) {
-                html += `<span class="counting-object">${aids.object}</span>`;
+                const obj = document.createElement('span');
+                obj.className = 'counting-object';
+                obj.textContent = aids.object;
+                group.appendChild(obj);
             }
-            html += '</div>';
+            container.appendChild(group);
             if (g < aids.groups - 1) {
-                html += '<span class="counting-operator">+</span>';
+                const op = document.createElement('span');
+                op.className = 'counting-operator';
+                op.textContent = '+';
+                container.appendChild(op);
             }
         }
     } else if (aids.type === 'division') {
-        // Show total objects grouped (e.g., 12 objects in groups of 4, no result shown)
-        html += '<div class="counting-group counting-group-division">';
+        const group = document.createElement('div');
+        group.className = 'counting-group counting-group-division';
         for (let g = 0; g < aids.groups; g++) {
-            html += '<div class="counting-subgroup">';
+            const subgroup = document.createElement('div');
+            subgroup.className = 'counting-subgroup';
             for (let i = 0; i < aids.perGroup; i++) {
-                html += `<span class="counting-object">${aids.object}</span>`;
+                const obj = document.createElement('span');
+                obj.className = 'counting-object';
+                obj.textContent = aids.object;
+                subgroup.appendChild(obj);
             }
-            html += '</div>';
+            group.appendChild(subgroup);
         }
-        html += '</div>';
+        container.appendChild(group);
     } else if (aids.type === 'number-bonds') {
-        // Show target number of objects with missing ones
-        html += '<div class="counting-group">';
+        const group = document.createElement('div');
+        group.className = 'counting-group';
         for (let i = 0; i < aids.target; i++) {
             const isShown = i < aids.shown;
-            html += `<span class="counting-object ${isShown ? '' : 'missing'}">${isShown ? aids.object : '?'}</span>`;
+            const obj = document.createElement('span');
+            obj.className = 'counting-object';
+            if (!isShown) obj.classList.add('missing');
+            obj.textContent = isShown ? aids.object : '?';
+            group.appendChild(obj);
         }
-        html += '</div>';
+        container.appendChild(group);
     } else if (aids.type === 'comparing') {
-        // Show both numbers side by side
-        html += '<div class="counting-group">';
+        const group1 = document.createElement('div');
+        group1.className = 'counting-group';
         for (let i = 0; i < aids.num1; i++) {
-            html += `<span class="counting-object">${aids.object}</span>`;
+            const obj = document.createElement('span');
+            obj.className = 'counting-object';
+            obj.textContent = aids.object;
+            group1.appendChild(obj);
         }
-        html += '</div><span class="counting-operator">?</span><div class="counting-group">';
+        container.appendChild(group1);
+
+        const op = document.createElement('span');
+        op.className = 'counting-operator';
+        op.textContent = '?';
+        container.appendChild(op);
+
+        const group2 = document.createElement('div');
+        group2.className = 'counting-group';
         for (let i = 0; i < aids.num2; i++) {
-            html += `<span class="counting-object">${aids.object}</span>`;
+            const obj = document.createElement('span');
+            obj.className = 'counting-object';
+            obj.textContent = aids.object;
+            group2.appendChild(obj);
         }
-        html += '</div>';
+        container.appendChild(group2);
     }
     
-    html += '</div>';
-    return html;
+    return container;
 }
 
 // Show error message

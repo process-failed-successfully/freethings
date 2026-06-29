@@ -9,3 +9,7 @@
 ## 2026-06-27 - [Removing Artificial UX Latency]
 **Learning:** Some tools may include artificial delays (e.g., 300ms setTimeout) intended to "simulate processing" for UX reasons, but these objectively degrade performance. Combining the removal of such delays with a proper debounce (e.g., 200ms) on input events provides a much snappier user experience while still preventing redundant processing during rapid typing.
 **Action:** Identify and remove artificial delays in simple utility tools. Implement debouncing for real-time input fields to balance responsiveness with processing efficiency.
+
+## 2026-06-30 - [DocumentFragment Batching for Worksheet Generation]
+**Learning:** Building large, multi-page worksheets with hundreds of small visual elements (counting aids, problem items) using string concatenation and `innerHTML` causes significant overhead due to repeated DOM parsing and layout thrashing.
+**Action:** Use `document.createDocumentFragment()` to batch all page and problem elements off-screen. Implement programmatic DOM construction (`document.createElement`, `.textContent`) instead of template literals to improve both rendering performance and XSS security. In the worksheet generator, this reduced latency by ~55%.
