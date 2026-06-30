@@ -18,6 +18,16 @@ function setupEventListeners() {
             }
         }
     });
+
+    // Keyboard accessibility for FAQ questions
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
 }
 
 // Update input fields based on QR type
@@ -387,14 +397,19 @@ function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const isActive = faqItem.classList.contains('active');
     
-    // Close all FAQ items
+    // Close all FAQ items and reset aria-expanded
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        const question = item.querySelector('.faq-question');
+        if (question) question.setAttribute('aria-expanded', 'false');
     });
     
     // Open clicked item if it wasn't active
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
+    } else {
+        element.setAttribute('aria-expanded', 'false');
     }
 }
 
