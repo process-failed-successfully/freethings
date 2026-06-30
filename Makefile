@@ -297,9 +297,27 @@ generate-audio:
 	fi
 	@echo "Generating missing phonics audio files via Docker..."
 	cd tools/reading-helper && docker build -t reading-helper-audio -f scripts/Dockerfile .
-	docker run --rm --gpus all -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-audio
 	@echo "Fixing file permissions..."
 	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-audio chown -R $$(id -u):$$(id -g) /workspace/audio /workspace/books_manifest.json 2>/dev/null || true
+
+# Generate comparison audio samples using SpeechT5 and Kokoro
+.PHONY: audio-sample
+audio-sample:
+	@echo "Checking VRAM availability..."
+	@if command -v nvidia-smi >/dev/null 2>&1; then \
+		FREE_VRAM=$$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -n 1); \
+		if [ "$$FREE_VRAM" -lt 1000 ]; then \
+			echo "Error: Not enough VRAM available. Need at least 1000MB for audio generation, but only have $${FREE_VRAM}MB."; \
+			exit 1; \
+		fi; \
+	fi
+	@echo "Building Docker image with updated audio dependencies..."
+	cd tools/reading-helper && docker build -t reading-helper-audio -f scripts/Dockerfile .
+	@echo "Generating audio samples..."
+	docker run --rm --gpus all -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-audio python /workspace/scripts/generate_samples.py
+	@echo "Fixing file permissions..."
+	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-audio chown -R $$(id -u):$$(id -g) /workspace/samples 2>/dev/null || true
+	@echo "Success! Audio samples generated in tools/reading-helper/samples/"
 
 # Generate missing book images using Docker, SDXL, and IP-Adapter
 .PHONY: generate-images

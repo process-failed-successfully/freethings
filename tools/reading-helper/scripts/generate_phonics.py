@@ -1,16 +1,16 @@
 import os
 import re
+import numpy as np
 import soundfile as sf
 import torch
-from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
-from datasets import load_dataset
+from kokoro import KPipeline
 
 def get_phonetic_sound(part):
     phone_helpers = {
         'b': 'buh', 'c': 'cuh', 'd': 'duh', 'f': 'fuh', 'g': 'guh', 'h': 'huh',
         'j': 'juh', 'k': 'cuh', 'l': 'luh', 'm': 'muh', 'n': 'nuh', 'p': 'puh',
         'q': 'kwuh', 'r': 'ruh', 's': 'suh', 't': 'tuh', 'v': 'vuh', 'w': 'wuh',
-        'x': 'ks', 'z': 'zuh',
+        'x': 'ks', 'y': 'ee', 'z': 'zuh',
         # Digraphs
         'th': 'thuh', 'sh': 'shh', 'ch': 'chuh', 'wh': 'wuh', 'ph': 'fuh',
         # L-blends
@@ -25,7 +25,7 @@ def get_phonetic_sound(part):
         'nd': 'und', 'nt': 'unt', 'nk': 'unk', 'ng': 'ing', 'mp': 'ump',
     }
     res = phone_helpers.get(part, part)
-    # Add a period to force a definitive stop and prevent SpeechT5 from stuttering on short words
+    # Add a period to force a definitive stop and prevent stuttering on short words
     if not res.endswith('.'):
         res += '.'
     return res
@@ -77,25 +77,8 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    print("Loading models (this might take a minute on first run)...")
-    processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_tts")
-    model = SpeechT5ForTextToSpeech.from_pretrained("microsoft/speecht5_tts").to(device)
-    vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan").to(device)
-
-    print("Loading speaker embeddings...")
-    embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation", trust_remote_code=True)
-    
-    # Find a much clearer, non-breathy voice (clb is a clear female voice, bdl is a clear male voice)
-    target_speaker = "cmu_us_clb_arctic"
-    speaker_idx = 7306 # fallback to default
-    
-    for i, x in enumerate(embeddings_dataset):
-        if target_speaker in x["filename"]:
-            speaker_idx = i
-            break
-            
-    print(f"Using speaker index {speaker_idx} ({target_speaker})")
-    speaker_embeddings = torch.tensor(embeddings_dataset[speaker_idx]["xvector"]).unsqueeze(0).to(device)
+    print("Loading Kokoro-82M model...")
+    pipeline = KPipeline(lang_code='a', device=device)
 
     if missing_parts:
         print(f"Missing audio for {len(missing_parts)} parts.")
@@ -103,22 +86,25 @@ def main():
             text = get_phonetic_sound(part)
             print(f"Generating audio for '{part}' (spoken as '{text}')")
             
-            inputs = processor(text=text, return_tensors="pt").to(device)
-            speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
-            
-            output_path = os.path.join(audio_dir, f"{part}.wav")
-            sf.write(output_path, speech.cpu().numpy(), samplerate=16000)
+            generator = pipeline(text, voice="af_sarah", speed=1)
+            audio_segments = [audio for _, _, audio in generator]
+            if audio_segments:
+                combined = np.concatenate(audio_segments)
+                output_path = os.path.join(audio_dir, f"{part}.wav")
+                sf.write(output_path, combined, samplerate=24000)
 
     if missing_pages:
         print(f"Missing audio for {len(missing_pages)} pages.")
         for p in missing_pages:
             text = p['text']
             print(f"Generating page audio for '{p['filename']}'")
-            inputs = processor(text=text, return_tensors="pt").to(device)
-            speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
             
-            output_path = os.path.join(audio_dir, p['filename'])
-            sf.write(output_path, speech.cpu().numpy(), samplerate=16000)
+            generator = pipeline(text, voice="af_sarah", speed=1)
+            audio_segments = [audio for _, _, audio in generator]
+            if audio_segments:
+                combined = np.concatenate(audio_segments)
+                output_path = os.path.join(audio_dir, p['filename'])
+                sf.write(output_path, combined, samplerate=24000)
     
     print("Generation complete.")
 
