@@ -24,3 +24,8 @@
 **Vulnerability:** DOM-based XSS via user-controlled story titles and page text in `reading-helper`, persistable via `localStorage`. Trailing syntax errors in `data.js` also caused runtime crashes.
 **Learning:** Tools that persist data (like `localStorage` for custom stories) create a "stored" XSS vector if not rendered safely. Additionally, monolithic rendering loops are fragile; a single malformed entry (e.g., from a syntax error in shared data) can crash the entire UI.
 **Prevention:** Always use `textContent` for persisted user data. Implement defensive null-checks in all rendering loops and data loading functions to prevent "Cannot read properties of undefined" crashes.
+
+## 2026-06-29 - DOM-based XSS in Worksheet Generator
+**Vulnerability:** DOM-based Cross-Site Scripting (XSS) in `worksheet-generator`. The `showError` function was using `innerHTML` to display messages, which could be exploited if user-controlled data was passed to it.
+**Learning:** Even utility functions like `showError` that are intended for system messages can become XSS vectors if they are not consistently refactored to use `textContent`.
+**Prevention:** Follow the "Structural HTML + textContent" pattern for all UI messages, including errors.

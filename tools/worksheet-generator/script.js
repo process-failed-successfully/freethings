@@ -949,12 +949,14 @@ function renderCountingAids(aids) {
 // Show error message
 function showError(message) {
     const preview = document.getElementById('worksheet-preview');
+    // Use structural innerHTML for static elements but textContent for dynamic message
     preview.innerHTML = `
         <div class="worksheet-placeholder">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>${message}</p>
+            <p></p>
         </div>
     `;
+    preview.querySelector('p').textContent = message;
     preview.classList.remove('has-worksheet');
 }
 
