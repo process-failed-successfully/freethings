@@ -13,3 +13,7 @@
 ## 2026-06-30 - [DocumentFragment Batching for Worksheet Generation]
 **Learning:** Building large, multi-page worksheets with hundreds of small visual elements (counting aids, problem items) using string concatenation and `innerHTML` causes significant overhead due to repeated DOM parsing and layout thrashing.
 **Action:** Use `document.createDocumentFragment()` to batch all page and problem elements off-screen. Implement programmatic DOM construction (`document.createElement`, `.textContent`) instead of template literals to improve both rendering performance and XSS security. In the worksheet generator, this reduced latency by ~55%.
+
+## 2026-07-02 - [Optimizing Async Generation and DOM Rendering in UUID Tool]
+**Learning:** Sequential 'await' calls in loops for asynchronous generation (like UUID v5) create unnecessary latency. Additionally, updating the DOM for each generated item or history entry causes significant layout thrashing.
+**Action:** Use 'Promise.all' with 'Array.from().map()' to parallelize asynchronous generation tasks. Implement 'document.createDocumentFragment()' to batch all DOM updates (multiple results or history lists) off-screen, ensuring a single reflow and significantly smoother UI performance.
