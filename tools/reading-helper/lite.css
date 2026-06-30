@@ -191,6 +191,7 @@ body {
     user-drag: none;
     user-select: none;
     -webkit-user-select: none;
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
 }
 
 .tag-replace-btn {
@@ -219,6 +220,12 @@ body {
     text-align: center;
     max-width: 800px;
     line-height: 1.4;
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.page-transition-out {
+    opacity: 0;
+    transform: scale(0.98) translateY(4px);
 }
 
 .word {

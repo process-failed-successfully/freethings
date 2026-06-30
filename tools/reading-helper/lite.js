@@ -4,6 +4,7 @@ let activePageIndex = 0;
 let currentSpokenWords = [];
 let pageAudio = null;
 let highlightInterval = null;
+let pageTransitionTimeout = null;
 
 const views = {
     home: document.getElementById('home-view'),
@@ -96,6 +97,16 @@ function renderLibrary(levelFilter = 'A') {
     grid.appendChild(fragment);
 }
 
+function preloadBookImages(book) {
+    if (!book || !book.pages) return;
+    book.pages.forEach(page => {
+        if (page.image) {
+            const img = new Image();
+            img.src = page.image;
+        }
+    });
+}
+
 function openBook(book) {
     activeBook = book;
     activePageIndex = 0;
@@ -105,6 +116,7 @@ function openBook(book) {
     views.home.classList.remove('active');
     views.read.classList.add('active');
     
+    preloadBookImages(book);
     renderPage();
 }
 
@@ -117,9 +129,17 @@ function goHome() {
 
 function renderPage() {
     stopAudio();
+    if (pageTransitionTimeout) {
+        clearTimeout(pageTransitionTimeout);
+    }
     
     const page = activeBook.pages[activePageIndex];
     const imgEl = document.getElementById('page-img');
+    const textContainer = document.getElementById('page-text');
+    
+    // Add transition-out class for smooth fade & slight translation
+    imgEl.classList.add('page-transition-out');
+    textContainer.classList.add('page-transition-out');
     
     // Ensure image has a positioned wrapper for the red cross
     let wrapper = imgEl.parentElement;
@@ -130,56 +150,62 @@ function renderPage() {
         wrapper.appendChild(imgEl);
     }
     
-    imgEl.src = page.image;
-    document.getElementById('page-indicator').textContent = `${activePageIndex + 1} / ${activeBook.pages.length}`;
-    
-    document.getElementById('btn-prev').disabled = activePageIndex === 0;
-    
-    const textContainer = document.getElementById('page-text');
-    textContainer.innerHTML = '';
-    currentSpokenWords = [];
-    
-    const words = page.text.split(' ');
-    const fragment = document.createDocumentFragment();
-    words.forEach(word => {
-        const span = document.createElement('span');
-        span.className = 'word';
-        span.textContent = word;
+    // Perform updates after the short transition duration
+    pageTransitionTimeout = setTimeout(() => {
+        imgEl.src = page.image;
+        document.getElementById('page-indicator').textContent = `${activePageIndex + 1} / ${activeBook.pages.length}`;
         
-        span.addEventListener('click', () => playWordAudio(word, span));
+        document.getElementById('btn-prev').disabled = activePageIndex === 0;
         
-        fragment.appendChild(span);
-        fragment.appendChild(document.createTextNode(' '));
+        textContainer.innerHTML = '';
+        currentSpokenWords = [];
         
-        currentSpokenWords.push({ word: word, element: span });
-    });
-    textContainer.appendChild(fragment);
-    
-    // Add red cross for local development tagging
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        const existingBtn = wrapper.querySelector('.tag-replace-btn');
-        if (existingBtn) existingBtn.remove();
-        
-        const tagBtn = document.createElement('button');
-        tagBtn.className = 'tag-replace-btn';
-        tagBtn.innerHTML = '&#10060;';
-        tagBtn.title = 'Flag image for replacement';
-        tagBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            fetch('/api/tag-replace', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({book_id: activeBook.id, page_index: activePageIndex})
-            })
-            .then(r => {
-                if (r.ok) {
-                    tagBtn.style.opacity = '0.5';
-                    tagBtn.title = 'Flagged for replacement';
-                }
-            });
+        const words = page.text.split(' ');
+        const fragment = document.createDocumentFragment();
+        words.forEach(word => {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.textContent = word;
+            
+            span.addEventListener('click', () => playWordAudio(word, span));
+            
+            fragment.appendChild(span);
+            fragment.appendChild(document.createTextNode(' '));
+            
+            currentSpokenWords.push({ word: word, element: span });
         });
-        wrapper.appendChild(tagBtn);
-    }
+        textContainer.appendChild(fragment);
+        
+        // Add red cross for local development tagging
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const existingBtn = wrapper.querySelector('.tag-replace-btn');
+            if (existingBtn) existingBtn.remove();
+            
+            const tagBtn = document.createElement('button');
+            tagBtn.className = 'tag-replace-btn';
+            tagBtn.innerHTML = '&#10060;';
+            tagBtn.title = 'Flag image for replacement';
+            tagBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                fetch('/api/tag-replace', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({book_id: activeBook.id, page_index: activePageIndex})
+                })
+                .then(r => {
+                    if (r.ok) {
+                        tagBtn.style.opacity = '0.5';
+                        tagBtn.title = 'Flagged for replacement';
+                    }
+                });
+            });
+            wrapper.appendChild(tagBtn);
+        }
+        
+        // Remove class to trigger fade-in transition
+        imgEl.classList.remove('page-transition-out');
+        textContainer.classList.remove('page-transition-out');
+    }, 150);
 }
 
 function prevPage() {

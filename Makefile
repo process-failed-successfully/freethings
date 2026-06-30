@@ -325,8 +325,8 @@ generate-images:
 	@echo "Checking VRAM availability..."
 	@if command -v nvidia-smi >/dev/null 2>&1; then \
 		FREE_VRAM=$$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -n 1); \
-		if [ "$$FREE_VRAM" -lt 6500 ]; then \
-			echo "Error: Not enough VRAM available. Need at least 6500MB for SDXL image generation, but only have $${FREE_VRAM}MB."; \
+		if [ "$$FREE_VRAM" -lt 1500 ]; then \
+			echo "Error: Not enough VRAM available. Need at least 1500MB for local Qwen LLM prompt enhancement, but only have $${FREE_VRAM}MB."; \
 			exit 1; \
 		fi; \
 	fi
@@ -335,3 +335,32 @@ generate-images:
 	docker run --rm --gpus all -e OPENROUTER_API_KEY -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-images
 	@echo "Fixing file permissions..."
 	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-images chown -R $$(id -u):$$(id -g) /workspace/images /workspace/books_manifest.json 2>/dev/null || true
+
+# Generate missing book images locally using Stable Diffusion
+.PHONY: generate-images-local
+generate-images-local:
+	@echo "Checking VRAM availability for local generation..."
+	@if command -v nvidia-smi >/dev/null 2>&1; then \
+		FREE_VRAM=$$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -n 1); \
+		if [ "$$FREE_VRAM" -lt 4000 ]; then \
+			echo "Error: Not enough VRAM available. Need at least 4000MB for local Stable Diffusion generation, but only have $${FREE_VRAM}MB."; \
+			exit 1; \
+		fi; \
+	fi
+	@echo "Generating missing book images locally via Docker..."
+	cd tools/reading-helper && docker build -t reading-helper-images -f scripts/Dockerfile.image-gen .
+	docker run --rm --gpus all -e LOCAL_MODEL -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-images python /workspace/scripts/generate_images.py --local
+	@echo "Fixing file permissions..."
+	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-images chown -R $$(id -u):$$(id -g) /workspace/images /workspace/books_manifest.json 2>/dev/null || true
+
+# Pre-pull Hugging Face models natively on the host to avoid Docker network issues
+.PHONY: pull-models
+pull-models:
+	@echo "Pre-pulling models natively to host cache (~/.cache/huggingface)..."
+	@if [ -f tools/reading-helper/venv/bin/python ]; then \
+		tools/reading-helper/venv/bin/python tools/reading-helper/scripts/pull_models.py; \
+	else \
+		python3 tools/reading-helper/scripts/pull_models.py; \
+	fi
+
+
