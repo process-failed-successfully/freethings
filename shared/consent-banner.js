@@ -164,8 +164,8 @@
                         <h3>🍪 Cookie Consent</h3>
                         <p>We use cookies to improve your experience and show relevant ads through Google AdSense. By clicking "Accept All", you consent to our use of cookies for advertising and analytics.</p>
                         <p class="consent-privacy-link">
-                            <a href="/privacy/" target="_blank">Privacy Policy</a> • 
-                            <a href="/terms/" target="_blank">Terms of Service</a>
+                            <a href="/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a> •
+                            <a href="/terms/" target="_blank" rel="noopener noreferrer">Terms of Service</a>
                         </p>
                     </div>
                     <div class="consent-banner-actions">
