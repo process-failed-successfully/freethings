@@ -194,6 +194,10 @@ function updateUnits() {
     fromUnit.innerHTML = '';
     toUnit.innerHTML = '';
     
+    // Use DocumentFragment to batch DOM updates
+    const fromFragment = document.createDocumentFragment();
+    const toFragment = document.createDocumentFragment();
+
     // Add options
     Object.keys(units).forEach(unitKey => {
         const unit = units[unitKey];
@@ -206,10 +210,13 @@ function updateUnits() {
         option2.value = unitKey;
         option2.textContent = unit.name;
         
-        fromUnit.appendChild(option1);
-        toUnit.appendChild(option2);
+        fromFragment.appendChild(option1);
+        toFragment.appendChild(option2);
     });
     
+    fromUnit.appendChild(fromFragment);
+    toUnit.appendChild(toFragment);
+
     // Set default selections
     const unitKeys = Object.keys(units);
     if (category === 'temperature') {
