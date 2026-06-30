@@ -1002,12 +1002,13 @@ async function generateMultipleUUIDs() {
     const count = 10; // Generate 10 UUIDs
     const multipleSection = document.getElementById('multiple-uuids-section');
     const multipleList = document.getElementById('multiple-uuids-list');
+    const uuidType = document.getElementById('uuid-type').value;
 
     multipleSection.style.display = 'block';
     multipleList.innerHTML = '';
 
-    for (let i = 0; i < count; i++) {
-        const uuidType = document.getElementById('uuid-type').value;
+    // Parallelize generation, especially useful for async v5
+    const generations = Array.from({ length: count }, async () => {
         let uuid;
         let typeDisplay;
         
@@ -1060,7 +1061,15 @@ async function generateMultipleUUIDs() {
                 uuid = generateUUIDv4();
                 typeDisplay = 'UUID v4';
         }
+        return { uuid, typeDisplay };
+    });
 
+    const results = await Promise.all(generations);
+
+    // Use DocumentFragment to batch DOM appends
+    const fragment = document.createDocumentFragment();
+
+    results.forEach(({ uuid, typeDisplay }) => {
         // Create UUID item
         const uuidItem = document.createElement('div');
         uuidItem.className = 'multiple-uuid-item';
@@ -1086,8 +1095,10 @@ async function generateMultipleUUIDs() {
 
         uuidItem.appendChild(uuidInfo);
         uuidItem.appendChild(copyBtn);
-        multipleList.appendChild(uuidItem);
-    }
+        fragment.appendChild(uuidItem);
+    });
+
+    multipleList.appendChild(fragment);
 
     // Scroll to multiple UUIDs section
     multipleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1239,6 +1250,10 @@ function updateHistoryDisplay() {
     }
     
     historyList.innerHTML = '';
+
+    // Use DocumentFragment to batch DOM appends
+    const fragment = document.createDocumentFragment();
+
     history.forEach(item => {
         const date = new Date(item.timestamp);
         const historyItem = document.createElement('div');
@@ -1272,8 +1287,10 @@ function updateHistoryDisplay() {
         historyItem.appendChild(historyUuid);
         historyItem.appendChild(historyInfo);
         historyItem.appendChild(copyBtn);
-        historyList.appendChild(historyItem);
+        fragment.appendChild(historyItem);
     });
+
+    historyList.appendChild(fragment);
 }
 
 // Set UUID type from footer links
@@ -1290,18 +1307,33 @@ function setUUIDType(type) {
 
 // Generate example UUIDs
 async function generateExampleUUIDs() {
-    // Generate examples for display
-    document.getElementById('example-v4').textContent = generateUUIDv4();
-    document.getElementById('example-v1').textContent = generateUUIDv1();
-    document.getElementById('example-v3').textContent = generateUUIDv3();
-    document.getElementById('example-v5').textContent = await generateUUIDv5();
-    document.getElementById('example-v6').textContent = generateUUIDv6();
-    document.getElementById('example-v7').textContent = generateUUIDv7();
-    document.getElementById('example-v8').textContent = generateUUIDv8();
-    document.getElementById('example-nil').textContent = generateNilUUID();
-    document.getElementById('example-max').textContent = generateMaxUUID();
-    document.getElementById('example-timestamp').textContent = generateTimestampID();
-    document.getElementById('example-nanoid').textContent = generateNanoID();
+    // Parallelize example generation, especially beneficial for async v5
+    const examples = await Promise.all([
+        generateUUIDv4(),
+        generateUUIDv1(),
+        generateUUIDv3(),
+        generateUUIDv5(),
+        generateUUIDv6(),
+        generateUUIDv7(),
+        generateUUIDv8(),
+        generateNilUUID(),
+        generateMaxUUID(),
+        generateTimestampID(),
+        generateNanoID()
+    ]);
+
+    // Update display elements in batch
+    const ids = [
+        'example-v4', 'example-v1', 'example-v3', 'example-v5', 'example-v6',
+        'example-v7', 'example-v8', 'example-nil', 'example-max', 'example-timestamp', 'example-nanoid'
+    ];
+
+    ids.forEach((id, index) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = examples[index];
+        }
+    });
 }
 
 // Show notification
