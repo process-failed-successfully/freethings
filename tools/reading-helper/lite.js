@@ -30,20 +30,32 @@ function init() {
 
     // Touch swipe gestures for page navigation
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
     const readView = document.getElementById('read-view');
     
     readView.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
     }, { passive: true });
     
     readView.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const threshold = 50;
-        if (touchEndX < touchStartX - threshold) {
-            nextPage();
-        } else if (touchEndX > touchStartX + threshold) {
-            prevPage();
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+        
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+        
+        const thresholdX = 50;
+        const thresholdY = 80; // ignore swipes with large vertical movement
+        
+        if (Math.abs(diffX) > thresholdX && Math.abs(diffY) < thresholdY) {
+            if (diffX < 0) {
+                nextPage();
+            } else {
+                prevPage();
+            }
         }
     }, { passive: true });
 }
