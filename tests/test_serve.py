@@ -3,6 +3,7 @@ from unittest.mock import patch, MagicMock, mock_open
 import json
 import os
 import sys
+import runpy
 
 # Add the root directory to sys.path to import serve.py
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -124,6 +125,12 @@ class TestFreeThingsHTTPRequestHandler(unittest.TestCase):
             self.handler.log_message("format")
             mock_super_log.assert_called_once()
 
+    def test_translate_path(self):
+        with patch('http.server.SimpleHTTPRequestHandler.translate_path') as mock_super_translate:
+            # Call the class method directly to test its implementation without instance overrides
+            serve.FreeThingsHTTPRequestHandler.translate_path(self.handler, '/some/path')
+            mock_super_translate.assert_called_with('/some/path')
+
 class TestMain(unittest.TestCase):
     @patch('socketserver.TCPServer')
     @patch('os.chdir')
@@ -149,6 +156,30 @@ class TestMain(unittest.TestCase):
             serve.main()
 
         mock_server.assert_called_with(("", 8000), serve.FreeThingsHTTPRequestHandler)
+
+    @patch('socketserver.TCPServer')
+    @patch('os.chdir')
+    @patch('sys.argv', ['serve.py'])
+    def test_entry_point(self, mock_chdir, mock_server):
+        mock_server_instance = mock_server.return_value.__enter__.return_value
+        mock_server_instance.serve_forever.side_effect = KeyboardInterrupt
+
+        with patch('builtins.print'):
+            runpy.run_path('serve.py', run_name='__main__')
+
+        mock_server.assert_called()
+
+    @patch('socketserver.TCPServer')
+    @patch('os.chdir')
+    @patch('sys.argv', ['serve.py'])
+    def test_main_keyboard_interrupt_prints_message(self, mock_chdir, mock_server):
+        mock_server_instance = mock_server.return_value.__enter__.return_value
+        mock_server_instance.serve_forever.side_effect = KeyboardInterrupt
+
+        with patch('builtins.print') as mock_print:
+            serve.main()
+
+        mock_print.assert_any_call("\nServer stopped.")
 
 if __name__ == '__main__':
     unittest.main()
