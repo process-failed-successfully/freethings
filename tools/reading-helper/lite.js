@@ -40,7 +40,7 @@ function init() {
         touchStartY = e.changedTouches[0].clientY;
     }, { passive: true });
     
-    readView.addEventListener('touchend', (e) => {
+    const handleTouchEnd = (e) => {
         touchEndX = e.changedTouches[0].clientX;
         touchEndY = e.changedTouches[0].clientY;
         
@@ -57,7 +57,10 @@ function init() {
                 prevPage();
             }
         }
-    }, { passive: true });
+    };
+
+    readView.addEventListener('touchend', handleTouchEnd, { passive: true });
+    readView.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 }
 
 function renderLibrary(levelFilter = 'A') {
