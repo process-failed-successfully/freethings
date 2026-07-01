@@ -363,4 +363,12 @@ pull-models:
 		python3 tools/reading-helper/scripts/pull_models.py; \
 	fi
 
+# Generate book images on a RunPod Community GPU pod (no persistent volume needed)
+# Spins up, generates via Flux locally on pod, pulls results back, then terminates.
+# Requires: RUNPOD_API_KEY set (runpodctl doctor to configure)
+# Optional: LOCAL_MODEL=black-forest-labs/FLUX.1-dev (default: FLUX.1-schnell)
+.PHONY: generate-images-runpod
+generate-images-runpod:
+	@echo "Launching RunPod community GPU pod for Flux image generation..."
+	@bash tools/reading-helper/scripts/runpod_generate_images.sh
 

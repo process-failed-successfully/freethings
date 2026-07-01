@@ -398,14 +398,19 @@ class TestGenerateImages(unittest.TestCase):
         mock_pipe_instance = MagicMock()
         mock_image = MagicMock()
         mock_pipe_instance.return_value.images = [mock_image]
+        # .to("cuda") returns another mock (the "cuda" instance)
+        mock_cuda_instance = MagicMock()
+        mock_pipe_instance.to.return_value = mock_cuda_instance
+        mock_cuda_instance.return_value.images = [mock_image]
         
-        with patch('diffusers.AutoPipelineForText2Image.from_pretrained', return_value=mock_pipe_instance) as mock_from_pretrained:
+        # Default model is StableDiffusionPipeline
+        with patch('diffusers.StableDiffusionPipeline.from_pretrained', return_value=mock_pipe_instance) as mock_from_pretrained:
             generate_images.main(manifest_path=self.manifest_path, workspace_root=self.workspace_root, local=True)
             
             # Verify the pipeline factory was called
             mock_from_pretrained.assert_called_once()
             # Verify the pipeline was called to generate the image
-            mock_pipe_instance.assert_called_once()
+            mock_cuda_instance.assert_called_once()
             # Verify no HTTP POST requests were sent to OpenRouter
             self.assertEqual(mock_requests.post.call_count, 0)
             # Verify the generated image was saved to disk
@@ -425,23 +430,49 @@ class TestGenerateImages(unittest.TestCase):
 
         # Mock the pipeline instance and returned image
         mock_pipe_instance = MagicMock()
+        # .to("cuda") returns the instance we use for IP-Adapter
+        mock_cuda_instance = MagicMock()
+        mock_pipe_instance.to.return_value = mock_cuda_instance
         # Mock set_ip_adapter_scale so hasattr(local_pipe, "set_ip_adapter_scale") returns True
-        mock_pipe_instance.set_ip_adapter_scale = MagicMock()
+        mock_cuda_instance.set_ip_adapter_scale = MagicMock()
         mock_image = MagicMock()
-        mock_pipe_instance.return_value.images = [mock_image]
+        mock_cuda_instance.return_value.images = [mock_image]
         
-        with patch('diffusers.AutoPipelineForText2Image.from_pretrained', return_value=mock_pipe_instance) as mock_from_pretrained:
+        with patch('diffusers.StableDiffusionPipeline.from_pretrained', return_value=mock_pipe_instance) as mock_from_pretrained:
             with patch('diffusers.utils.load_image', return_value="loaded_image") as mock_load_image:
                 generate_images.main(manifest_path=self.manifest_path, workspace_root=self.workspace_root, local=True)
                 
-                # Check load_ip_adapter was called
-                mock_pipe_instance.load_ip_adapter.assert_called_once()
+                # Check load_ip_adapter was called on mock_cuda_instance
+                mock_cuda_instance.load_ip_adapter.assert_called_once()
                 # Check set_ip_adapter_scale was called
-                mock_pipe_instance.set_ip_adapter_scale.assert_called_once_with(0.6)
+                mock_cuda_instance.set_ip_adapter_scale.assert_called_once_with(0.6)
                 # Check local_pipe was called with ip_adapter_image
+                mock_cuda_instance.assert_called_once()
+                kwargs = mock_cuda_instance.call_args[1]
+                self.assertEqual(kwargs["ip_adapter_image"], "loaded_image")
+
+    def test_local_flux_generation(self):
+        """When local=True and LOCAL_MODEL is Flux, it should use FluxPipeline."""
+        books = [{"id": "book1", "pages": [{"image": "images/page1.png", "prompt": "p1"}]}]
+        self._write_manifest(books)
+
+        mock_pipe_instance = MagicMock()
+        mock_image = MagicMock()
+        mock_pipe_instance.return_value.images = [mock_image]
+
+        with patch.dict(os.environ, {"LOCAL_MODEL": "black-forest-labs/FLUX.1-schnell"}):
+            with patch('diffusers.FluxPipeline.from_pretrained', return_value=mock_pipe_instance) as mock_from_pretrained:
+                generate_images.main(manifest_path=self.manifest_path, workspace_root=self.workspace_root, local=True)
+
+                mock_from_pretrained.assert_called_once()
+                mock_pipe_instance.enable_model_cpu_offload.assert_called_once()
                 mock_pipe_instance.assert_called_once()
                 kwargs = mock_pipe_instance.call_args[1]
-                self.assertEqual(kwargs["ip_adapter_image"], "loaded_image")
+                self.assertEqual(kwargs["num_inference_steps"], 4)
+                self.assertEqual(kwargs["height"], 1024)
+                self.assertEqual(kwargs["width"], 1024)
+                self.assertNotIn("guidance_scale", kwargs)
+                self.assertNotIn("ip_adapter_image", kwargs)
 
 
 if __name__ == '__main__':
