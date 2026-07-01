@@ -562,11 +562,11 @@ function generateUUIDv3() {
 }
 
 // Generate UUID v5 (SHA-1-based)
-async function generateUUIDv5() {
+async function generateUUIDv5(namespaceParam = null, nameParam = null) {
     const includeBraces = document.getElementById('include-braces')?.checked ?? false;
     const uppercase = document.getElementById('uppercase')?.checked ?? true;
-    const namespaceUuid = document.getElementById('namespace-uuid')?.value || '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-    const nameString = document.getElementById('name-string')?.value || 'example.com';
+    const namespaceUuid = namespaceParam || document.getElementById('namespace-uuid')?.value || '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+    const nameString = nameParam || document.getElementById('name-string')?.value || 'example.com';
     
     // Parse namespace UUID
     const namespaceBytes = parseUUID(namespaceUuid);
@@ -1002,66 +1002,39 @@ async function generateMultipleUUIDs() {
     const count = 10; // Generate 10 UUIDs
     const multipleSection = document.getElementById('multiple-uuids-section');
     const multipleList = document.getElementById('multiple-uuids-list');
+    const uuidType = document.getElementById('uuid-type').value;
+
+    // Cache options outside the loop
+    const namespaceValue = document.getElementById('namespace-uuid')?.value;
+    const nameValue = document.getElementById('name-string')?.value;
 
     multipleSection.style.display = 'block';
     multipleList.innerHTML = '';
 
-    for (let i = 0; i < count; i++) {
-        const uuidType = document.getElementById('uuid-type').value;
-        let uuid;
-        let typeDisplay;
-        
+    // Parallelize generation (especially for async v5)
+    const generationPromises = Array.from({ length: count }, () => {
         switch (uuidType) {
-            case 'v4':
-                uuid = generateUUIDv4();
-                typeDisplay = 'UUID v4';
-                break;
-            case 'v1':
-                uuid = generateUUIDv1();
-                typeDisplay = 'UUID v1';
-                break;
-            case 'v3':
-                uuid = generateUUIDv3();
-                typeDisplay = 'UUID v3';
-                break;
-            case 'v5':
-                uuid = await generateUUIDv5();
-                typeDisplay = 'UUID v5';
-                break;
-            case 'v6':
-                uuid = generateUUIDv6();
-                typeDisplay = 'UUID v6';
-                break;
-            case 'v7':
-                uuid = generateUUIDv7();
-                typeDisplay = 'UUID v7';
-                break;
-            case 'v8':
-                uuid = generateUUIDv8();
-                typeDisplay = 'UUID v8';
-                break;
-            case 'nil':
-                uuid = generateNilUUID();
-                typeDisplay = 'Nil UUID';
-                break;
-            case 'max':
-                uuid = generateMaxUUID();
-                typeDisplay = 'Max UUID';
-                break;
-            case 'timestamp':
-                uuid = generateTimestampID();
-                typeDisplay = 'Timestamp ID';
-                break;
-            case 'nanoid':
-                uuid = generateNanoID();
-                typeDisplay = 'Nano ID';
-                break;
-            default:
-                uuid = generateUUIDv4();
-                typeDisplay = 'UUID v4';
+            case 'v4': return { uuid: generateUUIDv4(), typeDisplay: 'UUID v4' };
+            case 'v1': return { uuid: generateUUIDv1(), typeDisplay: 'UUID v1' };
+            case 'v3': return { uuid: generateUUIDv3(), typeDisplay: 'UUID v3' };
+            case 'v5': return generateUUIDv5(namespaceValue, nameValue).then(uuid => ({ uuid, typeDisplay: 'UUID v5' }));
+            case 'v6': return { uuid: generateUUIDv6(), typeDisplay: 'UUID v6' };
+            case 'v7': return { uuid: generateUUIDv7(), typeDisplay: 'UUID v7' };
+            case 'v8': return { uuid: generateUUIDv8(), typeDisplay: 'UUID v8' };
+            case 'nil': return { uuid: generateNilUUID(), typeDisplay: 'Nil UUID' };
+            case 'max': return { uuid: generateMaxUUID(), typeDisplay: 'Max UUID' };
+            case 'timestamp': return { uuid: generateTimestampID(), typeDisplay: 'Timestamp ID' };
+            case 'nanoid': return { uuid: generateNanoID(), typeDisplay: 'Nano ID' };
+            default: return { uuid: generateUUIDv4(), typeDisplay: 'UUID v4' };
         }
+    });
 
-        // Create UUID item
+    const results = await Promise.all(generationPromises.map(p => Promise.resolve(p)));
+
+    // Use DocumentFragment for batching DOM updates to prevent layout thrashing
+    const fragment = document.createDocumentFragment();
+
+    results.forEach(({ uuid, typeDisplay }) => {
         const uuidItem = document.createElement('div');
         uuidItem.className = 'multiple-uuid-item';
 
@@ -1086,8 +1059,10 @@ async function generateMultipleUUIDs() {
 
         uuidItem.appendChild(uuidInfo);
         uuidItem.appendChild(copyBtn);
-        multipleList.appendChild(uuidItem);
-    }
+        fragment.appendChild(uuidItem);
+    });
+
+    multipleList.appendChild(fragment);
 
     // Scroll to multiple UUIDs section
     multipleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1238,7 +1213,9 @@ function updateHistoryDisplay() {
         return;
     }
     
-    historyList.innerHTML = '';
+    // Use DocumentFragment for batching DOM updates
+    const fragment = document.createDocumentFragment();
+
     history.forEach(item => {
         const date = new Date(item.timestamp);
         const historyItem = document.createElement('div');
@@ -1272,8 +1249,11 @@ function updateHistoryDisplay() {
         historyItem.appendChild(historyUuid);
         historyItem.appendChild(historyInfo);
         historyItem.appendChild(copyBtn);
-        historyList.appendChild(historyItem);
+        fragment.appendChild(historyItem);
     });
+
+    historyList.innerHTML = '';
+    historyList.appendChild(fragment);
 }
 
 // Set UUID type from footer links
@@ -1290,18 +1270,33 @@ function setUUIDType(type) {
 
 // Generate example UUIDs
 async function generateExampleUUIDs() {
-    // Generate examples for display
-    document.getElementById('example-v4').textContent = generateUUIDv4();
-    document.getElementById('example-v1').textContent = generateUUIDv1();
-    document.getElementById('example-v3').textContent = generateUUIDv3();
-    document.getElementById('example-v5').textContent = await generateUUIDv5();
-    document.getElementById('example-v6').textContent = generateUUIDv6();
-    document.getElementById('example-v7').textContent = generateUUIDv7();
-    document.getElementById('example-v8').textContent = generateUUIDv8();
-    document.getElementById('example-nil').textContent = generateNilUUID();
-    document.getElementById('example-max').textContent = generateMaxUUID();
-    document.getElementById('example-timestamp').textContent = generateTimestampID();
-    document.getElementById('example-nanoid').textContent = generateNanoID();
+    // Parallelize example generation
+    const examples = await Promise.all([
+        Promise.resolve(generateUUIDv4()),
+        Promise.resolve(generateUUIDv1()),
+        Promise.resolve(generateUUIDv3()),
+        generateUUIDv5(),
+        Promise.resolve(generateUUIDv6()),
+        Promise.resolve(generateUUIDv7()),
+        Promise.resolve(generateUUIDv8()),
+        Promise.resolve(generateNilUUID()),
+        Promise.resolve(generateMaxUUID()),
+        Promise.resolve(generateTimestampID()),
+        Promise.resolve(generateNanoID())
+    ]);
+
+    // Update examples in display
+    document.getElementById('example-v4').textContent = examples[0];
+    document.getElementById('example-v1').textContent = examples[1];
+    document.getElementById('example-v3').textContent = examples[2];
+    document.getElementById('example-v5').textContent = examples[3];
+    document.getElementById('example-v6').textContent = examples[4];
+    document.getElementById('example-v7').textContent = examples[5];
+    document.getElementById('example-v8').textContent = examples[6];
+    document.getElementById('example-nil').textContent = examples[7];
+    document.getElementById('example-max').textContent = examples[8];
+    document.getElementById('example-timestamp').textContent = examples[9];
+    document.getElementById('example-nanoid').textContent = examples[10];
 }
 
 // Show notification
