@@ -14,6 +14,16 @@ document.addEventListener('DOMContentLoaded', function() {
 // Setup event listeners
 function setupEventListeners() {
     const textInput = document.getElementById('text-input');
+
+    // Keyboard accessibility for interactive elements
+    document.querySelectorAll('.example-item, .faq-question, .file-upload-area').forEach(item => {
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
     
     // Real-time conversion for text input
     textInput.addEventListener('input', function() {
@@ -464,14 +474,16 @@ function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const isActive = faqItem.classList.contains('active');
     
-    // Close all FAQ items
+    // Close all FAQ items and update aria-expanded
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
     });
     
-    // Open clicked item if it wasn't active
+    // Open clicked item if it wasn't active and update aria-expanded
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
     }
 }
 
