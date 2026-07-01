@@ -29,3 +29,8 @@
 **Vulnerability:** DOM-based Cross-Site Scripting (XSS) in `worksheet-generator`. The `showError` function was using `innerHTML` to display messages, which could be exploited if user-controlled data was passed to it.
 **Learning:** Even utility functions like `showError` that are intended for system messages can become XSS vectors if they are not consistently refactored to use `textContent`.
 **Prevention:** Follow the "Structural HTML + textContent" pattern for all UI messages, including errors.
+
+## 2025-05-16 - Inline Event Handler Refactoring in QR Generator
+**Vulnerability:** High-risk XSS vectors via inline event handlers (`onclick`, `onchange`) in `qrcode-site`. These attributes can be exploited via attribute injection and prevent the enforcement of a strict Content Security Policy (CSP).
+**Learning:** Legacy tools often rely on inline handlers for simplicity, but they create a systemic risk and hinder security hardening. Programmatic event binding in `script.js` is the preferred pattern for both security and maintainability.
+**Prevention:** Always use `addEventListener` for interactive elements. Avoid `onclick`, `onchange`, and other inline event attributes in HTML templates.

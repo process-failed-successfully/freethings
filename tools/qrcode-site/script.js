@@ -18,6 +18,55 @@ function setupEventListeners() {
             }
         }
     });
+
+    // Handle QR type change
+    const qrType = document.getElementById('qr-type');
+    if (qrType) {
+        qrType.addEventListener('change', updateInputFields);
+    }
+
+    // Handle Generate button click
+    const generateBtn = document.getElementById('generate-btn');
+    if (generateBtn) {
+        generateBtn.addEventListener('click', generateQRCode);
+    }
+
+    // Handle Download button click
+    const downloadBtn = document.getElementById('download-btn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', downloadQRCode);
+    }
+
+    // Setup FAQ listeners
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => toggleFAQ(question));
+        question.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleFAQ(question);
+            }
+        });
+    });
+
+    // Handle footer type links
+    document.querySelectorAll('.qr-type-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const type = link.getAttribute('data-qr-type');
+            if (type) setQRType(type);
+        });
+    });
+
+    // Handle cookie consent link
+    const cookieLink = document.getElementById('manage-cookies-link');
+    if (cookieLink) {
+        cookieLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.manageCookieConsent) {
+                window.manageCookieConsent();
+            }
+        });
+    }
 }
 
 // Update input fields based on QR type
@@ -387,14 +436,19 @@ function toggleFAQ(element) {
     const faqItem = element.parentElement;
     const isActive = faqItem.classList.contains('active');
     
-    // Close all FAQ items
+    // Close all FAQ items and update aria-expanded
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
+        const question = item.querySelector('.faq-question');
+        if (question) {
+            question.setAttribute('aria-expanded', 'false');
+        }
     });
     
-    // Open clicked item if it wasn't active
+    // Open clicked item if it wasn't active and update aria-expanded
     if (!isActive) {
         faqItem.classList.add('active');
+        element.setAttribute('aria-expanded', 'true');
     }
 }
 
