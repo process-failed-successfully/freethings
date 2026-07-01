@@ -295,8 +295,8 @@ generate-audio:
 			exit 1; \
 		fi; \
 	fi
-	@echo "Generating missing phonics audio files via Docker..."
 	cd tools/reading-helper && docker build -t reading-helper-audio -f scripts/Dockerfile .
+	docker run --rm --gpus all -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-audio
 	@echo "Fixing file permissions..."
 	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-audio chown -R $$(id -u):$$(id -g) /workspace/audio /workspace/books_manifest.json 2>/dev/null || true
 
