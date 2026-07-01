@@ -74,7 +74,7 @@
                     
                     <div class="input-group">
                         <label for="qr-type">QR Code Type:</label>
-                        <select id="qr-type" onchange="updateInputFields()">
+                        <select id="qr-type">
                             <option value="url">Website URL</option>
                             <option value="text">Plain Text</option>
                             <option value="wifi">WiFi Network</option>
@@ -110,7 +110,7 @@
                         </div>
                     </div>
 
-                    <button id="generate-btn" class="generate-btn" onclick="generateQRCode()">
+                    <button id="generate-btn" class="generate-btn">
                         <i class="fas fa-magic"></i>
                         Generate QR Code
                     </button>
@@ -126,7 +126,7 @@
                     </div>
                     
                     <div id="download-section" class="download-section" style="display: none;">
-                        <button id="download-btn" class="download-btn" onclick="downloadQRCode()">
+                        <button id="download-btn" class="download-btn">
                             <i class="fas fa-download"></i>
                             Download QR Code
                         </button>
@@ -216,7 +216,7 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-list">
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
                         <h3>Is this QR code generator really free?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -225,7 +225,7 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
                         <h3>What types of content can I encode?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -234,7 +234,7 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
                         <h3>Can I customize the appearance of my QR code?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -243,7 +243,7 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
                         <h3>Is my data secure?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -278,15 +278,15 @@
                 <div class="footer-section">
                     <h4>QR Code Types</h4>
                     <ul>
-                        <li><a href="#" onclick="setQRType('url')">Website URL</a></li>
-                        <li><a href="#" onclick="setQRType('wifi')">WiFi Network</a></li>
-                        <li><a href="#" onclick="setQRType('email')">Email</a></li>
-                        <li><a href="#" onclick="setQRType('phone')">Phone</a></li>
+                        <li><a href="#" class="qr-type-link" data-qr-type="url">Website URL</a></li>
+                        <li><a href="#" class="qr-type-link" data-qr-type="wifi">WiFi Network</a></li>
+                        <li><a href="#" class="qr-type-link" data-qr-type="email">Email</a></li>
+                        <li><a href="#" class="qr-type-link" data-qr-type="phone">Phone</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 QR Generator. All rights reserved. | <a href="/privacy/">Privacy Policy</a> | <a href="/terms/">Terms of Service</a> | <a href="/contact/">Contact</a> | <a href="javascript:void(0)" onclick="window.manageCookieConsent()">Manage Cookies</a></p>
+                <p>&copy; 2024 QR Generator. All rights reserved. | <a href="/privacy/">Privacy Policy</a> | <a href="/terms/">Terms of Service</a> | <a href="/contact/">Contact</a> | <a href="javascript:void(0)" id="manage-cookies-link">Manage Cookies</a></p>
             </div>
         </div>
     </footer>
