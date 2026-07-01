@@ -6,6 +6,20 @@ let pageAudio = null;
 let highlightInterval = null;
 let pageTransitionTimeout = null;
 
+function isCompleteBook(book) {
+    if (!book) return false;
+    if (typeof book.id !== "string" || book.id.includes("mock") || book.id.includes("kebab-case")) {
+        return false;
+    }
+    if (!book.title || !book.level || !book.thumbnail) {
+        return false;
+    }
+    if (!book.pages || !Array.isArray(book.pages) || book.pages.length === 0) {
+        return false;
+    }
+    return book.pages.every(p => p && typeof p.text === "string" && p.text.trim() !== "" && typeof p.image === "string" && p.image.trim() !== "");
+}
+
 const views = {
     home: document.getElementById('home-view'),
     read: document.getElementById('read-view')
@@ -68,7 +82,7 @@ function renderLibrary(levelFilter = 'A') {
     const grid = document.getElementById('book-grid');
     grid.innerHTML = '';
     
-    const filteredBooks = PRELOADED_BOOKS.filter(b => b.level === levelFilter);
+    const filteredBooks = PRELOADED_BOOKS.filter(b => isCompleteBook(b) && b.level === levelFilter);
     
     if (filteredBooks.length === 0) {
         grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; font-size: 1.5rem; color: #7f8c8d;"></div>';

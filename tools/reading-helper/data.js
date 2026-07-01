@@ -416,7 +416,7 @@ const PRELOADED_BOOKS = [
             { text: "Bob the bear loves to eat baked beans.", image: "images/bear_beans_1.png" },
             { text: "He eats a big bowl of beans for his lunch.", image: "images/bear_beans_2.png" },
             { text: "Bob feels a funny rumble deep in his tummy.", image: "images/bear_beans_3.png" },
-            { text: "\"Oh no!\" says Bob. \"TOOT!\" goes his bottom.", image: "images/bear_beans_4.png" },
+            { text: `"Oh no!" says Bob. "TOOT!" goes his bottom.`, image: "images/bear_beans_4.png" },
             { text: "The loud toot blows Bob high up into a tall tree.", image: "images/bear_beans_5.png" },
             { text: "The birds laugh at the silly, smelly, farting bear.", image: "images/bear_beans_6.png" }
         ]
@@ -471,7 +471,7 @@ const PRELOADED_BOOKS = [
             { text: "She wears a beautiful pink dress and shiny new shoes.", image: "images/princess_poo_2.png" },
             { text: "Pam walks through the magic unicorn garden.", image: "images/princess_poo_3.png" },
             { text: "Squish! Splat! Pam steps right in colorful unicorn poo.", image: "images/princess_poo_4.png" },
-            { text: "\"Yuck!\" says Pam. Her shiny shoe is very smelly.", image: "images/princess_poo_5.png" },
+            { text: `"Yuck!" says Pam. Her shiny shoe is very smelly.`, image: "images/princess_poo_5.png" },
             { text: "Pam washes her stinky shoe in the pond before the ball.", image: "images/princess_poo_6.png" }
         ]
     },
@@ -486,7 +486,7 @@ const PRELOADED_BOOKS = [
             { text: "He mixes dirt and water to make a big mud pie.", image: "images/monkey_mud_2.png" },
             { text: "Max sees his friend Leo the lion fast asleep.", image: "images/monkey_mud_3.png" },
             { text: "Splat! Max throws the mud pie right on Leo's nose.", image: "images/monkey_mud_4.png" },
-            { text: "Leo wakes up and sneezes very loud. \"Achoo!\"", image: "images/monkey_mud_5.png" },
+            { text: `Leo wakes up and sneezes very loud. "Achoo!"`, image: "images/monkey_mud_5.png" },
             { text: "Green snot flies everywhere and covers silly Max.", image: "images/monkey_mud_6.png" },
             { text: "Now both friends need a long scrub in the river.", image: "images/monkey_mud_7.png" }
         ]
@@ -541,10 +541,10 @@ const PRELOADED_BOOKS = [
         wordsCount: 169,
         thumbnail: "images/arias_bedtime_1.png",
         pages: [
-            { text: "Aria likes to do fast cartwheels in the living room. Her little sister Amelia sits on the floor and watches. Amelia laughs and claps her tiny hands. \"Go, Aria, go!\" Amelia squeals.", image: "images/arias_bedtime_1.png" },
+            { text: `Aria likes to do fast cartwheels in the living room. Her little sister Amelia sits on the floor and watches. Amelia laughs and claps her tiny hands. "Go, Aria, go!" Amelia squeals.`, image: "images/arias_bedtime_1.png" },
             { text: "It is time for dinner. Aria sits on a tall stool at the kitchen bench. Baby Amelia sits next to her in a high chair. They eat yummy pasta and make silly faces at each other.", image: "images/arias_bedtime_2.png" },
             { text: "Splish, splash! The girls jump into a warm bath. Fluffy white bubbles cover them up to their chins. Aria makes a funny hat out of the soap bubbles. Amelia giggles and throws water.", image: "images/arias_bedtime_3.png" },
-            { text: "Aria runs to her bedroom. Her Dad is waiting on the cozy rug. Dad has a big stack of colorful books. \"Which story should we read first tonight?\" Dad asks with a smile.", image: "images/arias_bedtime_4.png" },
+            { text: `Aria runs to her bedroom. Her Dad is waiting on the cozy rug. Dad has a big stack of colorful books. "Which story should we read first tonight?" Dad asks with a smile.`, image: "images/arias_bedtime_4.png" },
             { text: "Aria climbs into her warm, soft bed. Dad opens a special book about the brave Dragon Queen. She flies high in the clouds on a golden dragon. Soon, Aria closes her eyes and falls asleep.", image: "images/arias_bedtime_5.png" }
         ]
     }

@@ -4,9 +4,23 @@
 
 // 2. Pre-loaded Leveled Books
 
+function isCompleteBook(book) {
+    if (!book) return false;
+    if (typeof book.id !== "string" || book.id.includes("mock") || book.id.includes("kebab-case")) {
+        return false;
+    }
+    if (!book.title || !book.level || !book.thumbnail) {
+        return false;
+    }
+    if (!book.pages || !Array.isArray(book.pages) || book.pages.length === 0) {
+        return false;
+    }
+    return book.pages.every(p => p && typeof p.text === "string" && p.text.trim() !== "" && typeof p.image === "string" && p.image.trim() !== "");
+}
+
 // State variables
-let books = [...PRELOADED_BOOKS];
-let activeBook = books[0];
+let books = PRELOADED_BOOKS.filter(isCompleteBook);
+let activeBook = books[0] || null;
 let activePageIndex = 0;
 let selectedWordElement = null;
 let currentUtterance = null;
@@ -23,7 +37,7 @@ function loadCustomBooks() {
             customBooks.forEach(cb => {
                 if (!cb) return;
                 // Prepend or append. Let's append them.
-                if (!books.some(b => b && b.id === cb.id)) {
+                if (isCompleteBook(cb) && !books.some(b => b && b.id === cb.id)) {
                     books.push(cb);
                 }
             });
