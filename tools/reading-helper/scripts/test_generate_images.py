@@ -99,15 +99,14 @@ class TestGenerateImages(unittest.TestCase):
                 generate_images.main(manifest_path=self.manifest_path, workspace_root=self.workspace_root)
                 mock_print.assert_any_call("All book images are up to date. Nothing to generate.")
 
-    @patch('sys.exit')
-    def test_missing_openrouter_key_exits(self, mock_exit):
+    def test_missing_openrouter_key_exits(self):
         books = [{"id": "book1", "pages": [{"image": "images/page1.png", "prompt": "p1"}]}]
         self._write_manifest(books)
 
         with patch.dict(os.environ, {}, clear=True):
-            generate_images.main(manifest_path=self.manifest_path, workspace_root=self.workspace_root)
-
-        mock_exit.assert_called_with(1)
+            with patch('builtins.print') as mock_print:
+                generate_images.main(manifest_path=self.manifest_path, workspace_root=self.workspace_root)
+                mock_print.assert_any_call("Skipping image generation.")
 
     # ------------------------------------------------------------------
     # API correctness: endpoint, payload, response

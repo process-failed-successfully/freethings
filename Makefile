@@ -295,10 +295,10 @@ generate-audio:
 			exit 1; \
 		fi; \
 	fi
-	cd tools/reading-helper && docker build -t reading-helper-audio -f scripts/Dockerfile .
-	docker run --rm --gpus all -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-audio
+	cd tools/reading-helper && docker build -t reading-helper-generator -f scripts/Dockerfile.generator .
+	docker run --rm --gpus all -v $$(pwd):/workspace -w /workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-generator python tools/reading-helper/scripts/generate_phonics.py
 	@echo "Fixing file permissions..."
-	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-audio chown -R $$(id -u):$$(id -g) /workspace/audio /workspace/books_manifest.json 2>/dev/null || true
+	@docker run --rm -v $$(pwd):/workspace reading-helper-generator chown -R $$(id -u):$$(id -g) /workspace/tools/reading-helper/audio /workspace/tools/reading-helper/books_manifest.json 2>/dev/null || true
 
 # Generate comparison audio samples using SpeechT5 and Kokoro
 .PHONY: audio-sample
@@ -312,11 +312,11 @@ audio-sample:
 		fi; \
 	fi
 	@echo "Building Docker image with updated audio dependencies..."
-	cd tools/reading-helper && docker build -t reading-helper-audio -f scripts/Dockerfile .
+	cd tools/reading-helper && docker build -t reading-helper-generator -f scripts/Dockerfile.generator .
 	@echo "Generating audio samples..."
-	docker run --rm --gpus all -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-audio python /workspace/scripts/generate_samples.py
+	docker run --rm --gpus all -v $$(pwd):/workspace -w /workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-generator python tools/reading-helper/scripts/generate_samples.py
 	@echo "Fixing file permissions..."
-	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-audio chown -R $$(id -u):$$(id -g) /workspace/samples 2>/dev/null || true
+	@docker run --rm -v $$(pwd):/workspace reading-helper-generator chown -R $$(id -u):$$(id -g) /workspace/tools/reading-helper/samples 2>/dev/null || true
 	@echo "Success! Audio samples generated in tools/reading-helper/samples/"
 
 # Generate missing book images using Docker, SDXL, and IP-Adapter
@@ -331,10 +331,10 @@ generate-images:
 		fi; \
 	fi
 	@echo "Generating missing book images via Docker..."
-	cd tools/reading-helper && docker build -t reading-helper-images -f scripts/Dockerfile.image-gen .
-	docker run --rm --gpus all -e OPENROUTER_API_KEY -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-images
+	cd tools/reading-helper && docker build -t reading-helper-generator -f scripts/Dockerfile.generator .
+	docker run --rm --gpus all -e OPENROUTER_API_KEY -v $$(pwd):/workspace -w /workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-generator python tools/reading-helper/scripts/generate_images.py --manifest-path tools/reading-helper/books_manifest.json --workspace-root tools/reading-helper
 	@echo "Fixing file permissions..."
-	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-images chown -R $$(id -u):$$(id -g) /workspace/images /workspace/books_manifest.json 2>/dev/null || true
+	@docker run --rm -v $$(pwd):/workspace reading-helper-generator chown -R $$(id -u):$$(id -g) /workspace/tools/reading-helper/images /workspace/tools/reading-helper/books_manifest.json 2>/dev/null || true
 
 # Generate missing book images locally using Stable Diffusion
 .PHONY: generate-images-local
@@ -348,19 +348,38 @@ generate-images-local:
 		fi; \
 	fi
 	@echo "Generating missing book images locally via Docker..."
-	cd tools/reading-helper && docker build -t reading-helper-images -f scripts/Dockerfile.image-gen .
-	docker run --rm --gpus all -e LOCAL_MODEL -v $$(pwd)/tools/reading-helper:/workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-images python /workspace/scripts/generate_images.py --local
+	cd tools/reading-helper && docker build -t reading-helper-generator -f scripts/Dockerfile.generator .
+	docker run --rm --gpus all -e LOCAL_MODEL -v $$(pwd):/workspace -w /workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-generator python tools/reading-helper/scripts/generate_images.py --local --manifest-path tools/reading-helper/books_manifest.json --workspace-root tools/reading-helper
 	@echo "Fixing file permissions..."
-	@docker run --rm -v $$(pwd)/tools/reading-helper:/workspace reading-helper-images chown -R $$(id -u):$$(id -g) /workspace/images /workspace/books_manifest.json 2>/dev/null || true
+	@docker run --rm -v $$(pwd):/workspace reading-helper-generator chown -R $$(id -u):$$(id -g) /workspace/tools/reading-helper/images /workspace/tools/reading-helper/books_manifest.json 2>/dev/null || true
+
+# Generate missing book images on a RunPod community GPU pod using Flux
+.PHONY: generate-images-runpod
+generate-images-runpod:
+	@tools/reading-helper/scripts/runpod_generate_images.sh
 
 # Pre-pull Hugging Face models natively on the host to avoid Docker network issues
 .PHONY: pull-models
 pull-models:
 	@echo "Pre-pulling models natively to host cache (~/.cache/huggingface)..."
-	@if [ -f tools/reading-helper/venv/bin/python ]; then \
+	@	if [ -f tools/reading-helper/venv/bin/python ]; then \
 		tools/reading-helper/venv/bin/python tools/reading-helper/scripts/pull_models.py; \
 	else \
 		python3 tools/reading-helper/scripts/pull_models.py; \
 	fi
 
-
+# Generate new children's books fully within Docker (resolves local dependency issues)
+.PHONY: generate-books
+generate-books:
+	@echo "Checking VRAM availability..."
+	@if command -v nvidia-smi >/dev/null 2>&1; then \
+		FREE_VRAM=$$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -n 1); \
+		if [ "$$FREE_VRAM" -lt 4000 ]; then \
+			echo "Warning: Low VRAM ($${FREE_VRAM}MB). Local models might fail."; \
+		fi; \
+	fi
+	@echo "Building unified Docker image for full generation..."
+	cd tools/reading-helper && docker build -t reading-helper-generator -f scripts/Dockerfile.generator .
+	docker run --rm --gpus all -e LOCAL_MODEL -e OPENROUTER_API_KEY -v $$(pwd):/workspace -w /workspace -v ~/.cache/huggingface:/root/.cache/huggingface reading-helper-generator python tools/reading-helper/scripts/generate_books.py
+	@echo "Fixing file permissions..."
+	@docker run --rm -v $$(pwd):/workspace reading-helper-generator chown -R $$(id -u):$$(id -g) /workspace/tools/reading-helper/images /workspace/tools/reading-helper/audio /workspace/tools/reading-helper/books_manifest.json /workspace/tools/reading-helper/data.js 2>/dev/null || true

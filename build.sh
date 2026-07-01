@@ -9,7 +9,7 @@ mkdir -p dist
 
 # Copy all files first (except dist itself to avoid recursion)
 if command -v rsync >/dev/null 2>&1; then
-  rsync -a --exclude='dist' --exclude='node_modules' --exclude='.git' --exclude='.github' ./ dist/
+  rsync -a --exclude='dist' --exclude='node_modules' --exclude='.git' --exclude='.github' --exclude='android' ./ dist/
 else
   # Fallback to cp if rsync is not available
   cp -R [a-zA-Z0-9]* dist/ 2>/dev/null || true
@@ -23,6 +23,7 @@ echo "Removing development and config files from build output..."
 rm -rf dist/node_modules \
        dist/.git \
        dist/.github \
+       dist/android \
        dist/.Jules \
        dist/.jules \
        dist/.agents \

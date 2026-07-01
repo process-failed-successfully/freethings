@@ -236,46 +236,58 @@ def main(manifest_path='/workspace/books_manifest.json', workspace_root='/worksp
         if missing_pages:
             local_model = os.environ.get("LOCAL_MODEL", "runwayml/stable-diffusion-v1-5")
             print(f"Loading local text-to-image model ({local_model}) into VRAM...")
-            from diffusers import AutoPipelineForText2Image
-            from transformers import CLIPVisionModelWithProjection
-            
-            # Load CLIP vision model required by IP-Adapter for feature projection
-            image_encoder = CLIPVisionModelWithProjection.from_pretrained(
-                "laion/CLIP-ViT-H-14-laion2B-s32B-b79K",
-                torch_dtype=torch.float16,
-            )
-            
-            local_pipe = AutoPipelineForText2Image.from_pretrained(
-                local_model,
-                image_encoder=image_encoder,
-                torch_dtype=torch.float16,
-                variant="fp16" if "turbo" in local_model or "v1-5" in local_model else None
-            )
-            local_pipe.to("cuda")
+            is_flux = "flux" in local_model.lower()
 
+            if is_flux:
+                from diffusers import FluxPipeline
+                local_pipe = FluxPipeline.from_pretrained(
+                    local_model,
+                    torch_dtype=torch.bfloat16,
+                )
+                local_pipe.to("cuda")
+            else:
+                from diffusers import AutoPipelineForText2Image
+                from transformers import CLIPVisionModelWithProjection
+                
+                # Load CLIP vision model required by IP-Adapter for feature projection
+                # SDXL requires laion/CLIP-ViT-bigG-14-laion2B-39b-b160k, SD1.5 requires laion/CLIP-ViT-H-14-laion2B-s32B-b79K
+                image_encoder_name = "laion/CLIP-ViT-bigG-14-laion2B-39b-b160k" if "xl" in local_model.lower() else "laion/CLIP-ViT-H-14-laion2B-s32B-b79K"
+                image_encoder = CLIPVisionModelWithProjection.from_pretrained(
+                    image_encoder_name,
+                    torch_dtype=torch.float16,
+                )
+                
+                local_pipe = AutoPipelineForText2Image.from_pretrained(
+                    local_model,
+                    image_encoder=image_encoder,
+                    torch_dtype=torch.float16,
+                    variant="fp16" if "turbo" in local_model or "v1-5" in local_model else None
+                )
+                local_pipe.to("cuda")
 
-            # Load IP-Adapter weights for style consistency across pages
-            try:
-                print("Loading IP-Adapter weights for local style consistency...")
-                if "xl" in local_model.lower():
-                    local_pipe.load_ip_adapter(
-                        "h94/IP-Adapter",
-                        subfolder="sdxl_models",
-                        weight_name="ip-adapter_sdxl.bin"
-                    )
-                else:
-                    local_pipe.load_ip_adapter(
-                        "h94/IP-Adapter",
-                        subfolder="models",
-                        weight_name="ip-adapter_sd15.bin"
-                    )
-            except Exception as e:
-                print(f"Warning: Could not load local IP-Adapter: {e}. Local generation will fall back to text-only prompts.")
+                # Load IP-Adapter weights for style consistency across pages
+                try:
+                    print("Loading IP-Adapter weights for local style consistency...")
+                    if "xl" in local_model.lower():
+                        local_pipe.load_ip_adapter(
+                            "h94/IP-Adapter",
+                            subfolder="sdxl_models",
+                            weight_name="ip-adapter_sdxl.bin"
+                        )
+                    else:
+                        local_pipe.load_ip_adapter(
+                            "h94/IP-Adapter",
+                            subfolder="models",
+                            weight_name="ip-adapter_sd15.bin"
+                        )
+                except Exception as e:
+                    print(f"Warning: Could not load local IP-Adapter: {e}. Local generation will fall back to text-only prompts.")
     else:
         openrouter_key = os.environ.get("OPENROUTER_API_KEY")
         if not openrouter_key:
-            print("Error: OPENROUTER_API_KEY environment variable is missing! Cannot generate images via OpenRouter.")
-            sys.exit(1)
+            print("Warning: OPENROUTER_API_KEY environment variable is missing! Cannot generate images via OpenRouter.")
+            print("Skipping image generation.")
+            return
 
     generated_any = False
 
@@ -306,8 +318,13 @@ def main(manifest_path='/workspace/books_manifest.json', workspace_root='/worksp
 
                 try:
                     local_model = os.environ.get("LOCAL_MODEL", "runwayml/stable-diffusion-v1-5")
-                    steps = 1 if "turbo" in local_model else 30
-                    guidance = 0.0 if "turbo" in local_model else 7.5
+                    is_flux = "flux" in local_model.lower()
+                    if is_flux:
+                        steps = 4 if "schnell" in local_model.lower() else 28
+                        guidance = 0.0 if "schnell" in local_model.lower() else 3.5
+                    else:
+                        steps = 1 if "turbo" in local_model else 30
+                        guidance = 0.0 if "turbo" in local_model else 7.5
 
                     
                     # Prepare pipeline arguments
@@ -318,9 +335,8 @@ def main(manifest_path='/workspace/books_manifest.json', workspace_root='/worksp
                     }
 
                     # Load and pass reference image to IP-Adapter if available
-                    if last_generated_path and os.path.exists(last_generated_path):
-                        # Only use IP-Adapter if it was successfully loaded
-                        if hasattr(local_pipe, "set_ip_adapter_scale"):
+                    if not is_flux and hasattr(local_pipe, "set_ip_adapter_scale"):
+                        if last_generated_path and os.path.exists(last_generated_path):
                             from diffusers.utils import load_image
                             ref_img = load_image(last_generated_path)
                             pipe_kwargs["ip_adapter_image"] = ref_img
@@ -328,6 +344,13 @@ def main(manifest_path='/workspace/books_manifest.json', workspace_root='/worksp
                             scale = page.get("ip_adapter_scale", 0.6)
                             local_pipe.set_ip_adapter_scale(scale)
                             print(f"  Using local reference image (IP-Adapter): {last_generated_path} (scale: {scale})")
+                        else:
+                            # For the first page (no reference image), if IP-Adapter weights are loaded,
+                            # we must pass a dummy image to avoid "image_embeds" schema errors, but set scale to 0.0
+                            from PIL import Image
+                            pipe_kwargs["ip_adapter_image"] = Image.new("RGB", (224, 224), "white")
+                            local_pipe.set_ip_adapter_scale(0.0)
+                            print("  First page generation: using dummy reference image with scale 0.0")
 
                     # Run local pipeline
                     result_img = local_pipe(**pipe_kwargs).images[0]

@@ -1,0 +1,691 @@
+{
+  "mystery": {
+    "parts": [
+      "mys",
+      "ter",
+      "y"
+    ],
+    "tip": "The 'y' in the middle makes a short /i/ sound!"
+  },
+  "tentacles": {
+    "parts": [
+      "ten",
+      "ta",
+      "cles"
+    ],
+    "tip": "Three parts. 'cles' makes the /kuhlz/ sound."
+  },
+  "treasure": {
+    "parts": [
+      "treas",
+      "ure"
+    ],
+    "tip": "'sure' here makes a soft /zh/ sound, like in measure."
+  },
+  "sneaky": {
+    "parts": [
+      "sneak",
+      "y"
+    ],
+    "tip": "'ea' makes the long /ee/ sound. 'y' makes another /ee/ sound."
+  },
+  "catastrophe": {
+    "parts": [
+      "ca",
+      "tas",
+      "tro",
+      "phe"
+    ],
+    "tip": "A long word! 'phe' makes the /fee/ sound like an 'f'."
+  },
+  "someone": {
+    "parts": [
+      "some",
+      "one"
+    ],
+    "tip": "A compound word. 'some' and 'one' are both tricky sight words!"
+  },
+  "outside": {
+    "parts": [
+      "out",
+      "side"
+    ],
+    "tip": "A compound word. 'out' and 'side'. The magic 'e' makes 'i' say its name."
+  },
+  "marshmallows": {
+    "parts": [
+      "marsh",
+      "mal",
+      "lows"
+    ],
+    "tip": "Three parts! 'lows' makes the long /o/ sound."
+  },
+  "sneezes": {
+    "parts": [
+      "sn",
+      "eeze",
+      "s"
+    ],
+    "tip": "'sn' makes the /sn/ blend. 'ee' makes the long /ee/ sound."
+  },
+  "achoo": {
+    "parts": [
+      "a",
+      "choo"
+    ],
+    "tip": "'ch' makes the /ch/ sound. 'oo' makes the long /oo/ sound."
+  },
+  "snotty": {
+    "parts": [
+      "snot",
+      "ty"
+    ],
+    "tip": "'sn' makes the /sn/ blend. 'y' makes the long /ee/ sound."
+  },
+  "yucky": {
+    "parts": [
+      "yuck",
+      "y"
+    ],
+    "tip": "Two parts: 'yuck' and 'y'. The 'ck' digraph makes the /k/ sound, and 'y' sounds like /ee/."
+  },
+  "slippery": {
+    "parts": [
+      "slip",
+      "per",
+      "y"
+    ],
+    "tip": "Three parts. The 'y' makes the long /ee/ sound."
+  },
+  "poo": {
+    "parts": [
+      "p",
+      "oo"
+    ],
+    "tip": "'p' makes the popping /p/ sound. 'oo' makes the long /oo/ sound."
+  },
+  "burp": {
+    "parts": [
+      "b",
+      "urp"
+    ],
+    "tip": "'ur' makes the bossy 'r' /er/ sound."
+  },
+  "smelly": {
+    "parts": [
+      "smell",
+      "y"
+    ],
+    "tip": "'y' at the end makes the long /ee/ sound."
+  },
+  "pig": {
+    "parts": [
+      "p",
+      "ig"
+    ],
+    "tip": "'p' makes the /p/ sound. 'ig' makes the /ig/ sound."
+  },
+  "big": {
+    "parts": [
+      "b",
+      "ig"
+    ],
+    "tip": "'b' makes the /b/ sound. 'ig' makes the /ig/ sound."
+  },
+  "wig": {
+    "parts": [
+      "w",
+      "ig"
+    ],
+    "tip": "'w' makes the /w/ sound. 'ig' makes the /ig/ sound."
+  },
+  "fat": {
+    "parts": [
+      "f",
+      "at"
+    ],
+    "tip": "'f' makes the /f/ sound. 'at' makes the /at/ sound."
+  },
+  "rat": {
+    "parts": [
+      "r",
+      "at"
+    ],
+    "tip": "'r' makes the /r/ sound. 'at' makes the /at/ sound."
+  },
+  "hat": {
+    "parts": [
+      "h",
+      "at"
+    ],
+    "tip": "'h' makes the /h/ sound. 'at' makes the /at/ sound."
+  },
+  "mat": {
+    "parts": [
+      "m",
+      "at"
+    ],
+    "tip": "'m' makes the humming /m/ sound. 'at' makes the short /at/ sound."
+  },
+  "bunny": {
+    "parts": [
+      "bun",
+      "ny"
+    ],
+    "tip": "Two parts: 'bun' and 'ny'. The 'y' makes the long /ee/ sound."
+  },
+  "hops": {
+    "parts": [
+      "h",
+      "ops"
+    ],
+    "tip": "'h' makes the /h/ sound. 'ops' makes the /ops/ sound."
+  },
+  "funny": {
+    "parts": [
+      "fun",
+      "ny"
+    ],
+    "tip": "Two parts: 'fun' and 'ny'. The 'y' makes the long /ee/ sound."
+  },
+  "orange": {
+    "parts": [
+      "or",
+      "ange"
+    ],
+    "tip": "'or' makes the /or/ sound. 'ange' sounds like /anj/."
+  },
+  "carrot": {
+    "parts": [
+      "car",
+      "rot"
+    ],
+    "tip": "Two parts: 'car' and 'rot'. 'c' makes the hard /k/ sound."
+  },
+  "full": {
+    "parts": [
+      "f",
+      "ull"
+    ],
+    "tip": "'f' makes the /f/ sound. 'ull' makes the /ool/ sound."
+  },
+  "very": {
+    "parts": [
+      "ver",
+      "y"
+    ],
+    "tip": "'v' makes the /v/ sound. 'y' makes the long /ee/ sound."
+  },
+  "white": {
+    "parts": [
+      "wh",
+      "ite"
+    ],
+    "tip": "'wh' makes the /w/ sound. 'ite' has a magic 'e' that makes 'i' say its name."
+  },
+  "grass": {
+    "parts": [
+      "gr",
+      "ass"
+    ],
+    "tip": "'gr' is a blend. 'ass' makes the /as/ sound."
+  },
+  "monster": {
+    "parts": [
+      "mon",
+      "ster"
+    ],
+    "tip": "Two parts. 'mon' and 'ster'. The 'er' says /er/."
+  },
+  "farted": {
+    "parts": [
+      "fart",
+      "ed"
+    ],
+    "tip": "'fart' has a bossy 'r' sound. 'ed' makes the /id/ sound."
+  },
+  "see": {
+    "parts": [
+      "s",
+      "ee"
+    ],
+    "tip": "'s' makes the /s/ sound. 'ee' makes the long /ee/ sound like in tree."
+  },
+  "the": {
+    "parts": [
+      "th",
+      "e"
+    ],
+    "tip": "'the' is a sight word. 'th' makes the buzzy /th/ sound."
+  },
+  "cat": {
+    "parts": [
+      "c",
+      "at"
+    ],
+    "tip": "'c' makes the hard /k/ sound. 'at' makes the short /at/ sound."
+  },
+  "has": {
+    "parts": [
+      "h",
+      "as"
+    ],
+    "tip": "'h' makes a breathing /h/ sound. 'as' sounds like /az/ here."
+  },
+  "a": {
+    "parts": [
+      "a"
+    ],
+    "tip": "'a' is spoken as a soft 'uh' /ə/ sound here."
+  },
+  "sits": {
+    "parts": [
+      "s",
+      "its"
+    ],
+    "tip": "'s' makes the /s/ sound. 'its' makes the /its/ sound."
+  },
+  "on": {
+    "parts": [
+      "o",
+      "n"
+    ],
+    "tip": "'o' makes the short /o/ sound. 'n' makes the nasal /n/ sound."
+  },
+  "is": {
+    "parts": [
+      "i",
+      "s"
+    ],
+    "tip": "'is' is a sight word. It sounds like /iz/."
+  },
+  "happy": {
+    "parts": [
+      "hap",
+      "py"
+    ],
+    "tip": "Two parts: 'hap' and 'py'. The 'y' at the end makes a long /ee/ sound."
+  },
+  "this": {
+    "parts": [
+      "th",
+      "is"
+    ],
+    "tip": "'th' makes the buzzy /th/ sound. 'is' makes the /iz/ sound."
+  },
+  "sam": {
+    "parts": [
+      "s",
+      "am"
+    ],
+    "tip": "'s' makes the /s/ sound. 'am' makes the /am/ sound."
+  },
+  "dog": {
+    "parts": [
+      "d",
+      "og"
+    ],
+    "tip": "'d' makes the popping /d/ sound. 'og' makes the /og/ sound."
+  },
+  "likes": {
+    "parts": [
+      "l",
+      "ikes"
+    ],
+    "tip": "'l' makes the /l/ sound. The silent 'e' makes the 'i' say its name /ai/."
+  },
+  "to": {
+    "parts": [
+      "t",
+      "o"
+    ],
+    "tip": "'to' is a sight word. It sounds like 'too' /tu:/."
+  },
+  "run": {
+    "parts": [
+      "r",
+      "un"
+    ],
+    "tip": "'r' makes the growly /r/ sound. 'un' makes the short /un/ sound."
+  },
+  "red": {
+    "parts": [
+      "r",
+      "ed"
+    ],
+    "tip": "'r' makes the growly /r/ sound. 'ed' makes the /ed/ sound."
+  },
+  "ball": {
+    "parts": [
+      "b",
+      "all"
+    ],
+    "tip": "'b' makes the /b/ sound. 'all' makes the /awl/ sound."
+  },
+  "plays": {
+    "parts": [
+      "pl",
+      "ays"
+    ],
+    "tip": "'pl' is a blend. 'ays' makes the long /ay/ sound like in day."
+  },
+  "in": {
+    "parts": [
+      "i",
+      "n"
+    ],
+    "tip": "'i' makes the short /i/ sound. 'n' makes the /n/ sound."
+  },
+  "mud": {
+    "parts": [
+      "m",
+      "ud"
+    ],
+    "tip": "'m' makes the humming /m/ sound. 'ud' makes the short /ud/ sound."
+  },
+  "bird": {
+    "parts": [
+      "b",
+      "ird"
+    ],
+    "tip": "'b' makes the /b/ sound. 'ird' has a bossy 'r' that makes the /erd/ sound."
+  },
+  "lives": {
+    "parts": [
+      "l",
+      "ives"
+    ],
+    "tip": "'l' makes the /l/ sound. 'ives' sounds like /ivz/."
+  },
+  "tree": {
+    "parts": [
+      "tr",
+      "ee"
+    ],
+    "tip": "'tr' is a blend. 'ee' makes the long /ee/ sound."
+  },
+  "she": {
+    "parts": [
+      "sh",
+      "e"
+    ],
+    "tip": "'sh' is a quiet digraph that says /sh/. 'e' says its name /ee/."
+  },
+  "wants": {
+    "parts": [
+      "w",
+      "ants"
+    ],
+    "tip": "'w' makes the /w/ sound. 'ants' sounds like /onts/ here."
+  },
+  "build": {
+    "parts": [
+      "b",
+      "uild"
+    ],
+    "tip": "'build' is a sight word. The 'ui' sounds like a short /i/."
+  },
+  "nest": {
+    "parts": [
+      "n",
+      "est"
+    ],
+    "tip": "'n' makes the /n/ sound. 'est' makes the /est/ sound."
+  },
+  "finds": {
+    "parts": [
+      "f",
+      "inds"
+    ],
+    "tip": "'f' makes the breathing /f/ sound. 'inds' makes the /aindz/ sound."
+  },
+  "green": {
+    "parts": [
+      "gr",
+      "een"
+    ],
+    "tip": "'gr' is a blend. 'ee' makes the long /ee/ sound."
+  },
+  "moss": {
+    "parts": [
+      "m",
+      "oss"
+    ],
+    "tip": "'m' makes the humming /m/ sound. 'oss' makes the /oss/ sound."
+  },
+  "and": {
+    "parts": [
+      "a",
+      "nd"
+    ],
+    "tip": "'a' makes the short /a/ sound. 'nd' is a final blend."
+  },
+  "straw": {
+    "parts": [
+      "str",
+      "aw"
+    ],
+    "tip": "'str' is a three-letter blend. 'aw' makes the yawning /aw/ sound."
+  },
+  "three": {
+    "parts": [
+      "thr",
+      "ee"
+    ],
+    "tip": "'thr' is a blend. 'ee' makes the long /ee/ sound."
+  },
+  "blue": {
+    "parts": [
+      "bl",
+      "ue"
+    ],
+    "tip": "'bl' is a blend. 'ue' makes the /oo/ sound."
+  },
+  "eggs": {
+    "parts": [
+      "egg",
+      "s"
+    ],
+    "tip": "'egg' makes the /eg/ sound. The 's' makes the /z/ sound at the end."
+  },
+  "are": {
+    "parts": [
+      "a",
+      "re"
+    ],
+    "tip": "'are' is a sight word. It sounds like the letter 'R'."
+  },
+  "leo": {
+    "parts": [
+      "le",
+      "o"
+    ],
+    "tip": "Two parts: 'le' (lee) and 'o' (oh). A boy's name."
+  },
+  "mia": {
+    "parts": [
+      "mi",
+      "a"
+    ],
+    "tip": "Two parts: 'mi' (mee) and 'a' (uh). A girl's name."
+  },
+  "pack": {
+    "parts": [
+      "p",
+      "ack"
+    ],
+    "tip": "'p' makes a popping /p/ sound. 'ck' is a digraph that makes the /k/ sound."
+  },
+  "bag": {
+    "parts": [
+      "b",
+      "ag"
+    ],
+    "tip": "'b' makes the /b/ sound. 'ag' makes the /ag/ sound."
+  },
+  "for": {
+    "parts": [
+      "f",
+      "or"
+    ],
+    "tip": "'f' makes the /f/ sound. 'or' is r-controlled and sounds like /or/."
+  },
+  "beach": {
+    "parts": [
+      "b",
+      "each"
+    ],
+    "tip": "'b' makes the /b/ sound. 'ea' makes the long /ee/ sound. 'ch' says /ch/."
+  },
+  "they": {
+    "parts": [
+      "th",
+      "ey"
+    ],
+    "tip": "'th' makes the buzzy /th/ sound. 'ey' makes the long /ay/ sound."
+  },
+  "tall": {
+    "parts": [
+      "t",
+      "all"
+    ],
+    "tip": "'t' makes the /t/ sound. 'all' makes the /awl/ sound."
+  },
+  "sandcastle": {
+    "parts": [
+      "sand",
+      "cas",
+      "tle"
+    ],
+    "tip": "Three parts: 'sand' - 'cas' - 'tle'. The 't' is silent."
+  },
+  "with": {
+    "parts": [
+      "w",
+      "ith"
+    ],
+    "tip": "'w' makes the /w/ sound. 'th' makes the quiet /th/ sound."
+  },
+  "flag": {
+    "parts": [
+      "fl",
+      "ag"
+    ],
+    "tip": "'fl' is a blend. 'ag' makes the /ag/ sound."
+  },
+  "cold": {
+    "parts": [
+      "c",
+      "old"
+    ],
+    "tip": "'c' makes the hard /k/ sound. 'old' sounds like /oh-ld/."
+  },
+  "wave": {
+    "parts": [
+      "w",
+      "ave"
+    ],
+    "tip": "'w' makes the /w/ sound. The silent 'e' makes 'a' say its name /ay/."
+  },
+  "splashes": {
+    "parts": [
+      "spl",
+      "ash",
+      "es"
+    ],
+    "tip": "Three parts: 'spl' - 'ash' - 'es'. 'spl' is a blend, 'sh' says /sh/."
+  },
+  "their": {
+    "parts": [
+      "th",
+      "eir"
+    ],
+    "tip": "'their' is a sight word. It sounds like 'there' /thair/."
+  },
+  "feet": {
+    "parts": [
+      "f",
+      "eet"
+    ],
+    "tip": "'f' makes the /f/ sound. 'ee' makes the long /ee/ sound."
+  },
+  "eat": {
+    "parts": [
+      "eat"
+    ],
+    "tip": "'ea' is a vowel digraph that makes the long /ee/ sound."
+  },
+  "sweet": {
+    "parts": [
+      "sw",
+      "eet"
+    ],
+    "tip": "'sw' is a blend. 'ee' makes the long /ee/ sound."
+  },
+  "watermelon": {
+    "parts": [
+      "wa",
+      "ter",
+      "mel",
+      "on"
+    ],
+    "tip": "Four parts: 'wa' - 'ter' - 'mel' - 'on'. A delicious fruit!"
+  },
+  "under": {
+    "parts": [
+      "un",
+      "der"
+    ],
+    "tip": "Two parts: 'un' and 'der'. The 'er' is r-controlled."
+  },
+  "umbrella": {
+    "parts": [
+      "um",
+      "brel",
+      "la"
+    ],
+    "tip": "Three parts: 'um' - 'brel' - 'la'. Keeps you dry in the rain!"
+  },
+  "walk": {
+    "parts": [
+      "w",
+      "alk"
+    ],
+    "tip": "'w' makes the /w/ sound. 'alk' sounds like /awk/ (silent 'l')."
+  },
+  "shoes": {
+    "parts": [
+      "sh",
+      "oes"
+    ],
+    "tip": "'sh' is a digraph that says /sh/. 'oes' makes the long /oo/ sound."
+  },
+  "splat": {
+    "parts": [
+      "spl",
+      "at"
+    ],
+    "tip": "'spl' is a three-letter blend. 'at' makes the short /at/ sound."
+  },
+  "stepped": {
+    "parts": [
+      "stepp",
+      "ed"
+    ],
+    "tip": "'stepp' has a short vowel, and 'ed' sounds like /t/ here (stept)."
+  },
+  "shoe": {
+    "parts": [
+      "sh",
+      "oe"
+    ],
+    "tip": "'sh' digraph says /sh/. 'oe' makes the long /oo/ sound."
+  },
+  "wash": {
+    "parts": [
+      "w",
+      "ash"
+    ],
+    "tip": "'w' makes the /w/ sound. 'ash' sounds like /osh/ here."
+  }
+}

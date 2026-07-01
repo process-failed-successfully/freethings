@@ -1,9 +1,17 @@
 import os
 import re
-import numpy as np
-import soundfile as sf
-import torch
-from kokoro import KPipeline
+import sys
+
+try:
+    import numpy as np
+    import soundfile as sf
+    import torch
+    from kokoro import KPipeline
+except ImportError as e:
+    print(f"Warning: Phonics dependencies (kokoro, numpy, etc.) not installed: {e}")
+    print("Skipping phonics generation (requires Python < 3.13).")
+    sys.exit(0)
+
 
 def get_phonetic_sound(part):
     phone_helpers = {

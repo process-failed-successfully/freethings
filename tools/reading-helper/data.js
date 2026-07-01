@@ -1,4 +1,19 @@
 const PHONICS_DICTIONARY = {
+    "aria": { parts: ["ar", "i", "a"], tip: "A girl's name. Three parts: ar-i-a." },
+    "amelia": { parts: ["a", "me", "li", "a"], tip: "A girl's name. Four parts: a-me-li-a." },
+    "cartwheels": { parts: ["cart", "wheels"], tip: "A compound word: 'cart' and 'wheels'." },
+    "squeals": { parts: ["squ", "eals"], tip: "'squ' blend makes /skw/. 'ea' makes the long /ee/ sound." },
+    "stool": { parts: ["st", "ool"], tip: "'st' is a blend. 'oo' makes the long /oo/ sound." },
+    "bench": { parts: ["b", "ench"], tip: "'b' makes the /b/ sound. 'ch' digraph says /ch/." },
+    "pasta": { parts: ["pas", "ta"], tip: "Two parts. 'pas' and 'ta'." },
+    "chins": { parts: ["ch", "ins"], tip: "'ch' is a digraph that says /ch/. 'ins' makes the /inz/ sound." },
+    "cozy": { parts: ["co", "zy"], tip: "Two parts. 'y' makes the long /ee/ sound." },
+    "tonight": { parts: ["to", "night"], tip: "A compound word. 'night' has a silent 'gh' and a long 'i' sound." },
+    "dragon": { parts: ["dra", "gon"], tip: "Two parts. 'dr' is a blend." },
+    "queen": { parts: ["qu", "een"], tip: "'qu' says /kw/. 'ee' makes the long /ee/ sound." },
+    "golden": { parts: ["gold", "en"], tip: "Two parts. 'gold' has a long 'o' sound." },
+    "asleep": { parts: ["a", "sleep"], tip: "Two parts. 'ee' makes the long /ee/ sound." },
+
     "mystery": { parts: ["mys", "ter", "y"], tip: "The 'y' in the middle makes a short /i/ sound!" },
 
     "tentacles": { parts: ["ten", "ta", "cles"], tip: "Three parts. 'cles' makes the /kuhlz/ sound." },
@@ -474,6 +489,63 @@ const PRELOADED_BOOKS = [
             { text: "Leo wakes up and sneezes very loud. \"Achoo!\"", image: "images/monkey_mud_5.png" },
             { text: "Green snot flies everywhere and covers silly Max.", image: "images/monkey_mud_6.png" },
             { text: "Now both friends need a long scrub in the river.", image: "images/monkey_mud_7.png" }
+        ]
+    },
+    {
+        id: "mock-book-a",
+        title: "The Mock Book A",
+        level: "A",
+        wordsCount: 10,
+        thumbnail: "images/mock-book-a_1.png",
+        pages: [
+            { text: "This is page 1 of A.", image: "images/mock-book-a_1.png" },
+            { text: "This is page 2 of A.", image: "images/mock-book-a_2.png" }
+        ]
+    },
+    {
+        id: "mock-book-a-1",
+        title: "The Mock Book A",
+        level: "A",
+        wordsCount: 10,
+        thumbnail: "images/mock-book-a-1_1.png",
+        pages: [
+            { text: "This is page 1 of A.", image: "images/mock-book-a-1_1.png" },
+            { text: "This is page 2 of A.", image: "images/mock-book-a-1_2.png" }
+        ]
+    },
+    {
+        id: "kebab-case-unique-id",
+        title: "Farting Frenzy",
+        level: "B",
+        wordsCount: 163,
+        thumbnail: "images/kebab-case-unique-id_1.png",
+        pages: [
+            { text: "In the kitchen, there was a pot of stew bubbling over. A tiny boy named Jack sat at his table, trying to catch the smell of the food. He started to farts loudly, which made everyone in the room laugh! The boy looked embarrassed but also amused by the noise. Suddenly, he noticed a little dog barking nearby, which made him giggle even more!", image: "images/kebab-case-unique-id_1.png" },
+            { text: "On the beach, a group of friends were playing hide-and-seek. They found a small puddle on the sand and decided to play hide-and-seek. The girls hid under a big rock, and the boys tried to find them. After a while, they finally found them, laughing and giggling! But then, one of the boys saw something strange in the water. He turned around and saw a giant mudball floating in the air. He was so surprised, he couldn't believe his eyes. Everyone laughed at the silly thing, but the boy felt a bit embarrassed too.", image: "images/kebab-case-unique-id_2.png" }
+        ]
+    },
+    {
+        id: "kebab-case-unique-id-1",
+        title: "The Magical Mud Bug Hunt",
+        level: "A",
+        wordsCount: 51,
+        thumbnail: "images/kebab-case-unique-id-1_1.png",
+        pages: [
+            { text: "In a world where every bug was just as lovable as you were, there lived a tiny bug named MUD who loved to explore his neighborhood. One day, MUD stumbled upon a mysterious pile of brown goo! He couldn’t believe his eyes but immediately realized he had discovered something special.", image: "images/kebab-case-unique-id-1_1.png" }
+        ]
+    },
+    {
+        id: "arias-bedtime",
+        title: "Aria's Bedtime Routine",
+        level: "D",
+        wordsCount: 169,
+        thumbnail: "images/arias_bedtime_1.png",
+        pages: [
+            { text: "Aria likes to do fast cartwheels in the living room. Her little sister Amelia sits on the floor and watches. Amelia laughs and claps her tiny hands. \"Go, Aria, go!\" Amelia squeals.", image: "images/arias_bedtime_1.png" },
+            { text: "It is time for dinner. Aria sits on a tall stool at the kitchen bench. Baby Amelia sits next to her in a high chair. They eat yummy pasta and make silly faces at each other.", image: "images/arias_bedtime_2.png" },
+            { text: "Splish, splash! The girls jump into a warm bath. Fluffy white bubbles cover them up to their chins. Aria makes a funny hat out of the soap bubbles. Amelia giggles and throws water.", image: "images/arias_bedtime_3.png" },
+            { text: "Aria runs to her bedroom. Her Dad is waiting on the cozy rug. Dad has a big stack of colorful books. \"Which story should we read first tonight?\" Dad asks with a smile.", image: "images/arias_bedtime_4.png" },
+            { text: "Aria climbs into her warm, soft bed. Dad opens a special book about the brave Dragon Queen. She flies high in the clouds on a golden dragon. Soon, Aria closes her eyes and falls asleep.", image: "images/arias_bedtime_5.png" }
         ]
     }
 ];

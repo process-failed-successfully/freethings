@@ -1,0 +1,26 @@
+[CONTEXT_OBJECTIVE]
+Rewrite `tools/reading-helper/scripts/generate_books.py` to use the locally cached `Qwen/Qwen2.5-0.5B-Instruct` model via HuggingFace `transformers` instead of relying on Ollama, and test the generation script end-to-end.
+
+[LOGICAL_ARCHETYPE_PLAN]
+1. Update `tools/reading-helper/scripts/generate_books.py`:
+- Remove the `urllib.request` / Ollama logic entirely.
+- Add imports for `torch` and from `transformers` import `AutoTokenizer, AutoModelForCausalLM`.
+- In the generation function, load `"Qwen/Qwen2.5-0.5B-Instruct"` with `torch_dtype=torch.float16, device_map="auto"`.
+- Use `apply_chat_template` and generate text with `max_new_tokens=512`. Extract the JSON from the output.
+- Keep the existing A/B/C tier balancing, `books_manifest.json` updating, and `data.js` updating logic.
+- Ensure `run_asset_generation` continues to use `venv/bin/python` for executing downstream scripts.
+2. Update `Makefile`:
+- Ensure the `generate-books` target runs the script using `tools/reading-helper/venv/bin/python` so it has access to the `transformers` library.
+
+[STRICT_CONSTRAINTS]
+- `generate_books.py` must use `Qwen/Qwen2.5-0.5B-Instruct` locally via PyTorch/Transformers. No external HTTP calls.
+- The prompt sent to Qwen must strictly ask for a valid JSON object matching the manifest schema.
+- Extract the JSON defensively using regex or `json.loads` within a try/except, as LLMs may add markdown like ```json ... ```.
+
+[ACCEPTANCE_CRITERIA]
+- `generate_books.py` runs successfully using the venv interpreter.
+- It loads Qwen, generates a book, and appends it.
+- Makefile uses `tools/reading-helper/venv/bin/python` for the target.
+
+[CONCLUDE_DIRECTIVE]
+Once the changes are written to the file and the acceptance criteria above are fulfilled, exit the session immediately. Do not generate conversational follow-up questions or write supplementary markdown explanations outside the code.

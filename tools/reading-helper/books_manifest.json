@@ -664,5 +664,88 @@
                 "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, A little brown monkey and a cute lion sitting together in a blue river washing themselves with soap bubbles."
             }
         ]
+    },
+    {
+        "id": "mock-book-a",
+        "title": "The Mock Book A",
+        "base_image": "mock-book-a_1.png",
+        "pages": [
+            {
+                "image": "images/mock-book-a_1.png",
+                "prompt": "A mock drawing"
+            },
+            {
+                "image": "images/mock-book-a_2.png",
+                "prompt": "A mock drawing 2"
+            }
+        ]
+    },
+    {
+        "id": "mock-book-a-1",
+        "title": "The Mock Book A",
+        "base_image": "mock-book-a-1_1.png",
+        "pages": [
+            {
+                "image": "images/mock-book-a-1_1.png",
+                "prompt": "A mock drawing"
+            },
+            {
+                "image": "images/mock-book-a-1_2.png",
+                "prompt": "A mock drawing 2"
+            }
+        ]
+    },
+    {
+        "id": "kebab-case-unique-id",
+        "title": "Farting Frenzy",
+        "base_image": "kebab-case-unique-id_1.png",
+        "pages": [
+            {
+                "image": "images/kebab-case-unique-id_1.png",
+                "prompt": "A tiny boy sitting at a table, trying to catch the smell of food, farts loudly, looks embarrassed but amused by the sound. A little dog barks nearby makes him giggle even more."
+            },
+            {
+                "image": "images/kebab-case-unique-id_2.png",
+                "prompt": "A group of friends playing hide-and-seek on the beach, finding a puddle with a ball floating in it. The girl hides under the rock, and the boys try to find her. They finally find her, laughing and giggling. Then, one boy sees something strange in the water, turns around, and sees a mudball floating in the air. He feels a bit embarrassed, but everyone laughs at the silly thing."
+            }
+        ]
+    },
+    {
+        "id": "kebab-case-unique-id-1",
+        "title": "The Magical Mud Bug Hunt",
+        "base_image": "kebab-case-unique-id-1_1.png",
+        "pages": [
+            {
+                "image": "images/kebab-case-unique-id-1_1.png",
+                "prompt": "Create an image of MUD finding the magical brown goo while being chased by a mischievous sprite. Use whimsical illustrations and colorful backgrounds."
+            }
+        ]
+    },
+    {
+        "id": "arias-bedtime",
+        "title": "Aria's Bedtime Routine",
+        "base_image": "arias_bedtime_1.png",
+        "pages": [
+            {
+                "image": "images/arias_bedtime_1.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, a girl named Aria with long brown hair in plaited pigtails, olive skin, and brown eyes, doing a cartwheel in a cozy living room. Her toddler sister Amelia, with blonde hair and blue eyes, is sitting on the floor laughing and clapping."
+            },
+            {
+                "image": "images/arias_bedtime_2.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Aria, a girl with long brown hair in plaited pigtails, olive skin, and brown eyes, sitting at a kitchen bench eating dinner. Next to her is her toddler sister Amelia, with blonde hair and blue eyes, sitting in a high chair baby seat."
+            },
+            {
+                "image": "images/arias_bedtime_3.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Aria (long brown hair in plaited pigtails, olive skin) and toddler Amelia (blonde hair, blue eyes) taking a bath together. Fluffy white soap bubbles cover their bodies up to their chins, playing happily."
+            },
+            {
+                "image": "images/arias_bedtime_4.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Aria, a girl with long brown hair in plaited pigtails, olive skin, and brown eyes, in her bedroom looking at a stack of books with her Dad. Dad has dark brown hair with grey highlights, olive skin, brown eyes, and a scruffy short beard."
+            },
+            {
+                "image": "images/arias_bedtime_5.png",
+                "prompt": "Whimsical children's book watercolor illustration, bright pastel colors, white background, cute friendly characters, simple details, Aria (long brown hair in plaited pigtails, olive skin) tucked in bed, looking cozy. Her Dad (dark brown hair with grey, olive skin, short beard) is sitting next to the bed reading a book about a dragon queen."
+            }
+        ]
     }
 ]
