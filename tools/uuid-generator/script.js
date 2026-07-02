@@ -2,6 +2,7 @@
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', async function() {
+    initializeEventListeners();
     updateOptions();
     await generateExampleUUIDs();
     loadHistory();
@@ -19,6 +20,108 @@ function setupFAQListeners() {
             }
         });
     });
+}
+
+// Initialize all event listeners programmatically
+function initializeEventListeners() {
+    // UUID type selector
+    const uuidTypeSelect = document.getElementById('uuid-type');
+    if (uuidTypeSelect) {
+        uuidTypeSelect.addEventListener('change', updateOptions);
+    }
+
+    // Main buttons
+    const generateBtn = document.getElementById('generate-btn');
+    if (generateBtn) {
+        generateBtn.addEventListener('click', generateUUID);
+    }
+
+    const generateMultipleBtn = document.getElementById('generate-multiple-btn');
+    if (generateMultipleBtn) {
+        generateMultipleBtn.addEventListener('click', generateMultipleUUIDs);
+    }
+
+    const copyBtn = document.getElementById('copy-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function() { copyUUID(this); });
+    }
+
+    const clearBtn = document.getElementById('clear-btn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', clearResults);
+    }
+
+    const copyRegexBtn = document.getElementById('copy-regex-btn');
+    if (copyRegexBtn) {
+        copyRegexBtn.addEventListener('click', function() { copyRegex(this); });
+    }
+
+    // Regex tabs
+    document.querySelectorAll('.regex-tab').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            const tabType = tab.textContent.toLowerCase().includes('insensitive') ? 'case-insensitive' : 'case-sensitive';
+            switchRegexTab(e, tabType);
+        });
+    });
+
+    // FAQ items
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', function() { toggleFAQ(this); });
+    });
+
+    // Cookie consent link
+    const manageCookiesLink = document.getElementById('manage-cookies-link');
+    if (manageCookiesLink) {
+        manageCookiesLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof window.manageCookieConsent === 'function') {
+                window.manageCookieConsent();
+            }
+        });
+    }
+
+    // Footer and other setUUIDType links
+    document.addEventListener('click', function(e) {
+        const setUUIDLink = e.target.closest('[data-uuid-type]');
+        if (setUUIDLink) {
+            e.preventDefault();
+            setUUIDType(setUUIDLink.getAttribute('data-uuid-type'));
+        }
+    });
+
+    // Dynamic options container delegation
+    const optionsContainer = document.getElementById('options-container');
+    if (optionsContainer) {
+        optionsContainer.addEventListener('input', function(e) {
+            if (e.target.id === 'timestamp-suffix-length') {
+                updateSuffixDisplay();
+            } else if (e.target.id === 'nanoid-length') {
+                updateNanoIdDisplay();
+            }
+        });
+    }
+
+    // Multiple list delegation
+    const multipleList = document.getElementById('multiple-uuids-list');
+    if (multipleList) {
+        multipleList.addEventListener('click', function(e) {
+            const btn = e.target.closest('.uuid-copy-btn');
+            if (btn && btn.dataset.uuid) {
+                copySpecificUUID(btn.dataset.uuid, btn);
+            }
+        });
+    }
+
+    // History list delegation
+    const historyList = document.getElementById('history-list');
+    if (historyList) {
+        historyList.addEventListener('click', function(e) {
+            const btn = e.target.closest('.history-copy-btn');
+            if (btn && btn.dataset.uuid) {
+                copySpecificUUID(btn.dataset.uuid, btn);
+            }
+        });
+    }
 }
 
 // Character sets for different ID types
@@ -289,7 +392,7 @@ function updateOptions() {
                     </div>
                     <div class="input-group">
                         <label for="timestamp-suffix-length">Suffix Length:</label>
-                        <input type="range" id="timestamp-suffix-length" min="3" max="12" value="6" oninput="updateSuffixDisplay()">
+                        <input type="range" id="timestamp-suffix-length" min="3" max="12" value="6">
                         <span id="suffix-display">6</span>
                     </div>
                     <div class="checkbox-group">
@@ -309,7 +412,7 @@ function updateOptions() {
                     <h3>Nano ID Options:</h3>
                     <div class="input-group">
                         <label for="nanoid-length">Length:</label>
-                        <input type="range" id="nanoid-length" min="4" max="64" value="21" oninput="updateNanoIdDisplay()">
+                        <input type="range" id="nanoid-length" min="4" max="64" value="21">
                         <span id="nanoid-display">21</span>
                     </div>
                     <div class="input-group">
@@ -980,12 +1083,14 @@ function updateRegexPattern(typeDisplay) {
 }
 
 // Switch between case-sensitive and case-insensitive regex tabs
-function switchRegexTab(tabType) {
+function switchRegexTab(e, tabType) {
     // Update tab appearance
     document.querySelectorAll('.regex-tab').forEach(tab => {
         tab.classList.remove('active');
     });
-    event.target.classList.add('active');
+    if (e && e.currentTarget) {
+        e.currentTarget.classList.add('active');
+    }
     
     // Update current tab
     window.currentRegexTab = tabType;
@@ -1082,7 +1187,7 @@ async function generateMultipleUUIDs() {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'uuid-copy-btn';
         copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-        copyBtn.onclick = function() { copySpecificUUID(uuid, this); };
+        copyBtn.dataset.uuid = uuid;
 
         uuidItem.appendChild(uuidInfo);
         uuidItem.appendChild(copyBtn);
@@ -1267,7 +1372,7 @@ function updateHistoryDisplay() {
         copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
         copyBtn.setAttribute('aria-label', 'Copy UUID');
         copyBtn.title = 'Copy UUID';
-        copyBtn.onclick = function() { copySpecificUUID(item.uuid, this); };
+        copyBtn.dataset.uuid = item.uuid;
 
         historyItem.appendChild(historyUuid);
         historyItem.appendChild(historyInfo);
@@ -1444,4 +1549,3 @@ function copyRegex(button) {
 
     copyToClipboard(window.lastRegexPattern, button);
 }
-

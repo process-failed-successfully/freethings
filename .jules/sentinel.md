@@ -29,3 +29,8 @@
 **Vulnerability:** DOM-based Cross-Site Scripting (XSS) in `worksheet-generator`. The `showError` function was using `innerHTML` to display messages, which could be exploited if user-controlled data was passed to it.
 **Learning:** Even utility functions like `showError` that are intended for system messages can become XSS vectors if they are not consistently refactored to use `textContent`.
 **Prevention:** Follow the "Structural HTML + textContent" pattern for all UI messages, including errors.
+
+## 2024-05-24 - CSP Readiness via Inline Handler Removal
+**Vulnerability:** Systemic reliance on inline event handlers (`onclick`, `onchange`) prevents the enforcement of a strict Content Security Policy (CSP), leaving the application vulnerable to XSS if a single injection point is found.
+**Learning:** Refactoring to programmatic listeners requires careful handling of shared global functions (like `manageCookieConsent`) and using `e.currentTarget` in event listeners to ensure state changes (like active classes) are applied to the correct element regardless of where the click landed within the button.
+**Prevention:** Eliminate all inline JS from HTML. Target elements by ID or data attributes and use event delegation for dynamic or repeated components.
