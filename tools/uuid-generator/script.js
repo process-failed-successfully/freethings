@@ -998,98 +998,62 @@ function switchRegexTab(tabType) {
 
 
 // Generate multiple UUIDs
+/**
+ * Generate multiple UUIDs.
+ * ⚡ Performance: Optimized with concurrent generation and DocumentFragment batching.
+ */
 async function generateMultipleUUIDs() {
-    const count = 10; // Generate 10 UUIDs
+    const count = 10;
     const multipleSection = document.getElementById('multiple-uuids-section');
     const multipleList = document.getElementById('multiple-uuids-list');
+    const uuidType = document.getElementById('uuid-type').value;
+
+    const typeNames = {
+        'v4': 'UUID v4', 'v1': 'UUID v1', 'v3': 'UUID v3', 'v5': 'UUID v5',
+        'v6': 'UUID v6', 'v7': 'UUID v7', 'v8': 'UUID v8', 'nil': 'Nil UUID',
+        'max': 'Max UUID', 'timestamp': 'Timestamp ID', 'nanoid': 'Nano ID'
+    };
+    const typeDisplay = typeNames[uuidType] || 'UUID v4';
 
     multipleSection.style.display = 'block';
     multipleList.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-    for (let i = 0; i < count; i++) {
-        const uuidType = document.getElementById('uuid-type').value;
-        let uuid;
-        let typeDisplay;
-        
+    // Generate all UUIDs concurrently (especially beneficial for async v5)
+    const uuids = await Promise.all(Array.from({ length: count }, () => {
         switch (uuidType) {
-            case 'v4':
-                uuid = generateUUIDv4();
-                typeDisplay = 'UUID v4';
-                break;
-            case 'v1':
-                uuid = generateUUIDv1();
-                typeDisplay = 'UUID v1';
-                break;
-            case 'v3':
-                uuid = generateUUIDv3();
-                typeDisplay = 'UUID v3';
-                break;
-            case 'v5':
-                uuid = await generateUUIDv5();
-                typeDisplay = 'UUID v5';
-                break;
-            case 'v6':
-                uuid = generateUUIDv6();
-                typeDisplay = 'UUID v6';
-                break;
-            case 'v7':
-                uuid = generateUUIDv7();
-                typeDisplay = 'UUID v7';
-                break;
-            case 'v8':
-                uuid = generateUUIDv8();
-                typeDisplay = 'UUID v8';
-                break;
-            case 'nil':
-                uuid = generateNilUUID();
-                typeDisplay = 'Nil UUID';
-                break;
-            case 'max':
-                uuid = generateMaxUUID();
-                typeDisplay = 'Max UUID';
-                break;
-            case 'timestamp':
-                uuid = generateTimestampID();
-                typeDisplay = 'Timestamp ID';
-                break;
-            case 'nanoid':
-                uuid = generateNanoID();
-                typeDisplay = 'Nano ID';
-                break;
-            default:
-                uuid = generateUUIDv4();
-                typeDisplay = 'UUID v4';
+            case 'v4': return generateUUIDv4();
+            case 'v1': return generateUUIDv1();
+            case 'v3': return generateUUIDv3();
+            case 'v5': return generateUUIDv5();
+            case 'v6': return generateUUIDv6();
+            case 'v7': return generateUUIDv7();
+            case 'v8': return generateUUIDv8();
+            case 'nil': return generateNilUUID();
+            case 'max': return generateMaxUUID();
+            case 'timestamp': return generateTimestampID();
+            case 'nanoid': return generateNanoID();
+            default: return generateUUIDv4();
         }
+    }));
 
-        // Create UUID item
+    uuids.forEach(uuid => {
         const uuidItem = document.createElement('div');
         uuidItem.className = 'multiple-uuid-item';
+        uuidItem.innerHTML = `
+            <div class="uuid-info">
+                <div class="uuid-text"></div>
+                <div class="uuid-type"></div>
+            </div>
+            <button class="uuid-copy-btn"><i class="fas fa-copy"></i> Copy</button>
+        `;
+        uuidItem.querySelector('.uuid-text').textContent = uuid;
+        uuidItem.querySelector('.uuid-type').textContent = typeDisplay;
+        uuidItem.querySelector('.uuid-copy-btn').onclick = function() { copySpecificUUID(uuid, this); };
+        fragment.appendChild(uuidItem);
+    });
 
-        const uuidInfo = document.createElement('div');
-        uuidInfo.className = 'uuid-info';
-
-        const uuidText = document.createElement('div');
-        uuidText.className = 'uuid-text';
-        uuidText.textContent = uuid;
-
-        const uuidTypeElem = document.createElement('div');
-        uuidTypeElem.className = 'uuid-type';
-        uuidTypeElem.textContent = typeDisplay;
-
-        uuidInfo.appendChild(uuidText);
-        uuidInfo.appendChild(uuidTypeElem);
-
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'uuid-copy-btn';
-        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-        copyBtn.onclick = function() { copySpecificUUID(uuid, this); };
-
-        uuidItem.appendChild(uuidInfo);
-        uuidItem.appendChild(copyBtn);
-        multipleList.appendChild(uuidItem);
-    }
-
-    // Scroll to multiple UUIDs section
+    multipleList.appendChild(fragment);
     multipleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -1229,6 +1193,10 @@ function loadHistory() {
 }
 
 // Update history display
+/**
+ * Update the history display.
+ * ⚡ Performance: Optimized using DocumentFragment for batched DOM updates.
+ */
 function updateHistoryDisplay() {
     const history = getHistory();
     const historyList = document.getElementById('history-list');
@@ -1239,41 +1207,33 @@ function updateHistoryDisplay() {
     }
     
     historyList.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+
     history.forEach(item => {
         const date = new Date(item.timestamp);
         const historyItem = document.createElement('div');
         historyItem.className = 'history-item';
 
-        const historyUuid = document.createElement('div');
-        historyUuid.className = 'history-uuid';
-        historyUuid.textContent = item.uuid;
+        historyItem.innerHTML = `
+            <div class="history-uuid"></div>
+            <div class="history-info">
+                <span class="history-type"></span>
+                <span class="history-time"></span>
+            </div>
+            <button class="history-copy-btn" aria-label="Copy UUID" title="Copy UUID">
+                <i class="fas fa-copy"></i>
+            </button>
+        `;
 
-        const historyInfo = document.createElement('div');
-        historyInfo.className = 'history-info';
+        historyItem.querySelector('.history-uuid').textContent = item.uuid;
+        historyItem.querySelector('.history-type').textContent = item.type;
+        historyItem.querySelector('.history-time').textContent = date.toLocaleString();
+        historyItem.querySelector('.history-copy-btn').onclick = function() { copySpecificUUID(item.uuid, this); };
 
-        const historyType = document.createElement('span');
-        historyType.className = 'history-type';
-        historyType.textContent = item.type;
-
-        const historyTime = document.createElement('span');
-        historyTime.className = 'history-time';
-        historyTime.textContent = date.toLocaleString();
-
-        historyInfo.appendChild(historyType);
-        historyInfo.appendChild(historyTime);
-
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'history-copy-btn';
-        copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-        copyBtn.setAttribute('aria-label', 'Copy UUID');
-        copyBtn.title = 'Copy UUID';
-        copyBtn.onclick = function() { copySpecificUUID(item.uuid, this); };
-
-        historyItem.appendChild(historyUuid);
-        historyItem.appendChild(historyInfo);
-        historyItem.appendChild(copyBtn);
-        historyList.appendChild(historyItem);
+        fragment.appendChild(historyItem);
     });
+
+    historyList.appendChild(fragment);
 }
 
 // Set UUID type from footer links
@@ -1289,19 +1249,23 @@ function setUUIDType(type) {
 }
 
 // Generate example UUIDs
+/**
+ * Generate example UUIDs.
+ * ⚡ Performance: Optimized with concurrent generation to improve initialization speed.
+ */
 async function generateExampleUUIDs() {
-    // Generate examples for display
-    document.getElementById('example-v4').textContent = generateUUIDv4();
-    document.getElementById('example-v1').textContent = generateUUIDv1();
-    document.getElementById('example-v3').textContent = generateUUIDv3();
-    document.getElementById('example-v5').textContent = await generateUUIDv5();
-    document.getElementById('example-v6').textContent = generateUUIDv6();
-    document.getElementById('example-v7').textContent = generateUUIDv7();
-    document.getElementById('example-v8').textContent = generateUUIDv8();
-    document.getElementById('example-nil').textContent = generateNilUUID();
-    document.getElementById('example-max').textContent = generateMaxUUID();
-    document.getElementById('example-timestamp').textContent = generateTimestampID();
-    document.getElementById('example-nanoid').textContent = generateNanoID();
+    // Generate all example ID types concurrently
+    const examples = await Promise.all([
+        generateUUIDv4(), generateUUIDv1(), generateUUIDv3(), generateUUIDv5(),
+        generateUUIDv6(), generateUUIDv7(), generateUUIDv8(), generateNilUUID(),
+        generateMaxUUID(), generateTimestampID(), generateNanoID()
+    ]);
+
+    const ids = ['v4', 'v1', 'v3', 'v5', 'v6', 'v7', 'v8', 'nil', 'max', 'timestamp', 'nanoid'];
+    examples.forEach((example, i) => {
+        const el = document.getElementById(`example-${ids[i]}`);
+        if (el) el.textContent = example;
+    });
 }
 
 // Show notification
