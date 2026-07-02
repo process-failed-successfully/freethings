@@ -42,6 +42,9 @@ rm -rf dist/node_modules \
        dist/build.sh \
        dist/.gitignore
 
+# Run cache busting to invalidate changed files selectively
+python3 tools/cache_buster.py
+
 # Remove scripts, venvs, Dockerfiles, and python source files from tools
 echo "Cleaning up tool directories..."
 find dist/tools -type d -name "scripts" -exec rm -rf {} + 2>/dev/null || true
